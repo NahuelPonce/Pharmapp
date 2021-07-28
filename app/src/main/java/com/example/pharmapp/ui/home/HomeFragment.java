@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,24 +19,27 @@ import com.example.pharmapp.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+
     private FragmentHomeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        String [] medicamentosItems = {"prueba1","prueba2","prueba3"};
+
+        ListView listView = (ListView) root.findViewById(R.id.lvLista);
+
+        ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(
+                getActivity(),
+                android.R.layout.simple_list_item_1,
+                medicamentosItems
+
+        );
+        listView.setAdapter(listViewAdapter);
+
         return root;
     }
 
