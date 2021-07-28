@@ -46,12 +46,14 @@ public class Adapter extends BaseAdapter {
         TextView nombre = (TextView) v.findViewById(R.id.lvTitulo);
         TextView comprimido =(TextView) v.findViewById(R.id.textComprimido);
         TextView descripcion =(TextView) v.findViewById(R.id.textView3);
+        TextView precio = (TextView) v.findViewById(R.id.lvPrecio);
         ImageView imagen = (ImageView) v.findViewById(R.id.ivImagen);
 
         nombre.setText(item.getNombre());
         comprimido.setText(item.getComprimido().toString());
         descripcion.setText(item.getDescripcion());
         imagen.setImageResource(item.getImagen());
+        precio.setText(item.getPrecio().toString());
 
         return v;
     }

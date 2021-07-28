@@ -5,6 +5,7 @@ public class Medicamento {
     private Integer comprimido;
     private String descripcion;
     private int imagen;
+    private Integer precio;
 
     public String getNombre() {
         return nombre;
@@ -28,6 +29,14 @@ public class Medicamento {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Integer getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Integer precio) {
+        this.precio = precio;
     }
 
     public int getImagen() {
