@@ -4,9 +4,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.pharmapp.ui.home.DetalleMedicamento;
+import com.example.pharmapp.ui.home.Medicamento;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -16,7 +20,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pharmapp.databinding.ActivityMain2Binding;
 
-public class Main2Activity extends AppCompatActivity {
+public class Main2Activity extends AppCompatActivity implements iComunicaFragments {
+
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+
+    //variable del fragmentodellate medicamento
+    DetalleMedicamento detalleMedicamentoFragment;
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMain2Binding binding;
@@ -62,5 +72,20 @@ public class Main2Activity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main2);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void enviarMedicamento(Medicamento medicamento) {
+
+        detalleMedicamentoFragment = new DetalleMedicamento();
+
+        Bundle bundle = new Bundle();
+
+        bundle.putSerializable("objeto", medicamento);
+        detalleMedicamentoFragment.setArguments(bundle);
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction.replace(R.id.nav_host_fragment_content_main2, detalleMedicamentoFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }

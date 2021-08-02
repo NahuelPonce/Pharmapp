@@ -18,4 +18,5 @@
     <string name="descripcion">Descripción</string>
     <string name="comprimidos">Comprimidos</string>
     <string name="precio">Precio</string>
+    <string name="total">Total</string>
 </resources>

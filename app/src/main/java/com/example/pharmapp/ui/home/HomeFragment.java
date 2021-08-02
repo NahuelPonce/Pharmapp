@@ -1,6 +1,7 @@
 package com.example.pharmapp.ui.home;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,14 +21,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pharmapp.R;
 import com.example.pharmapp.databinding.FragmentHomeBinding;
+import com.example.pharmapp.iComunicaFragments;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
-    private ArrayList<Medicamento> medicamentos;
+    ArrayList<Medicamento> medicamentos;
     RecyclerView recyclerViewMedicamentos;
-    private AdapterMedicamento adapter;
+    AdapterMedicamento adapter;
+
+    // referencias para comunicar fragments
+
+    Activity activity;
+    iComunicaFragments interfaceComunicaFragments;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -85,6 +94,20 @@ public class HomeFragment extends Fragment {
         medicamentos.add(item);
     }
 
+    @Override
+    public void onAttach(@NonNull @NotNull Context context) {
+        super.onAttach(context);
+        if(context instanceof Activity) {
+            this.activity = (Activity) context;
+            interfaceComunicaFragments = (iComunicaFragments) this.activity;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
     public void mostrar() {
         recyclerViewMedicamentos.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new AdapterMedicamento(getContext(), medicamentos);
@@ -95,6 +118,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 String nombre = medicamentos.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getNombre();
                 Toast.makeText(getContext(), "Selecciono el medicamento " + nombre, Toast.LENGTH_SHORT).show();
+                interfaceComunicaFragments.enviarMedicamento(medicamentos.get(recyclerViewMedicamentos.getChildAdapterPosition(v)));
             }
         });
     }
