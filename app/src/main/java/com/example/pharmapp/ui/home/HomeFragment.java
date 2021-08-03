@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,8 @@ import com.example.pharmapp.R;
 import com.example.pharmapp.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
+
+import static androidx.navigation.Navigation.findNavController;
 
 public class HomeFragment extends Fragment {
 
@@ -93,8 +96,10 @@ public class HomeFragment extends Fragment {
         adapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nombre = medicamentos.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getNombre();
-                Toast.makeText(getContext(), "Selecciono el medicamento " + nombre, Toast.LENGTH_SHORT).show();
+
+                findNavController(v).navigate(R.id.action_nav_home_to_detalleeFragment);
+                //String nombre = medicamentos.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getNombre();
+                //Toast.makeText(getContext(), "Selecciono el medicamento " + nombre, Toast.LENGTH_SHORT).show();
             }
         });
     }
