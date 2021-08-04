@@ -11,8 +11,8 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_nav_home_to_detalleeFragment"
-            app:destination="@id/detalleeFragment" />
+            android:id="@+id/action_nav_home_to_nav_detalle"
+            app:destination="@id/nav_detalle" />
     </fragment>
 
     <fragment
@@ -26,9 +26,10 @@
         android:name="com.example.pharmapp.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+
     <fragment
-        android:id="@+id/detalleeFragment"
-        android:name="com.example.pharmapp.DetalleeFragment"
-        android:label="fragment_detallee"
-        tools:layout="@layout/fragment_detallee" />
+        android:id="@+id/nav_detalle"
+        android:name="com.example.pharmapp.ui.home.DetalleMedicamento"
+        android:label="detalle_medicamento"
+        tools:layout="@layout/fragment_detalle_medicamento" />
 </navigation>
