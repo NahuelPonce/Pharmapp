@@ -7,6 +7,8 @@ public class Medicamento {
     private String descripcion;
     private int imagen;
     private Double precio;
+    private int cantidad;
+    private double total;
 
     public String getNombre() {
         return nombre;
@@ -46,5 +48,21 @@ public class Medicamento {
 
     public void setImagen(int imagen) {
         this.imagen = imagen;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
 }

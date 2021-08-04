@@ -1,5 +1,7 @@
 package com.example.pharmapp.ui.home;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 
@@ -13,11 +15,15 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pharmapp.R;
+import com.google.gson.Gson;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+
+import static androidx.navigation.Navigation.findNavController;
 
 public class DetalleMedicamento extends Fragment {
 
@@ -31,6 +37,7 @@ public class DetalleMedicamento extends Fragment {
     ImageButton menos;
     ImageButton agregar;
     NumberFormat formatter;
+    Medicamento mpedido;
 
     public DetalleMedicamento() {
         // Required empty public constructor
@@ -78,6 +85,12 @@ cament
         medicamentoCantidad.setText("1");
         medicamentoPrecioTotal.setText(String.valueOf(precio));
 
+        mpedido = new Medicamento();
+        mpedido.setNombre(nombre);
+        mpedido.setPrecio(precio);
+        mpedido.setImagen(imagen);
+        mpedido.setCantidad(1);
+
 
         mas.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +99,7 @@ cament
                 _cantidad=_cantidad.replace(",","").replace("#","").replace(".","");
                 int Incremento =Integer.parseInt(_cantidad)+1;
                 medicamentoCantidad.setText(String.valueOf(Incremento));
-                CalculaTotal(Incremento);
+                calculaTotal(Incremento);
             }
         });
 
@@ -96,10 +109,19 @@ cament
                 String _cantidad= medicamentoCantidad.getText().toString();
                 _cantidad=_cantidad.replace(",","").replace("#","").replace(".","");
                 int Incremento =Integer.parseInt(_cantidad)-1;
-                if(Incremento < 0)
-                    Incremento=0;
+                if(Incremento < 1)
+                    Incremento=1;
                 medicamentoCantidad.setText(String.valueOf(Incremento));
-                CalculaTotal(Incremento);
+                calculaTotal(Incremento);
+            }
+        });
+
+        agregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                guardarMedicamento(mpedido);
+                findNavController(v).navigate(R.id.action_nav_detalle_to_nav_home2);
+
             }
         });
 
@@ -108,7 +130,18 @@ cament
         return v;
     }
 
-    void CalculaTotal (int cantidad) {
+    public void guardarMedicamento(Medicamento medicamento) {
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(mpedido);
+        editor.putString("medicamento", json);
+        editor.apply();
+
+    }
+
+    void calculaTotal (int cantidad) {
 
         Bundle bundle = getArguments();
         Double precio = bundle.getDouble("precio");
@@ -118,6 +151,8 @@ cament
         double medicamentop= precio;
         resultado=cantidad*medicamentop;
         medicamentoPrecioTotal.setText(formatter.format(resultado));
+        mpedido.setTotal(resultado);
+        mpedido.setCantidad(cantidad);
         //medicamentoPrecioTotal.setText(String.valueOf(resultado));
     }
 }
