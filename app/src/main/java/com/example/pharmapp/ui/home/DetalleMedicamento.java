@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,22 +16,28 @@ import android.widget.TextView;
 
 import com.example.pharmapp.R;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class DetalleMedicamento extends Fragment {
-
-
-    public DetalleMedicamento() {
-        // Required empty public constructor
-    }
 
     ImageView medicamentoImagen;
     TextView medicamentoNombre;
     TextView medicamentoCantidad;
-    //TextView medicamentoPrecioTotal;
+    TextView medicamentoPrecioTotal;
     TextView medicamentoPrecio;
     //TextView medicamentoId;
     ImageButton mas;
     ImageButton menos;
     ImageButton agregar;
+    NumberFormat formatter;
+
+    public DetalleMedicamento() {
+        // Required empty public constructor
+        formatter = new DecimalFormat("$ ###,###,###.00");
+
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,17 +48,17 @@ public class DetalleMedicamento extends Fragment {
         medicamentoImagen = v.findViewById(R.id.imagen_medicamento);
         medicamentoNombre = v.findViewById(R.id.nombre_medicamento);
         medicamentoCantidad = v.findViewById(R.id.cantidad_medicamento);
-        //medicamentoPrecioTotal = v.findViewById(R.id.preciototal_medicamento);
+        medicamentoPrecioTotal = v.findViewById(R.id.preciototal_medicamento);
         medicamentoPrecio = v.findViewById(R.id.precio_medicamento);
         //medicamentoId = v.findViewById(R.id.medicamento_id);
 
         Bundle bundle = getArguments();
         String nombre = bundle.getString("nombre");
-        String precio = bundle.getString("precio");
+        Double precio = bundle.getDouble("precio");
         int imagen = bundle.getInt("imagen");
 
         medicamentoNombre.setText(nombre);
-        medicamentoPrecio.setText(precio);
+        medicamentoPrecio.setText(String.valueOf(precio));
         medicamentoImagen.setImageResource(imagen);
 
         /*Bundle objetoMedicamento = getArguments();
@@ -68,6 +76,8 @@ cament
         mas = v.findViewById(R.id.mas);
         menos = v.findViewById(R.id.menos);
         medicamentoCantidad.setText("1");
+        medicamentoPrecioTotal.setText(String.valueOf(precio));
+
 
         mas.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +86,7 @@ cament
                 _cantidad=_cantidad.replace(",","").replace("#","").replace(".","");
                 int Incremento =Integer.parseInt(_cantidad)+1;
                 medicamentoCantidad.setText(String.valueOf(Incremento));
+                CalculaTotal(Incremento);
             }
         });
 
@@ -88,17 +99,25 @@ cament
                 if(Incremento < 0)
                     Incremento=0;
                 medicamentoCantidad.setText(String.valueOf(Incremento));
+                CalculaTotal(Incremento);
             }
         });
+
 
 
         return v;
     }
 
-    /*void CalculaTotal (int cantidad) {
+    void CalculaTotal (int cantidad) {
+
+        Bundle bundle = getArguments();
+        Double precio = bundle.getDouble("precio");
+
 
         double resultado = 0;
-        resultado = cantidad*medicamentoPrecio.getPrecio();
-        medicamentoPrecioTotal
-    }*/
+        double medicamentop= precio;
+        resultado=cantidad*medicamentop;
+        medicamentoPrecioTotal.setText(formatter.format(resultado));
+        //medicamentoPrecioTotal.setText(String.valueOf(resultado));
+    }
 }

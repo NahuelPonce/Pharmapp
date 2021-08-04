@@ -6,7 +6,7 @@ public class Medicamento {
     private Integer comprimido;
     private String descripcion;
     private int imagen;
-    private Integer precio;
+    private Double precio;
 
     public String getNombre() {
         return nombre;
@@ -32,11 +32,11 @@ public class Medicamento {
         this.descripcion = descripcion;
     }
 
-    public Integer getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Integer precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
