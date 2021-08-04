@@ -20,13 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pharmapp.databinding.ActivityMain2Binding;
 
-public class Main2Activity extends AppCompatActivity implements iComunicaFragments {
-
-    FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
-
-    //variable del fragmentodellate medicamento
-    DetalleMedicamento detalleMedicamentoFragment;
+public class Main2Activity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMain2Binding binding;
@@ -74,18 +68,4 @@ public class Main2Activity extends AppCompatActivity implements iComunicaFragmen
                 || super.onSupportNavigateUp();
     }
 
-    @Override
-    public void enviarMedicamento(Medicamento medicamento) {
-
-        detalleMedicamentoFragment = new DetalleMedicamento();
-
-        Bundle bundle = new Bundle();
-
-        bundle.putSerializable("objeto", medicamento);
-        detalleMedicamentoFragment.setArguments(bundle);
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction.replace(R.id.nav_host_fragment_content_main2, detalleMedicamentoFragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-    }
 }

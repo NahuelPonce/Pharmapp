@@ -1,8 +1,7 @@
 package com.example.pharmapp.ui.home;
 
-import java.io.Serializable;
 
-public class Medicamento implements Serializable {
+public class Medicamento {
     private String nombre;
     private Integer comprimido;
     private String descripcion;
