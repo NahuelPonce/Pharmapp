@@ -1,7 +1,11 @@
 package com.example.pharmapp.ui.home;
 
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Medicamento {
+    private static final AtomicInteger count = new AtomicInteger(0);
+    private int medicamentoID = count.incrementAndGet();
     private String nombre;
     private Integer comprimido;
     private String descripcion;
@@ -9,6 +13,10 @@ public class Medicamento {
     private Double precio;
     private int cantidad;
     private double total;
+
+    public int getMedicamentoID() {
+        return medicamentoID;
+    }
 
     public String getNombre() {
         return nombre;

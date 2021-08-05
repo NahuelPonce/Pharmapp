@@ -1,9 +1,11 @@
 package com.example.pharmapp;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.pharmapp.db.DbHelper;
 import com.example.pharmapp.ui.home.DetalleMedicamento;
 import com.example.pharmapp.ui.home.Medicamento;
 import com.google.android.material.snackbar.Snackbar;
@@ -28,6 +30,9 @@ public class Main2Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        DbHelper dbHelper = new DbHelper(this);
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         binding = ActivityMain2Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

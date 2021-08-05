@@ -1,7 +1,10 @@
 package com.example.pharmapp.ui.home;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 
@@ -18,10 +21,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pharmapp.R;
+import com.example.pharmapp.db.DbHelper;
 import com.google.gson.Gson;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -32,12 +37,13 @@ public class DetalleMedicamento extends Fragment {
     TextView medicamentoCantidad;
     TextView medicamentoPrecioTotal;
     TextView medicamentoPrecio;
-    //TextView medicamentoId;
+    TextView medicamentoId;
     ImageButton mas;
     ImageButton menos;
     ImageButton agregar;
     NumberFormat formatter;
-    Medicamento mpedido;
+
+    DbHelper dbHelper;
 
     public DetalleMedicamento() {
         // Required empty public constructor
@@ -57,16 +63,18 @@ public class DetalleMedicamento extends Fragment {
         medicamentoCantidad = v.findViewById(R.id.cantidad_medicamento);
         medicamentoPrecioTotal = v.findViewById(R.id.preciototal_medicamento);
         medicamentoPrecio = v.findViewById(R.id.precio_medicamento);
-        //medicamentoId = v.findViewById(R.id.medicamento_id);
+        medicamentoId = v.findViewById(R.id.medicamento_id);
 
         Bundle bundle = getArguments();
         String nombre = bundle.getString("nombre");
         Double precio = bundle.getDouble("precio");
         int imagen = bundle.getInt("imagen");
+        int idmedicamento = bundle.getInt("medicamentoid");
 
         medicamentoNombre.setText(nombre);
         medicamentoPrecio.setText(String.valueOf(precio));
         medicamentoImagen.setImageResource(imagen);
+        medicamentoId.setText(String.valueOf(idmedicamento));
 
         /*Bundle objetoMedicamento = getArguments();
         Medicamento medio = null;
@@ -82,14 +90,11 @@ cament
         agregar = v.findViewById(R.id.agregar_medicamento);
         mas = v.findViewById(R.id.mas);
         menos = v.findViewById(R.id.menos);
+        dbHelper = new DbHelper(v.getContext());
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
+
         medicamentoCantidad.setText("1");
         medicamentoPrecioTotal.setText(String.valueOf(precio));
-
-        mpedido = new Medicamento();
-        mpedido.setNombre(nombre);
-        mpedido.setPrecio(precio);
-        mpedido.setImagen(imagen);
-        mpedido.setCantidad(1);
 
 
         mas.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +124,24 @@ cament
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                guardarMedicamento(mpedido);
+                Cursor c = db.rawQuery("SELECT id, cantidad, total FROM t_carrito where medicamentoId=?", new String[]{medicamentoId.getText().toString()});
+                ContentValues values = new ContentValues();
+
+                if(!c.moveToFirst()) {
+                    values.put("medicamentoId", Integer.parseInt(medicamentoId.getText().toString()));
+                    values.put("nombre", medicamentoNombre.getText().toString());
+                    values.put("precio", Float.parseFloat(medicamentoPrecio.getText().toString().replace("$","")));
+                    //values.put("imagen", Integer.parseInt(String.valueOf(medicamentoImagen)));
+                    values.put("cantidad", Integer.parseInt(medicamentoCantidad.getText().toString()));
+                    values.put("total", Float.parseFloat(medicamentoPrecioTotal.getText().toString().replace("$", "")));
+                    db.insert("t_carrito", null, values);
+                }
+                else {
+                    values.put("cantidad", Integer.parseInt(medicamentoCantidad.getText().toString()));
+                    values.put("total", Float.parseFloat(medicamentoPrecioTotal.getText().toString().replace("$", "")));
+                    db.update("t_carrito", values, "medicamentoId=?", new String[]{medicamentoId.getText().toString()});
+                }
+
                 findNavController(v).navigate(R.id.action_nav_detalle_to_nav_home2);
 
             }
@@ -128,17 +150,6 @@ cament
 
 
         return v;
-    }
-
-    public void guardarMedicamento(Medicamento medicamento) {
-
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(mpedido);
-        editor.putString("medicamento", json);
-        editor.apply();
-
     }
 
     void calculaTotal (int cantidad) {
@@ -150,9 +161,7 @@ cament
         double resultado = 0;
         double medicamentop= precio;
         resultado=cantidad*medicamentop;
-        medicamentoPrecioTotal.setText(formatter.format(resultado));
-        mpedido.setTotal(resultado);
-        mpedido.setCantidad(cantidad);
-        //medicamentoPrecioTotal.setText(String.valueOf(resultado));
+        //medicamentoPrecioTotal.setText(formatter.format(resultado));
+        medicamentoPrecioTotal.setText(String.valueOf(resultado));
     }
 }

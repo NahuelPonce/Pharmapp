@@ -39,15 +39,7 @@ public class GalleryFragment extends Fragment {
 
         recyclerViewMedicamentos = v.findViewById(R.id.lvLista2);
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("shared preferences", Context.MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString("medicamento", null);
-        Type type = new TypeToken<ArrayList<Medicamento>>() {}.getType();
-        medicamentos = gson.fromJson(json, type);
 
-        if (medicamentos == null) {
-            medicamentos = new ArrayList<>();
-        }
 
         recyclerViewMedicamentos.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new AdapterMedicamento(getContext(), medicamentos);

@@ -90,6 +90,7 @@ public class HomeFragment extends Fragment {
                 bundle.putString("nombre", medicamentos.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getNombre());
                 bundle.putDouble("precio", medicamentos.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getPrecio());
                 bundle.putInt("imagen", medicamentos.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getImagen());
+                bundle.putInt("medicamentoid", medicamentos.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getMedicamentoID());
 
                 findNavController(v).navigate(R.id.action_nav_home_to_nav_detalle, bundle);
             }
