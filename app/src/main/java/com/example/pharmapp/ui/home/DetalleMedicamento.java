@@ -124,7 +124,7 @@ cament
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cursor c = db.rawQuery("SELECT id, cantidad, total FROM t_carrito where medicamentoId=?", new String[]{medicamentoId.getText().toString()});
+                Cursor c = db.rawQuery("SELECT id, cantidad, total FROM t_carrito where nombre=?", new String[]{(String) medicamentoNombre.getText()});
                 ContentValues values = new ContentValues();
 
                 if(!c.moveToFirst()) {
@@ -136,10 +136,10 @@ cament
                     values.put("total", Float.parseFloat(medicamentoPrecioTotal.getText().toString().replace("$", "")));
                     db.insert("t_carrito", null, values);
                 }
-                else {
+                if (c.moveToFirst()) {
                     values.put("cantidad", Integer.parseInt(medicamentoCantidad.getText().toString()));
                     values.put("total", Float.parseFloat(medicamentoPrecioTotal.getText().toString().replace("$", "")));
-                    db.update("t_carrito", values, "medicamentoId=?", new String[]{medicamentoId.getText().toString()});
+                    db.update("t_carrito", values, "nombre=?", new String[]{(String) medicamentoNombre.getText()});
                 }
 
                 findNavController(v).navigate(R.id.action_nav_detalle_to_nav_home2);

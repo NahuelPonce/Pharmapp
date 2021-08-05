@@ -47,7 +47,7 @@ public class AdapterMedicamento2 extends RecyclerView.Adapter<AdapterMedicamento
     @Override
     public void onBindViewHolder(@NonNull @NotNull AdapterMedicamento2.ViewHolder holder, int position) {
         String nombre = medicamentos.get(position).getNombre();
-        String precio = medicamentos.get(position).getPrecio().toString();
+        String precio = String.valueOf(medicamentos.get(position).getTotal());
 
 
         holder.nombre.setText(nombre);
