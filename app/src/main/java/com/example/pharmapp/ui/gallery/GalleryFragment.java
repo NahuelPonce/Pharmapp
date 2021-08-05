@@ -2,6 +2,7 @@ package com.example.pharmapp.ui.gallery;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pharmapp.R;
 import com.example.pharmapp.databinding.FragmentGalleryBinding;
+import com.example.pharmapp.db.DbHelper;
 import com.example.pharmapp.ui.home.AdapterMedicamento;
 import com.example.pharmapp.ui.home.Medicamento;
 import com.google.gson.Gson;
@@ -25,12 +27,16 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import android.database.Cursor;
+
 
 public class GalleryFragment extends Fragment {
-
-    ArrayList<Medicamento> medicamentos;
+    Context context;
+    ArrayList<Medicamento> medicamentoArrayList;
     RecyclerView recyclerViewMedicamentos;
-    AdapterMedicamento adapter;
+    AdapterMedicamento2 adapter;
+    DbHelper dbHelper;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -41,11 +47,35 @@ public class GalleryFragment extends Fragment {
 
 
 
+        dbHelper = new DbHelper(v.getContext());
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ArrayList<Medicamento> medicamentoArrayList = new ArrayList<>();
+        Medicamento medicamento = null;
+        Cursor cursorMedicamento;
+        cursorMedicamento = db.rawQuery("SELECT * FROM  t_carrito",null);
+
+        if (cursorMedicamento.moveToFirst()){
+            do {
+                medicamento = new Medicamento();
+                medicamento.setNombre(cursorMedicamento.getString(2));
+                medicamento.setCantidad(cursorMedicamento.getInt(5));
+                medicamento.setPrecio(cursorMedicamento.getDouble(3));
+                medicamento.setTotal(cursorMedicamento.getDouble(6));
+
+
+                medicamentoArrayList.add(medicamento);
+            } while (cursorMedicamento.moveToNext());
+        }
+
+        cursorMedicamento.close();
         recyclerViewMedicamentos.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new AdapterMedicamento(getContext(), medicamentos);
+        adapter = new AdapterMedicamento2(getContext(),medicamentoArrayList);
+        //adapter = new AdapterMedicamento2(getContext(), medicamentoArrayList);
         recyclerViewMedicamentos.setAdapter(adapter);
 
         return v;
     }
+
+
 
 }
