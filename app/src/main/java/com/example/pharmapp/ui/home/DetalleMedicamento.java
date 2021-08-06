@@ -124,7 +124,7 @@ cament
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cursor c = db.rawQuery("SELECT id, cantidad, total FROM t_carrito where medicamentoID=?", new String[]{(String) medicamentoId.getText().toString()});
+                Cursor c = db.rawQuery("SELECT id, cantidad, total FROM t_carrito where medicamentoId=?", new String[]{(String) medicamentoId.getText().toString()});
                 ContentValues values = new ContentValues();
 
                 if(!c.moveToFirst()) {
@@ -138,15 +138,11 @@ cament
                 }
                 if (c.moveToFirst()) {
 
-                    values.put("cantidad", Integer.parseInt(medicamentoCantidad.getText().toString()));
-                    values.put("total", Float.parseFloat(medicamentoPrecioTotal.getText().toString().replace("$","")));
-                    db.update("t_carrito",values,"medicamentoID=?", new String[]{(String) medicamentoId.getText()});
-
-                    //int nuevaCantidad= c.getInt(5) + Integer.parseInt(medicamentoCantidad.getText().toString());
-                    //float nuevototal= c.getFloat(6)+Float.parseFloat(medicamentoPrecioTotal.getText().toString().replace("$",""));
-                    //values.put("cantidad", nuevaCantidad);
-                    //values.put("total", nuevototal);
-                    //db.update("t_carrito",values,"medicamentoId=?",new String[]{medicamentoId.getText().toString()});
+                    int nuevaCantidad= c.getInt(1) + Integer.parseInt(medicamentoCantidad.getText().toString());
+                    float nuevototal= c.getFloat(2) + Float.parseFloat(medicamentoPrecioTotal.getText().toString().replace("$",""));
+                    values.put("cantidad", nuevaCantidad);
+                    values.put("total", nuevototal);
+                    db.update("t_carrito",values,"medicamentoId=?",new String[]{medicamentoId.getText().toString()});
 
                 }
 
