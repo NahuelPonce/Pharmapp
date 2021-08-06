@@ -147,7 +147,7 @@ cament
                 }
 
                 findNavController(v).navigate(R.id.action_nav_detalle_to_nav_home2);
-
+                Toast.makeText(getActivity(), "Medicamento agregado al carrito exitosamente", Toast.LENGTH_LONG ).show();
             }
         });
 

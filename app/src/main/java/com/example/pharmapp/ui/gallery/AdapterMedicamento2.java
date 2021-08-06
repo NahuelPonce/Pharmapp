@@ -34,7 +34,7 @@ public class AdapterMedicamento2 extends RecyclerView.Adapter<AdapterMedicamento
     @NotNull
     @Override
     public AdapterMedicamento2.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View v = inflater.inflate((R.layout.elemento_lista), parent, false);
+        View v = inflater.inflate((R.layout.elemento_lista_carrito), parent, false);
         v.setOnClickListener(this);
 
         return new AdapterMedicamento2.ViewHolder(v);
