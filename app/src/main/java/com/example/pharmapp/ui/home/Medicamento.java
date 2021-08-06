@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Medicamento {
     private static final AtomicInteger count = new AtomicInteger(0);
-    private int medicamentoID = count.incrementAndGet();
+    private int medicamentoID;
     private String nombre;
     private Integer comprimido;
     private String descripcion;
@@ -16,6 +16,10 @@ public class Medicamento {
 
     public int getMedicamentoID() {
         return medicamentoID;
+    }
+
+    public void setMedicamentoID(int medicamentoID) {
+        this.medicamentoID = medicamentoID;
     }
 
     public String getNombre() {

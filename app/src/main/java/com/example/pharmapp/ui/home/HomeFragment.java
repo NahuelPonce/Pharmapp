@@ -41,6 +41,7 @@ public class HomeFragment extends Fragment {
     public void llenar() {
 
         Medicamento item = new Medicamento();
+        item.setMedicamentoID(1);
         item.setNombre("ibuprofeno");
         item.setComprimido(800);
         item.setDescripcion("blalbalbal");
@@ -50,6 +51,7 @@ public class HomeFragment extends Fragment {
         medicamentos.add(item);
         //
         item = new Medicamento();
+        item.setMedicamentoID(2);
         item.setNombre("Tafirol");
         item.setComprimido(400);
         item.setDescripcion("blalbalbal2");
@@ -59,6 +61,7 @@ public class HomeFragment extends Fragment {
         medicamentos.add(item);
         //
         item = new Medicamento();
+        item.setMedicamentoID(3);
         item.setNombre("ibupirac");
         item.setComprimido(600);
         item.setDescripcion("blalbalbal3");
@@ -69,6 +72,7 @@ public class HomeFragment extends Fragment {
 
         //
         item = new Medicamento();
+        item.setMedicamentoID(4);
         item.setNombre("Adermicina");
         item.setComprimido(600);
         item.setDescripcion("blalbalbal4");

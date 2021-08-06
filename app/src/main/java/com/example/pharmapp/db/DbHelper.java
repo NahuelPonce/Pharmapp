@@ -18,7 +18,7 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_CARRITO + "(" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "id INTEGER ," +
                 "medicamentoId INT NOT NULL," +
                 "nombre TEXT," +
                 "precio FLOAT," +
