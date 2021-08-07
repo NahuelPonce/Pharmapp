@@ -1,9 +1,12 @@
 package com.example.pharmapp.ui.home;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,12 +24,30 @@ public class HomeFragment extends Fragment {
     ArrayList<Medicamento> medicamentos;
     RecyclerView recyclerViewMedicamentos;
     AdapterMedicamento adapter;
+    EditText svSearch;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_home,container,false);
         recyclerViewMedicamentos = v.findViewById(R.id.lvLista);
+        svSearch = v.findViewById(R.id.svSearch);
+        svSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
 
         medicamentos = new ArrayList<>();
 
@@ -35,6 +56,17 @@ public class HomeFragment extends Fragment {
         mostrar();
 
         return v;
+    }
+
+    public void filter(String text) {
+        ArrayList<Medicamento> filteredList = new ArrayList<>();
+
+        for (Medicamento item: medicamentos) {
+            if (item.getNombre().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        adapter.filterList(filteredList);
     }
 
 

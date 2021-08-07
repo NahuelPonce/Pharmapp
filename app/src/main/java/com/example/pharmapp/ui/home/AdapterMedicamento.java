@@ -74,6 +74,11 @@ public class AdapterMedicamento extends RecyclerView.Adapter<AdapterMedicamento.
 
     }
 
+    public void filterList (ArrayList<Medicamento> filteredList) {
+        medicamentos = filteredList;
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView nombre, descripcion, comprimido, precio;

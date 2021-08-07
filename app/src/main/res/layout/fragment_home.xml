@@ -7,9 +7,23 @@
     android:orientation="vertical"
     tools:context=".ui.home.HomeFragment">
 
+
+    <EditText
+        android:id="@+id/svSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="16dp"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lvLista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/svSearch"
+
         />
 </LinearLayout>
