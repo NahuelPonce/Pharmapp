@@ -67,6 +67,18 @@ public class HomeFragment extends Fragment {
             }
         }
         adapter.filterList(filteredList);
+        adapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("nombre", filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getNombre());
+                bundle.putDouble("precio", filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getPrecio());
+                bundle.putInt("imagen", filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getImagen());
+                bundle.putInt("medicamentoid", filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getMedicamentoID());
+
+                findNavController(v).navigate(R.id.action_nav_home_to_nav_detalle, bundle);
+            }
+        });
     }
 
 
