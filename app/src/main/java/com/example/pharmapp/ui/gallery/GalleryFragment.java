@@ -41,7 +41,7 @@ public class GalleryFragment extends Fragment {
     RecyclerView recyclerViewMedicamentos;
     AdapterMedicamento2 adapter;
     DbHelper dbHelper;
-    ImageButton eliminar;
+    //ImageButton eliminar;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -50,7 +50,7 @@ public class GalleryFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_gallery, container,false);
 
         recyclerViewMedicamentos = v.findViewById(R.id.lvLista2);
-        eliminar = v.findViewById(R.id.imageButton);
+        //eliminar = v.findViewById(R.id.imageButton);
 
 
         dbHelper = new DbHelper(v.getContext());
@@ -63,6 +63,7 @@ public class GalleryFragment extends Fragment {
         if (cursorMedicamento.moveToFirst()){
             do {
                 medicamento = new Medicamento();
+                medicamento.setMedicamentoID(cursorMedicamento.getInt(1));
                 medicamento.setNombre(cursorMedicamento.getString(2));
                 medicamento.setCantidad(cursorMedicamento.getInt(5));
                 medicamento.setPrecio(cursorMedicamento.getDouble(3));

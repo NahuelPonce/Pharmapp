@@ -1,9 +1,13 @@
 package com.example.pharmapp.ui.gallery;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pharmapp.R;
+import com.example.pharmapp.db.DbHelper;
 import com.example.pharmapp.ui.gallery.AdapterMedicamento2;
 import com.example.pharmapp.ui.home.AdapterMedicamento;
 import com.example.pharmapp.ui.home.Medicamento;
@@ -22,6 +27,7 @@ import java.util.ArrayList;
 public class AdapterMedicamento2 extends RecyclerView.Adapter<AdapterMedicamento2.ViewHolder> implements  View.OnClickListener {
     LayoutInflater inflater;
     ArrayList<Medicamento> medicamentos;
+    DbHelper dbHelper;
 
     private View.OnClickListener listener;
 
@@ -69,9 +75,10 @@ public class AdapterMedicamento2 extends RecyclerView.Adapter<AdapterMedicamento
 
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView nombre,precio;
+        TextView nombre,precio, id;
+        ImageButton btnEliminar;
 
 
         public ViewHolder(@NonNull @NotNull View itemView) {
@@ -79,7 +86,30 @@ public class AdapterMedicamento2 extends RecyclerView.Adapter<AdapterMedicamento
 
             nombre = itemView.findViewById(R.id.lvTitulo);
             precio = itemView.findViewById(R.id.lvPrecio);
+            btnEliminar = itemView.findViewById(R.id.btnEliminar);
+            btnEliminar.setOnClickListener(this);
 
+        }
+
+        @Override
+        public void onClick(View v) {
+            dbHelper = new DbHelper(v.getContext());
+            final SQLiteDatabase db = dbHelper.getWritableDatabase();
+            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+            builder.setMessage("¿Desea eliminar el medicamento del carrito?")
+                    .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            db.delete("t_carrito", "medicamentoId=?", new String[] {String.valueOf(medicamentos.get(getAdapterPosition()).getMedicamentoID())});
+
+                        }
+                    })
+                    .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).show();
         }
     }
 

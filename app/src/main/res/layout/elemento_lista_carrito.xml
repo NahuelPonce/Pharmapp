@@ -68,7 +68,7 @@
             android:text="mg" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/btnEliminar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
