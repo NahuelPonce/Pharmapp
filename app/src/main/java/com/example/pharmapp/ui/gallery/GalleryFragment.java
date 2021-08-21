@@ -1,12 +1,16 @@
 package com.example.pharmapp.ui.gallery;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +26,7 @@ import com.example.pharmapp.databinding.FragmentGalleryBinding;
 import com.example.pharmapp.db.DbHelper;
 import com.example.pharmapp.ui.home.AdapterMedicamento;
 import com.example.pharmapp.ui.home.Medicamento;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -36,6 +41,7 @@ public class GalleryFragment extends Fragment {
     RecyclerView recyclerViewMedicamentos;
     AdapterMedicamento2 adapter;
     DbHelper dbHelper;
+    ImageButton eliminar;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -44,7 +50,7 @@ public class GalleryFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_gallery, container,false);
 
         recyclerViewMedicamentos = v.findViewById(R.id.lvLista2);
-
+        eliminar = v.findViewById(R.id.imageButton);
 
 
         dbHelper = new DbHelper(v.getContext());
@@ -70,12 +76,33 @@ public class GalleryFragment extends Fragment {
         cursorMedicamento.close();
         recyclerViewMedicamentos.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new AdapterMedicamento2(getContext(),medicamentoArrayList);
-        //adapter = new AdapterMedicamento2(getContext(), medicamentoArrayList);
         recyclerViewMedicamentos.setAdapter(adapter);
+
+        /*eliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage("¿Desea eliminar el medicamento?")
+                        .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String nombre = medicamentoArrayList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getNombre();
+                                db.delete("t_carrito","nombre = ?",new String[]{nombre});
+                            }
+                        })
+                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).show();
+
+            }
+        });
+        */
+
 
         return v;
     }
-
-
 
 }
