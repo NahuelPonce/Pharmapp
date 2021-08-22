@@ -12,8 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pharmapp.Main2Activity;
 import com.example.pharmapp.R;
 import com.example.pharmapp.db.DbHelper;
 import com.example.pharmapp.ui.gallery.AdapterMedicamento2;
@@ -101,7 +104,7 @@ public class AdapterMedicamento2 extends RecyclerView.Adapter<AdapterMedicamento
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             db.delete("t_carrito", "medicamentoId=?", new String[] {String.valueOf(medicamentos.get(getAdapterPosition()).getMedicamentoID())});
-
+                            Navigation.findNavController(v).navigate(R.id.action_nav_gallery_self);
                         }
                     })
                     .setNegativeButton("NO", new DialogInterface.OnClickListener() {
