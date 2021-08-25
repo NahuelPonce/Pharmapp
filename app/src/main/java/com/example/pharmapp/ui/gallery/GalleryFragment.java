@@ -1,52 +1,52 @@
 package com.example.pharmapp.ui.gallery;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pharmapp.R;
-import com.example.pharmapp.databinding.FragmentGalleryBinding;
 import com.example.pharmapp.db.DbHelper;
-import com.example.pharmapp.ui.home.AdapterMedicamento;
 import com.example.pharmapp.ui.home.Medicamento;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import android.database.Cursor;
 
 
 public class GalleryFragment extends Fragment {
+    private static final int COD_SELECCIONA = 10;
+    private static final int COD_FOTO = 20;
+
     Context context;
     ArrayList<Medicamento> medicamentoArrayList;
     RecyclerView recyclerViewMedicamentos;
     AdapterMedicamento2 adapter;
     DbHelper dbHelper;
-    //ImageButton eliminar;
+    Button este;
+    ImageView foto;
 
+    ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+            new ActivityResultCallback<Uri>() {
+                @Override
+                public void onActivityResult(Uri uri) {
+                    // Handle the returned Uri
+                    foto.setImageURI(uri);
+
+                }
+            });
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -54,8 +54,8 @@ public class GalleryFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_gallery, container,false);
 
         recyclerViewMedicamentos = v.findViewById(R.id.lvLista2);
-        //eliminar = v.findViewById(R.id.imageButton);
-
+        este = v.findViewById(R.id.button4);
+        foto = v.findViewById(R.id.imageView9);
 
         dbHelper = new DbHelper(v.getContext());
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -83,31 +83,69 @@ public class GalleryFragment extends Fragment {
         adapter = new AdapterMedicamento2(getContext(),medicamentoArrayList);
         recyclerViewMedicamentos.setAdapter(adapter);
 
-        /*eliminar.setOnClickListener(new View.OnClickListener() {
+
+        este.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setMessage("¿Desea eliminar el medicamento?")
-                        .setPositiveButton("SI", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                String nombre = medicamentoArrayList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getNombre();
-                                db.delete("t_carrito","nombre = ?",new String[]{nombre});
-                            }
-                        })
-                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        }).show();
+                //mostrarDialogoOpciones();
+                mGetContent.launch("image/*");
 
             }
+
         });
-        */
 
 
         return v;
     }
 
+
+    /*private void mostrarDialogoOpciones() {
+        final CharSequence[] opciones={"Tomar Foto","Elegir de Galeria","Cancelar"};
+        final AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+        builder.setTitle("Elige una opción");
+        builder.setItems(opciones, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (opciones[which].equals("Tomar Foto")){
+                    Toast.makeText(getContext(),"Cargar camara",Toast.LENGTH_SHORT).show();
+
+
+                }else {
+                    if (opciones[which].equals("Elegir de Galeria")){
+
+
+
+                        Intent intent= new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        intent.setType("images/*");
+                        //onActivityResult(intent.createChooser(intent,"Seleccione"),COD_SELECCIONA);
+                        //registerForActivityResult(Intent.createChooser(intent,"Seleccione"),COD_SELECCIONA);
+                        startActivityForResult(intent.createChooser(intent,"Seleccione"), COD_SELECCIONA);
+
+
+                    }else {
+                        dialog.dismiss();
+                    }
+
+                }
+            }
+        });
+        builder.show();
+    }
+*/
+
+
+   /* @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode){
+            case COD_SELECCIONA:
+                Uri miPath=data.getData();
+                foto.setImageURI(miPath);
+                break;
+        }
+
+
+    }
+    */
 }

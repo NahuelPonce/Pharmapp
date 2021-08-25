@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Menu;
 
 import com.example.pharmapp.db.DbHelper;
+import com.example.pharmapp.ui.gallery.GalleryFragment;
 import com.example.pharmapp.ui.home.DetalleMedicamento;
 import com.example.pharmapp.ui.home.Medicamento;
 import com.google.android.material.snackbar.Snackbar;
@@ -72,5 +73,12 @@ public class Main2Activity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    public void cambiarfragment(){
+        GalleryFragment mFragment = new GalleryFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.nav_host_fragment_content_main2, mFragment).commit();
+    };
+
 
 }

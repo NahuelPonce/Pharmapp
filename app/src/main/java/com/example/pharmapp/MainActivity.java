@@ -1,17 +1,20 @@
 package com.example.pharmapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.pharmapp.ui.gallery.GalleryFragment;
+
 public class MainActivity extends AppCompatActivity {
 
     ImageView imagen;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
