@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 
 import androidx.activity.result.ActivityResultCallback;
@@ -23,10 +25,12 @@ import com.example.pharmapp.db.DbHelper;
 import com.example.pharmapp.ui.home.Medicamento;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import android.database.Cursor;
 
 
-public class GalleryFragment extends Fragment {
+public class GalleryFragment<GetMultipleContentsLaucher> extends Fragment {
     private static final int COD_SELECCIONA = 10;
     private static final int COD_FOTO = 20;
 
@@ -37,13 +41,23 @@ public class GalleryFragment extends Fragment {
     DbHelper dbHelper;
     Button este;
     ImageView foto;
+    GridView gvImagenes;
 
-    ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
-            new ActivityResultCallback<Uri>() {
+    GridViewAdapter baseAdapter;
+    List<Uri> listaImagenes = new ArrayList<>();
+
+
+
+    ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetMultipleContents(),
+            new ActivityResultCallback<List<Uri>> () {
                 @Override
-                public void onActivityResult(Uri uri) {
+                public void onActivityResult(List<Uri> result) {
                     // Handle the returned Uri
-                    foto.setImageURI(uri);
+                    //foto.setImageURI((Uri) result);
+                    //listaImagenes.add((Uri) result);
+                    listaImagenes.add((Uri) result);
+                    baseAdapter = new GridViewAdapter(getContext(),listaImagenes);
+                    gvImagenes.setAdapter(baseAdapter);
 
                 }
             });
@@ -56,6 +70,8 @@ public class GalleryFragment extends Fragment {
         recyclerViewMedicamentos = v.findViewById(R.id.lvLista2);
         este = v.findViewById(R.id.button4);
         foto = v.findViewById(R.id.imageView9);
+
+        gvImagenes = v.findViewById(R.id.gvImagenes);
 
         dbHelper = new DbHelper(v.getContext());
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -90,9 +106,13 @@ public class GalleryFragment extends Fragment {
                 //mostrarDialogoOpciones();
                 mGetContent.launch("image/*");
 
+
             }
 
         });
+
+
+
 
 
         return v;
