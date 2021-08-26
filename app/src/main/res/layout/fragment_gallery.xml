@@ -10,13 +10,16 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lvLista2"
         android:layout_width="match_parent"
-        android:layout_height="262dp" />
+        android:layout_height="325dp" />
 
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="133dp"
-        android:layout_height="124dp"
-        android:src="@android:drawable/ic_menu_report_image" />
+    <GridView
+        android:id="@+id/gvImagenes"
+        android:layout_width="match_parent"
+        android:layout_height="176dp"
+        android:columnWidth="100dp"
+        android:horizontalSpacing="5dp"
+        android:numColumns="3"
+        android:verticalSpacing="5dp" />
 
     <Button
         android:id="@+id/button4"
@@ -24,15 +27,11 @@
         android:layout_height="wrap_content"
         android:text="Agregar Receta" />
 
-    <GridView
-        android:id="@+id/gvImagenes"
+    <Button
+        android:id="@+id/button2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="3"
-        android:columnWidth="100dp"
-        android:verticalSpacing="5dp"
-        android:horizontalSpacing="5dp"
-        />
+        android:layout_height="wrap_content"
+        android:text="Button" />
 
 
 </LinearLayout>

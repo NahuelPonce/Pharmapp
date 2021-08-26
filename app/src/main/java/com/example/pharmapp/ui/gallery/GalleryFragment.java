@@ -30,9 +30,7 @@ import java.util.List;
 import android.database.Cursor;
 
 
-public class GalleryFragment<GetMultipleContentsLaucher> extends Fragment {
-    private static final int COD_SELECCIONA = 10;
-    private static final int COD_FOTO = 20;
+public class GalleryFragment extends Fragment {
 
     Context context;
     ArrayList<Medicamento> medicamentoArrayList;
@@ -42,21 +40,15 @@ public class GalleryFragment<GetMultipleContentsLaucher> extends Fragment {
     Button este;
     ImageView foto;
     GridView gvImagenes;
-
     GridViewAdapter baseAdapter;
-    List<Uri> listaImagenes = new ArrayList<>();
-
 
 
     ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetMultipleContents(),
             new ActivityResultCallback<List<Uri>> () {
                 @Override
                 public void onActivityResult(List<Uri> result) {
-                    // Handle the returned Uri
                     //foto.setImageURI((Uri) result);
-                    //listaImagenes.add((Uri) result);
-                    listaImagenes.add((Uri) result);
-                    baseAdapter = new GridViewAdapter(getContext(),listaImagenes);
+                    baseAdapter = new GridViewAdapter(getContext(),result);
                     gvImagenes.setAdapter(baseAdapter);
 
                 }
@@ -69,7 +61,6 @@ public class GalleryFragment<GetMultipleContentsLaucher> extends Fragment {
 
         recyclerViewMedicamentos = v.findViewById(R.id.lvLista2);
         este = v.findViewById(R.id.button4);
-        foto = v.findViewById(R.id.imageView9);
 
         gvImagenes = v.findViewById(R.id.gvImagenes);
 
@@ -103,10 +94,7 @@ public class GalleryFragment<GetMultipleContentsLaucher> extends Fragment {
         este.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //mostrarDialogoOpciones();
                 mGetContent.launch("image/*");
-
-
             }
 
         });
@@ -118,54 +106,4 @@ public class GalleryFragment<GetMultipleContentsLaucher> extends Fragment {
         return v;
     }
 
-
-    /*private void mostrarDialogoOpciones() {
-        final CharSequence[] opciones={"Tomar Foto","Elegir de Galeria","Cancelar"};
-        final AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
-        builder.setTitle("Elige una opción");
-        builder.setItems(opciones, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (opciones[which].equals("Tomar Foto")){
-                    Toast.makeText(getContext(),"Cargar camara",Toast.LENGTH_SHORT).show();
-
-
-                }else {
-                    if (opciones[which].equals("Elegir de Galeria")){
-
-
-
-                        Intent intent= new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        intent.setType("images/*");
-                        //onActivityResult(intent.createChooser(intent,"Seleccione"),COD_SELECCIONA);
-                        //registerForActivityResult(Intent.createChooser(intent,"Seleccione"),COD_SELECCIONA);
-                        startActivityForResult(intent.createChooser(intent,"Seleccione"), COD_SELECCIONA);
-
-
-                    }else {
-                        dialog.dismiss();
-                    }
-
-                }
-            }
-        });
-        builder.show();
-    }
-*/
-
-
-   /* @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode){
-            case COD_SELECCIONA:
-                Uri miPath=data.getData();
-                foto.setImageURI(miPath);
-                break;
-        }
-
-
-    }
-    */
 }
