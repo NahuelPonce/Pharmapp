@@ -10,6 +10,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NOMBRE = "carrito.sqlite";
     public static final String TABLE_CARRITO = "t_carrito";
+    public static final String TABLE_RECETA = "t_receta";
 
     public DbHelper(Context context) {
         super(context, DATABASE_NOMBRE, null, DATABASE_VERSION);
@@ -25,6 +26,9 @@ public class DbHelper extends SQLiteOpenHelper {
                 "imagen INT," +
                 "cantidad INT," +
                 "total FLOAT)");
+
+        db.execSQL("CREATE TABLE " + TABLE_RECETA + "(" +
+                "uri TEXT)");
     }
 
     @Override
