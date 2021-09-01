@@ -28,7 +28,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 "total FLOAT)");
 
         db.execSQL("CREATE TABLE " + TABLE_RECETA + "(" +
-                "uri TEXT)");
+                "recetaId INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "imagen BLOB)");
     }
 
     @Override

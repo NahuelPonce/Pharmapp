@@ -1,7 +1,13 @@
 package com.example.pharmapp.ui.gallery;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,17 +15,24 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.example.pharmapp.R;
+import androidx.navigation.Navigation;
 
+import com.example.pharmapp.R;
+import com.example.pharmapp.db.DbHelper;
+import com.example.pharmapp.ui.gallery.Receta;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.List;
 
 public class GridViewAdapter extends BaseAdapter {
 
     Context context;
-    List<Uri> listaImagenes;
+    List<Receta> listaImagenes;
     LayoutInflater layoutInflater;
+    DbHelper dbHelper;
 
-    public GridViewAdapter(Context context, List<Uri> listaImagenes) {
+    public GridViewAdapter(Context context, List<Receta> listaImagenes) {
         this.context = context;
         this.listaImagenes = listaImagenes;
     }
@@ -49,14 +62,42 @@ public class GridViewAdapter extends BaseAdapter {
         ImageView ivImagen = convertView.findViewById(R.id.ivImagen);
         ImageButton ibtnEliminar = convertView.findViewById(R.id.ibtnEliminar);
 
-        ivImagen.setImageURI(listaImagenes.get(position));
+        byte [] blob = listaImagenes.get(position).getImagen();
+        ByteArrayInputStream bais = new ByteArrayInputStream(blob);
+        Bitmap bitmap = BitmapFactory.decodeStream(bais);
+
+        ivImagen.setImageBitmap(bitmap);
+
+
+
 
         ibtnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listaImagenes.remove(position);
-                notifyDataSetChanged();
+                //listaImagenes.remove(position);
+                dbHelper = new DbHelper(view.getContext());
+                final SQLiteDatabase db = dbHelper.getWritableDatabase();
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setMessage("¿Desea eliminar la receta del carrito?")
+                        .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                db.delete("t_receta", "recetaId=?", new String[] {String.valueOf(listaImagenes.get(position).getRecetaID())});
+                                Navigation.findNavController(view).navigate(R.id.action_nav_gallery_self);
+                            }
+                        })
+                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).show();
             }
+
+
+
+
         });
 
         return convertView;

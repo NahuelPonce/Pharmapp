@@ -28,6 +28,7 @@ import com.example.pharmapp.R;
 import com.example.pharmapp.db.DbHelper;
 import com.example.pharmapp.ui.home.Medicamento;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -64,11 +65,18 @@ public class GalleryFragment extends Fragment {
 
                     for (Uri cadena : result) {
                         ContentValues values = new ContentValues();
-                        //System.out.println(cadena);
-                        String x = cadena.getPath();
-                        //System.out.println(x);
-                        values.put("uri", x);
-                        db.insert("t_receta", null, values );
+                        try {
+
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), cadena );
+                            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.PNG,100, bos);
+                            byte[] bArray = bos.toByteArray();
+                            values.put("imagen", bArray);
+                            db.insert("t_receta", null, values );
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                         //Uri prueba = Uri.parse(x);
                         //System.out.println("content://com.google.android.apps.photos.contentprovider"+ prueba);
                         /*try {
@@ -86,13 +94,16 @@ public class GalleryFragment extends Fragment {
                     }
                     Cursor cursorReceta;
                     cursorReceta = db.rawQuery("SELECT * FROM t_receta", null);
-                    List<Uri> recetas = new ArrayList<>();
+                    List<Receta> recetas = new ArrayList<>();
+                    Receta receta = null;
 
                     if (cursorReceta.moveToFirst()){
                         do {
-                            String imag = cursorReceta.getString(0);
-                            Uri imagenuri = Uri.parse("content://com.google.android.apps.photos.contentprovider"+imag);
-                            recetas.add(imagenuri);
+                            receta = new Receta();
+                            receta.setRecetaID(cursorReceta.getInt(0));
+                            receta.setImagen(cursorReceta.getBlob(1));
+
+                            recetas.add(receta);
                         } while (cursorReceta.moveToNext());
                     }
 
@@ -137,6 +148,24 @@ public class GalleryFragment extends Fragment {
         recyclerViewMedicamentos.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new AdapterMedicamento2(getContext(),medicamentoArrayList);
         recyclerViewMedicamentos.setAdapter(adapter);
+
+        Cursor cursorReceta;
+        cursorReceta = db.rawQuery("SELECT * FROM t_receta", null);
+        List<Receta> recetas = new ArrayList<>();
+        Receta receta = null;
+
+        if (cursorReceta.moveToFirst()){
+            do {
+                receta = new Receta();
+                receta.setRecetaID(cursorReceta.getInt(0));
+                receta.setImagen(cursorReceta.getBlob(1));
+
+                recetas.add(receta);
+            } while (cursorReceta.moveToNext());
+        }
+
+        baseAdapter = new GridViewAdapter(getContext(),recetas);
+        gvImagenes.setAdapter(baseAdapter);
 
 
         este.setOnClickListener(new View.OnClickListener() {
