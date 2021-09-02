@@ -39,9 +39,10 @@ import java.util.List;
 
 import android.database.Cursor;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 
-public class GalleryFragment extends Fragment {
+public class GalleryFragment<Total> extends Fragment {
 
     Context context;
     ArrayList<Medicamento> medicamentoArrayList;
@@ -52,7 +53,7 @@ public class GalleryFragment extends Fragment {
     ImageView foto;
     GridView gvImagenes;
     GridViewAdapter baseAdapter;
-
+    TextView tot;
 
     ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetMultipleContents(),
             new ActivityResultCallback<List<Uri>> () {
@@ -120,6 +121,7 @@ public class GalleryFragment extends Fragment {
 
         recyclerViewMedicamentos = v.findViewById(R.id.lvLista2);
         este = v.findViewById(R.id.button4);
+        tot = v.findViewById(R.id.textView10);
 
         gvImagenes = v.findViewById(R.id.gvImagenes);
 
@@ -129,7 +131,7 @@ public class GalleryFragment extends Fragment {
         Medicamento medicamento = null;
         Cursor cursorMedicamento;
         cursorMedicamento = db.rawQuery("SELECT * FROM  t_carrito",null);
-
+        double total = 0;
         if (cursorMedicamento.moveToFirst()){
             do {
                 medicamento = new Medicamento();
@@ -138,6 +140,8 @@ public class GalleryFragment extends Fragment {
                 medicamento.setCantidad(cursorMedicamento.getInt(5));
                 medicamento.setPrecio(cursorMedicamento.getDouble(3));
                 medicamento.setTotal(cursorMedicamento.getDouble(6));
+
+                total = cursorMedicamento.getDouble(6) + total;
 
 
                 medicamentoArrayList.add(medicamento);
@@ -148,6 +152,8 @@ public class GalleryFragment extends Fragment {
         recyclerViewMedicamentos.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new AdapterMedicamento2(getContext(),medicamentoArrayList);
         recyclerViewMedicamentos.setAdapter(adapter);
+        tot.setText(String.valueOf(total));
+
 
         Cursor cursorReceta;
         cursorReceta = db.rawQuery("SELECT * FROM t_receta", null);
