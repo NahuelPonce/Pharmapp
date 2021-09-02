@@ -197,7 +197,7 @@ public class GalleryFragment<Total> extends Fragment {
 
         } else{
             gvImagenes.setVisibility(getView().VISIBLE);
-      */  }
+      } */
 
 
 
