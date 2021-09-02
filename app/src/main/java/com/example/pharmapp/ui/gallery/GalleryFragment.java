@@ -21,6 +21,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -96,6 +98,7 @@ public class GalleryFragment<Total> extends Fragment {
 
                     baseAdapter = new GridViewAdapter(getContext(),recetas);
                     gvImagenes.setAdapter(baseAdapter);
+
 
                 }
             });
@@ -182,6 +185,7 @@ public class GalleryFragment<Total> extends Fragment {
             vacio.setVisibility(getView().VISIBLE);
             gvImagenes.setVisibility(getView().GONE);
         } else {
+
             tot.setVisibility(getView().VISIBLE);
             tot2.setVisibility(getView().VISIBLE);
             pesos.setVisibility(getView().VISIBLE);
@@ -189,21 +193,32 @@ public class GalleryFragment<Total> extends Fragment {
             gvImagenes.setVisibility(getView().VISIBLE);
             tot.setText(String.valueOf(total));
 
+
         }
 
-
-        /*if (recetas.isEmpty()){
+       /* if (recetas.isEmpty()){
             gvImagenes.setVisibility(getView().GONE);
+
 
         } else{
             gvImagenes.setVisibility(getView().VISIBLE);
-      } */
-
-
-
-
+        }
+*/
 
         return v;
     }
+
+    /*public void actualizar(List<Receta> recetas, View view) {
+        if (recetas.isEmpty()){
+            gvImagenes.setVisibility(getView().GONE);
+            Navigation.findNavController(view).navigate(R.id.action_nav_gallery_self);
+
+        } else{
+            gvImagenes.setVisibility(getView().VISIBLE);
+        }
+
+
+    }
+    */
 
 }

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="3dp"
+    app:cardCornerRadius="7dp"
+    app:cardElevation="7dp"
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
@@ -87,13 +87,13 @@
             android:layout_toEndOf="@+id/textComprimido"
             android:text="mg" />
 
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="53dp"
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
             android:layout_height="43dp"
             android:layout_below="@+id/lvTitulo"
-            android:layout_marginStart="45dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="25dp"
             android:layout_toEndOf="@+id/peso"
             app:srcCompat="@drawable/shopping" />
 
