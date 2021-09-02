@@ -2,6 +2,7 @@ package com.example.pharmapp.ui.gallery;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -37,18 +38,24 @@ public class VisorRecetaFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_visor_receta, container, false);
+
+        dbHelper = new DbHelper(view.getContext());
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
+
         recetaImagen = view.findViewById(R.id.visorReceta);
         recetaDelete = view.findViewById(R.id.btndeleteimage);
 
         Bundle bundle = getArguments();
-        byte [] receta = bundle.getByteArray("imagen");
         int imagenid = bundle.getInt("recetaid");
 
-        ByteArrayInputStream bais = new ByteArrayInputStream(receta);
-        Bitmap bitmap = BitmapFactory.decodeStream(bais);
+        Cursor c = db.rawQuery("SELECT imagen FROM t_receta where recetaId=?", new String[]{String.valueOf(imagenid)});
+        if(c.moveToFirst()) {
+            byte[] receta = c.getBlob(0);
+            ByteArrayInputStream bais = new ByteArrayInputStream(receta);
+            Bitmap bitmap = BitmapFactory.decodeStream(bais);
 
-        recetaImagen.setImageBitmap(bitmap);
-
+            recetaImagen.setImageBitmap(bitmap);
+        }
         recetaDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

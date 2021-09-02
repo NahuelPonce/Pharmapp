@@ -76,7 +76,6 @@ public class GridViewAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("recetaid", listaImagenes.get(position).getRecetaID());
-                bundle.putByteArray("imagen", listaImagenes.get(position).getImagen());
 
                 findNavController(v).navigate(R.id.action_nav_gallery_to_nav_visor_receta, bundle);
             }
