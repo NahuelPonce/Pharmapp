@@ -88,7 +88,6 @@ public class GridViewAdapter extends BaseAdapter {
         ibtnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //listaImagenes.remove(position);
                 dbHelper = new DbHelper(view.getContext());
                 final SQLiteDatabase db = dbHelper.getWritableDatabase();
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
