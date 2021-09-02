@@ -56,10 +56,10 @@
     <GridView
         android:id="@+id/gvImagenes"
         android:layout_width="match_parent"
-        android:layout_height="176dp"
-        android:columnWidth="100dp"
+        android:layout_height="94dp"
+        android:columnWidth="50dp"
         android:horizontalSpacing="5dp"
-        android:numColumns="4"
+        android:numColumns="6"
         android:verticalSpacing="5dp" />
 
     <Button
