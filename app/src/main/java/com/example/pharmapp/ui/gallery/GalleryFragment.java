@@ -49,11 +49,12 @@ public class GalleryFragment<Total> extends Fragment {
     RecyclerView recyclerViewMedicamentos;
     AdapterMedicamento2 adapter;
     DbHelper dbHelper;
-    Button este;
+    Button este, continuar;
     ImageView foto;
     GridView gvImagenes;
     GridViewAdapter baseAdapter;
-    TextView tot;
+    TextView tot,tot2,pesos, vacio;
+
 
     ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetMultipleContents(),
             new ActivityResultCallback<List<Uri>> () {
@@ -107,6 +108,10 @@ public class GalleryFragment<Total> extends Fragment {
         recyclerViewMedicamentos = v.findViewById(R.id.lvLista2);
         este = v.findViewById(R.id.button4);
         tot = v.findViewById(R.id.textView10);
+        pesos = v.findViewById(R.id.textView12);
+        tot2= v.findViewById(R.id.textView11);
+        vacio = v.findViewById(R.id.textView3);
+        continuar = v.findViewById(R.id.button2);
 
         gvImagenes = v.findViewById(R.id.gvImagenes);
 
@@ -137,7 +142,7 @@ public class GalleryFragment<Total> extends Fragment {
         recyclerViewMedicamentos.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new AdapterMedicamento2(getContext(),medicamentoArrayList);
         recyclerViewMedicamentos.setAdapter(adapter);
-        tot.setText(String.valueOf(total));
+
 
 
         Cursor cursorReceta;
@@ -163,9 +168,36 @@ public class GalleryFragment<Total> extends Fragment {
             @Override
             public void onClick(View v) {
                 mGetContent.launch("image/*");
+
             }
 
         });
+
+        if (total == 0.0 && medicamentoArrayList.isEmpty()) {
+            tot.setVisibility(getView().INVISIBLE);
+            tot2.setVisibility(getView().INVISIBLE);
+            pesos.setVisibility(getView().INVISIBLE);
+            este.setVisibility(getView().INVISIBLE);
+            continuar.setVisibility(getView().INVISIBLE);
+            vacio.setVisibility(getView().VISIBLE);
+            gvImagenes.setVisibility(getView().GONE);
+        } else {
+            tot.setVisibility(getView().VISIBLE);
+            tot2.setVisibility(getView().VISIBLE);
+            pesos.setVisibility(getView().VISIBLE);
+            vacio.setVisibility(getView().GONE);
+            gvImagenes.setVisibility(getView().VISIBLE);
+            tot.setText(String.valueOf(total));
+
+        }
+
+
+        /*if (recetas.isEmpty()){
+            gvImagenes.setVisibility(getView().GONE);
+
+        } else{
+            gvImagenes.setVisibility(getView().VISIBLE);
+      */  }
 
 
 

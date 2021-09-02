@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="3dp"
+    app:cardCornerRadius="7dp"
+    app:cardElevation="7dp"
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:padding="10dp">
 
 
@@ -18,11 +19,14 @@
             android:id="@+id/lvTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="26dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="17dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="6dp"
             android:text="@string/nombremedicamento"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
@@ -30,11 +34,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView2"
-            android:layout_marginStart="9dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="-7dp"
             android:layout_toEndOf="@+id/textView4"
             android:text="@string/precio"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textComprimido"
@@ -42,10 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/lvTitulo"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:text="@string/comprimidos"
-            android:textStyle="bold" />
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/comprimidos" />
 
         <TextView
             android:id="@+id/textView6"
@@ -53,17 +56,17 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textComprimido"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="6dp"
-            android:text="Unitario:" />
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="5dp"
+            android:text="Cantidad:" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView5"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="9dp"
+            android:layout_below="@+id/textView2"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="-7dp"
             android:layout_toEndOf="@+id/textView7"
             android:text="$"
             android:textSize="16sp" />
@@ -73,8 +76,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lvTitulo"
-            android:layout_marginStart="22dp"
-            android:layout_marginTop="13dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="3dp"
             android:layout_toEndOf="@+id/textComprimido"
             android:text="Comprimido" />
 
@@ -84,39 +87,29 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView6"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginStart="222dp"
+            android:layout_marginTop="-8dp"
             android:text="Subtotal:"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textComprimido"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="7dp"
-            android:layout_toEndOf="@+id/textView6"
-            android:text="$" />
 
         <TextView
             android:id="@+id/peso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lvTitulo"
-            android:layout_marginStart="11dp"
-            android:layout_marginTop="13dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
             android:layout_toEndOf="@+id/textView8"
             android:text="mg" />
 
         <ImageButton
             android:id="@+id/btnEliminar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="41dp"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="80dp"
-            android:layout_marginTop="41dp"
+            android:layout_marginStart="82dp"
+            android:layout_marginTop="4dp"
             android:layout_toEndOf="@+id/peso"
             app:srcCompat="@android:drawable/ic_menu_delete" />
 
@@ -125,10 +118,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textComprimido"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="10dp"
-            android:layout_toEndOf="@+id/textView5"
-            android:text="PrecioUnitario" />
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="5dp"
+
+            android:layout_toEndOf="@+id/textView6"
+            android:text="cantidad" />
 
 
     </RelativeLayout>
