@@ -77,21 +77,6 @@ public class GalleryFragment<Total> extends Fragment {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
-                        //Uri prueba = Uri.parse(x);
-                        //System.out.println("content://com.google.android.apps.photos.contentprovider"+ prueba);
-                        /*try {
-                            FileInputStream fs = new FileInputStream(x);
-                            byte[] imgbyte = new byte[fs.available()];
-                            fs.read(imgbyte);
-
-
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }*/
-
-
                     }
                     Cursor cursorReceta;
                     cursorReceta = db.rawQuery("SELECT * FROM t_receta", null);

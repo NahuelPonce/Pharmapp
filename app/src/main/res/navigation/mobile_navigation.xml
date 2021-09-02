@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_nav_gallery_self"
             app:destination="@id/nav_gallery" />
+        <action
+            android:id="@+id/action_nav_gallery_to_nav_visor_receta"
+            app:destination="@id/nav_visor_receta" />
     </fragment>
 
     <fragment
@@ -39,5 +42,15 @@
         <action
             android:id="@+id/action_nav_detalle_to_nav_home2"
             app:destination="@id/nav_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_visor_receta"
+        android:name="com.example.pharmapp.ui.gallery.VisorRecetaFragment"
+        android:label="@string/visor_imagen"
+        tools:layout="@layout/fragment_visor_receta" >
+        <action
+            android:id="@+id/action_nav_visor_receta_to_nav_gallery"
+            app:destination="@id/nav_gallery" />
     </fragment>
 </navigation>

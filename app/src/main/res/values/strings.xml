@@ -11,6 +11,7 @@
     <string name="menu_home">Inicio</string>
     <string name="menu_gallery">Carrito de Compra</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="visor_imagen">Visor Imagen</string>
     <string name="iniciarsesion">Iniciar Sesión</string>
     <string name="usuario">Usuario</string>
     <string name="password">Contraseña</string>
@@ -20,4 +21,5 @@
     <string name="precio">Precio</string>
     <string name="total">Total</string>
     <string name="buscador">Buscar medicamento</string>
+
 </resources>

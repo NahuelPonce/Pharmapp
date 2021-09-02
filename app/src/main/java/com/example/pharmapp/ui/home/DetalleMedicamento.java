@@ -76,17 +76,6 @@ public class DetalleMedicamento extends Fragment {
         medicamentoImagen.setImageResource(imagen);
         medicamentoId.setText(String.valueOf(idmedicamento));
 
-        /*Bundle objetoMedicamento = getArguments();
-        Medicamento medio = null;
-cament
-        if(objetoMedicamento!=null){
-            medicamento = (Medicamento) objetoMedicamento.getSerializable("objeto");
-
-            medicamentoImagen.setImageResource(medicamento.getImagen());
-            medicamentoNombre.setText(medicamento.getNombre());
-            medicamentoPrecio.setText(medicamento.getPrecio());
-        }*/
-
         agregar = v.findViewById(R.id.agregar_medicamento);
         mas = v.findViewById(R.id.mas);
         menos = v.findViewById(R.id.menos);

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,8 @@ import com.example.pharmapp.ui.gallery.Receta;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
+
+import static androidx.navigation.Navigation.findNavController;
 
 public class GridViewAdapter extends BaseAdapter {
 
@@ -68,13 +71,22 @@ public class GridViewAdapter extends BaseAdapter {
 
         ivImagen.setImageBitmap(bitmap);
 
+        ivImagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("recetaid", listaImagenes.get(position).getRecetaID());
+
+                findNavController(v).navigate(R.id.action_nav_gallery_to_nav_visor_receta, bundle);
+            }
+        });
+
 
 
 
         ibtnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //listaImagenes.remove(position);
                 dbHelper = new DbHelper(view.getContext());
                 final SQLiteDatabase db = dbHelper.getWritableDatabase();
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
