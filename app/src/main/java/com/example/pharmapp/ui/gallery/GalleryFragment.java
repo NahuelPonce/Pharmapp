@@ -184,6 +184,9 @@ public class GalleryFragment<Total> extends Fragment {
             continuar.setVisibility(getView().INVISIBLE);
             vacio.setVisibility(getView().VISIBLE);
             gvImagenes.setVisibility(getView().GONE);
+
+            //dbHelper =new DbHelper(getContext());
+            db.delete("t_receta",null,null);
         } else {
 
             tot.setVisibility(getView().VISIBLE);
