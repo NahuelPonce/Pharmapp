@@ -85,6 +85,24 @@ public class DetalleMedicamento extends Fragment {
         medicamentoCantidad.setText("1");
         medicamentoPrecioTotal.setText(String.valueOf(precio));
 
+        medicamentoCantidad.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String verificarCantidad = String.valueOf(s);
+                calculaTotal(Integer.parseInt(verificarCantidad));
+            }
+        });
+
 
         mas.setOnClickListener(new View.OnClickListener() {
             @Override
