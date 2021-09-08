@@ -73,6 +73,7 @@ public class HomeFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("nombre", filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getNombre());
                 bundle.putDouble("precio", filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getPrecio());
+                bundle.putInt("comprimido",filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getComprimido());
                 bundle.putInt("imagen", filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getImagen());
                 bundle.putInt("medicamentoid", filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getMedicamentoID());
 
@@ -137,6 +138,7 @@ public class HomeFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("nombre", medicamentos.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getNombre());
                 bundle.putDouble("precio", medicamentos.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getPrecio());
+                bundle.putInt("comprimido",medicamentos.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getComprimido());
                 bundle.putInt("imagen", medicamentos.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getImagen());
                 bundle.putInt("medicamentoid", medicamentos.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getMedicamentoID());
 

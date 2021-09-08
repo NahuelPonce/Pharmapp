@@ -133,6 +133,7 @@ public class GalleryFragment<Total> extends Fragment {
                 medicamento.setCantidad(cursorMedicamento.getInt(5));
                 medicamento.setPrecio(cursorMedicamento.getDouble(3));
                 medicamento.setTotal(cursorMedicamento.getDouble(6));
+                medicamento.setComprimido(cursorMedicamento.getInt(7));
 
                 total = cursorMedicamento.getDouble(6) + total;
 

@@ -25,6 +25,7 @@ import com.example.pharmapp.ui.home.Medicamento;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.BreakIterator;
 import java.util.ArrayList;
 //extends RecyclerView.Adapter<AdapterMedicamento.ViewHolder> implements View.OnClickListener
 public class AdapterMedicamento2 extends RecyclerView.Adapter<AdapterMedicamento2.ViewHolder> implements  View.OnClickListener {
@@ -57,10 +58,13 @@ public class AdapterMedicamento2 extends RecyclerView.Adapter<AdapterMedicamento
     public void onBindViewHolder(@NonNull @NotNull AdapterMedicamento2.ViewHolder holder, int position) {
         String nombre = medicamentos.get(position).getNombre();
         String precio = String.valueOf(medicamentos.get(position).getTotal());
+        String cantidad = String.valueOf(medicamentos.get(position).getCantidad());
+        String comprimido = String.valueOf(medicamentos.get(position).getComprimido());
 
-
+        holder.cantidad.setText(cantidad);
         holder.nombre.setText(nombre);
         holder.precio.setText(precio);
+        holder.comprimido.setText(comprimido);
 
 
     }
@@ -80,7 +84,7 @@ public class AdapterMedicamento2 extends RecyclerView.Adapter<AdapterMedicamento
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView nombre,precio, id;
+        TextView nombre,precio, id, cantidad, comprimido;
         ImageButton btnEliminar;
 
 
@@ -89,6 +93,9 @@ public class AdapterMedicamento2 extends RecyclerView.Adapter<AdapterMedicamento
 
             nombre = itemView.findViewById(R.id.lvTitulo);
             precio = itemView.findViewById(R.id.lvPrecio);
+            cantidad = itemView.findViewById(R.id.textView2);
+            comprimido =itemView.findViewById(R.id.textView8);
+
             btnEliminar = itemView.findViewById(R.id.btnEliminar);
             btnEliminar.setOnClickListener(this);
 

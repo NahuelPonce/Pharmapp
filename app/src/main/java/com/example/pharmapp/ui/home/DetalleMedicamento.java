@@ -34,7 +34,7 @@ public class DetalleMedicamento extends Fragment {
 
     ImageView medicamentoImagen;
     TextView medicamentoNombre;
-    TextView medicamentoCantidad;
+    TextView medicamentoCantidad, medicamentoComprimido;
     TextView medicamentoPrecioTotal;
     TextView medicamentoPrecio;
     TextView medicamentoId;
@@ -64,16 +64,19 @@ public class DetalleMedicamento extends Fragment {
         medicamentoPrecioTotal = v.findViewById(R.id.preciototal_medicamento);
         medicamentoPrecio = v.findViewById(R.id.precio_medicamento);
         medicamentoId = v.findViewById(R.id.medicamento_id);
+        medicamentoComprimido = v.findViewById(R.id.txComprimido);
 
         Bundle bundle = getArguments();
         String nombre = bundle.getString("nombre");
         Double precio = bundle.getDouble("precio");
+        Integer comprimido = bundle.getInt("comprimido");
         int imagen = bundle.getInt("imagen");
         int idmedicamento = bundle.getInt("medicamentoid");
 
         medicamentoNombre.setText(nombre);
         medicamentoPrecio.setText(String.valueOf(precio));
         medicamentoImagen.setImageResource(imagen);
+        medicamentoComprimido.setText(String.valueOf(comprimido));
         medicamentoId.setText(String.valueOf(idmedicamento));
 
         agregar = v.findViewById(R.id.agregar_medicamento);
@@ -139,6 +142,7 @@ public class DetalleMedicamento extends Fragment {
                     values.put("nombre", medicamentoNombre.getText().toString());
                     values.put("precio", Float.parseFloat(medicamentoPrecio.getText().toString().replace("$","")));
                     //values.put("imagen", Integer.parseInt(String.valueOf(medicamentoImagen)));
+                    values.put("comprimido",Integer.parseInt(medicamentoComprimido.getText().toString()));
                     values.put("cantidad", Integer.parseInt(medicamentoCantidad.getText().toString()));
                     values.put("total", Float.parseFloat(medicamentoPrecioTotal.getText().toString().replace("$", "")));
                     db.insert("t_carrito", null, values);
