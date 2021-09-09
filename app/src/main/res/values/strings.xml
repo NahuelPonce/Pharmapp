@@ -21,6 +21,6 @@
     <string name="Pharmapp">Pharmapp</string>
     <string name="precio">Precio</string>
     <string name="total">Total</string>
-    <string name="buscador">Buscar medicamento</string>
+    <string name="buscador">¿Que desea buscar?</string>
 
 </resources>
