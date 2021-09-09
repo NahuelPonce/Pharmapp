@@ -21,8 +21,8 @@
 
             <ImageView
                 android:id="@+id/imagen_medicamento"
-                android:layout_width="386dp"
-                android:layout_height="241dp"
+                android:layout_width="348dp"
+                android:layout_height="225dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
@@ -33,25 +33,27 @@
             <TextView
                 android:id="@+id/nombre_medicamento"
                 android:layout_width="match_parent"
-                android:layout_height="4dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp"
                 android:layout_weight="1"
                 android:text="@string/nombremedicamento"
                 android:textAlignment="center"
+                android:textColor="@color/black"
                 android:textSize="24sp"
-                android:layout_marginTop="10sp"
                 android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1sp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView9"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="24dp"
                     android:layout_marginStart="30dp"
+                    android:layout_marginTop="5dp"
                     android:text="Comprimido:  "
                     android:textAlignment="center"
                     android:textSize="16sp" />
@@ -59,14 +61,16 @@
                 <TextView
                     android:id="@+id/txComprimido"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="5dp"
                     android:text="comprimido"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/textView14"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:text=" Mg."
                     android:textSize="16sp" />
@@ -74,7 +78,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1sp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:textAlignment="center">
@@ -85,6 +89,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
                     android:text="$  "
+                    android:textColor="@color/black"
                     android:textSize="20sp" />
 
                 <TextView
@@ -93,7 +98,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/precio"
+                    android:textColor="@color/black"
                     android:textSize="20sp"
+
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -101,17 +108,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginTop="15sp"
                 android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/menos"
-                    android:layout_width="80dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="110dp"
+                    android:layout_height="78dp"
                     android:layout_weight="1"
                     android:adjustViewBounds="false"
+                    android:layout_marginStart="10sp"
                     android:cropToPadding="false"
                     android:scaleType="fitCenter"
-                    android:src="@android:drawable/button_onoff_indicator_on" />
+                    android:background="@drawable/shapebotonessuma"
+                    android:src="@drawable/menos" />
 
                 <EditText
                     android:id="@+id/cantidad_medicamento"
@@ -126,10 +136,12 @@
 
                 <ImageButton
                     android:id="@+id/mas"
-                    android:layout_width="80dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="110dp"
+                    android:layout_height="78sp"
+                    android:layout_marginEnd="10sp"
                     android:layout_weight="1"
-                    android:src="@android:drawable/ic_input_add" />
+                    android:background="@drawable/shapebotonessuma"
+                    android:src="@drawable/mas" />
             </LinearLayout>
 
             <TableRow
@@ -146,6 +158,7 @@
                     android:layout_weight="1"
                     android:paddingRight="5dp"
                     android:text="@string/total"
+                    android:textColor="@color/black"
                     android:textAlignment="viewEnd"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -156,6 +169,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="$ 0.00"
+                    android:textColor="@color/black"
                     android:textAlignment="textStart"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -165,8 +179,11 @@
                 android:id="@+id/agregar_medicamento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginBottom="10sp"
                 android:layout_weight="1"
-                android:background="@android:color/holo_green_light"
+                android:background="@drawable/shape"
                 android:src="@drawable/shopping" />
 
             <TextView

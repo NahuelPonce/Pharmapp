@@ -37,7 +37,7 @@
     <fragment
         android:id="@+id/nav_detalle"
         android:name="com.example.pharmapp.ui.home.DetalleMedicamento"
-        android:label="detalle_medicamento"
+        android:label="@string/Pharmapp"
         tools:layout="@layout/fragment_detalle_medicamento" >
         <action
             android:id="@+id/action_nav_detalle_to_nav_home2"

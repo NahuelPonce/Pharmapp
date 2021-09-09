@@ -100,6 +100,9 @@
                     android:layout_height="wrap_content"
                     android:text="Agregar Receta"
                     android:visibility="visible"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10sp"
+                    android:background="@drawable/shapegallery"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/gvImagenes" />
 
@@ -108,7 +111,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:background="@drawable/shapegallery"
                     android:text="Continuar"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/button4" />
 
