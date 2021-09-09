@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         imagen = findViewById(R.id.logo);
-        imagen.setImageResource(R.drawable.blue_modern_icons_maternity_doctor_logo);
+        imagen.setImageResource(R.drawable.logo);
     }
 
     //metodo boton siguiente

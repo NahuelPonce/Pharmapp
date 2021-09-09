@@ -47,13 +47,11 @@ public class AdapterMedicamento extends RecyclerView.Adapter<AdapterMedicamento.
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
         String nombre = medicamentos.get(position).getNombre();
-        String descripcion = medicamentos.get(position).getDescripcion();
         String comprimido = medicamentos.get(position).getComprimido().toString();
         String precio = medicamentos.get(position).getPrecio().toString();
         int imagen = medicamentos.get(position).getImagen();
 
         holder.nombre.setText(nombre);
-        holder.descripcion.setText(descripcion);
         holder.comprimido.setText(comprimido);
         holder.precio.setText(precio);
         holder.imagen.setImageResource(imagen);
@@ -81,7 +79,7 @@ public class AdapterMedicamento extends RecyclerView.Adapter<AdapterMedicamento.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView nombre, descripcion, comprimido, precio;
+        TextView nombre, comprimido, precio;
         ImageView imagen;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
@@ -89,7 +87,6 @@ public class AdapterMedicamento extends RecyclerView.Adapter<AdapterMedicamento.
 
             nombre = itemView.findViewById(R.id.lvTitulo);
             comprimido = itemView.findViewById(R.id.textComprimido);
-            descripcion = itemView.findViewById(R.id.textDescripcion);
             precio = itemView.findViewById(R.id.lvPrecio);
             imagen = itemView.findViewById(R.id.ivImagen);
         }

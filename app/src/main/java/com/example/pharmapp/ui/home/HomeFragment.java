@@ -87,9 +87,8 @@ public class HomeFragment extends Fragment {
 
         Medicamento item = new Medicamento();
         item.setMedicamentoID(1);
-        item.setNombre("ibuprofeno");
+        item.setNombre("Ibuprofeno");
         item.setComprimido(800);
-        item.setDescripcion("blalbalbal");
         item.setPrecio(500.00);
         item.setImagen(R.drawable.ibuprofeno);
 
@@ -99,7 +98,6 @@ public class HomeFragment extends Fragment {
         item.setMedicamentoID(2);
         item.setNombre("Tafirol");
         item.setComprimido(400);
-        item.setDescripcion("blalbalbal2");
         item.setPrecio(500.00);
         item.setImagen(R.drawable.fb8_deva);
 
@@ -107,9 +105,8 @@ public class HomeFragment extends Fragment {
         //
         item = new Medicamento();
         item.setMedicamentoID(3);
-        item.setNombre("ibupirac");
+        item.setNombre("Ibupirac");
         item.setComprimido(600);
-        item.setDescripcion("blalbalbal3");
         item.setPrecio(500.00);
         item.setImagen(R.drawable.ibupirac_600_60b660d67d7c0);
 
@@ -120,7 +117,6 @@ public class HomeFragment extends Fragment {
         item.setMedicamentoID(4);
         item.setNombre("Adermicina");
         item.setComprimido(600);
-        item.setDescripcion("blalbalbal4");
         item.setPrecio(500.00);
         item.setImagen(R.drawable.ibupirac_600_60b660d67d7c0);
 

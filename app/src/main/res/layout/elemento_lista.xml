@@ -10,15 +10,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="143dp"
         android:padding="10dp">
 
         <TextView
             android:id="@+id/lvTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginLeft="14dp"
             android:layout_toEndOf="@id/ivImagen"
             android:layout_toRightOf="@+id/ivImagen"
             android:text="@string/nombremedicamento"
@@ -26,28 +26,16 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textDescripcion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/lvTitulo"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="20dp"
-            android:layout_toEndOf="@+id/ivImagen"
-            android:layout_toRightOf="@id/ivImagen"
-            android:text="@string/descripcion"
-            android:textSize="16sp" />
-
-        <TextView
             android:id="@+id/textComprimido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textDescripcion"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="20dp"
+            android:layout_below="@+id/lvTitulo"
+            android:layout_marginStart="14dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="23dp"
             android:layout_toEndOf="@+id/ivImagen"
             android:layout_toRightOf="@id/ivImagen"
-            android:text="@string/comprimidos"
-            android:textStyle="bold" />
+            android:text="@string/comprimidos" />
 
         <ImageView
             android:id="@+id/ivImagen"
@@ -61,29 +49,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textComprimido"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="21dp"
             android:layout_toEndOf="@+id/textView4"
             android:text="@string/precio"
-            android:textSize="16sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textComprimido"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="22dp"
             android:layout_toEndOf="@+id/ivImagen"
+            android:textSize="20sp"
             android:text="$" />
 
         <TextView
             android:id="@+id/peso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textDescripcion"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_below="@+id/lvTitulo"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="23dp"
             android:layout_toEndOf="@+id/textComprimido"
             android:text="mg" />
 
@@ -92,8 +81,8 @@
             android:layout_width="wrap_content"
             android:layout_height="43dp"
             android:layout_below="@+id/lvTitulo"
-            android:layout_marginStart="52dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginStart="73dp"
+            android:layout_marginTop="18dp"
             android:layout_toEndOf="@+id/peso"
             app:srcCompat="@drawable/shopping" />
 
