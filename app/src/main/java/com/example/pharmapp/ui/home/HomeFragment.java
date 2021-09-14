@@ -6,6 +6,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.textclassifier.TextClassification;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -13,7 +14,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.pharmapp.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -22,8 +34,10 @@ import static androidx.navigation.Navigation.findNavController;
 public class HomeFragment extends Fragment {
 
     ArrayList<Medicamento> medicamentos;
+    ArrayList<MedicamentoBD> medicamentosBD;
     RecyclerView recyclerViewMedicamentos;
     AdapterMedicamento adapter;
+    AdapterMedicamentoBD adapterBD;
     EditText svSearch;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -50,31 +64,31 @@ public class HomeFragment extends Fragment {
         });
 
         medicamentos = new ArrayList<>();
+        medicamentosBD = new ArrayList<>();
 
         llenar();
 
-        mostrar();
+        //mostrar();
 
         return v;
     }
-
     public void filter(String text) {
-        ArrayList<Medicamento> filteredList = new ArrayList<>();
+        ArrayList<MedicamentoBD> filteredList = new ArrayList<>();
 
-        for (Medicamento item: medicamentos) {
+        for (MedicamentoBD item: medicamentosBD) {
             if (item.getNombre().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item);
             }
         }
-        adapter.filterList(filteredList);
-        adapter.setOnClickListener(new View.OnClickListener() {
+        adapterBD.filterList(filteredList);
+        adapterBD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("nombre", filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getNombre());
                 bundle.putDouble("precio", filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getPrecio());
                 bundle.putInt("comprimido",filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getComprimido());
-                bundle.putInt("imagen", filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getImagen());
+                bundle.putString("imagen", filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getImagen());
                 bundle.putInt("medicamentoid", filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getMedicamentoID());
 
                 findNavController(v).navigate(R.id.action_nav_home_to_nav_detalle, bundle);
@@ -85,7 +99,47 @@ public class HomeFragment extends Fragment {
 
     public void llenar() {
 
-        Medicamento item = new Medicamento();
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                getResources().getString(R.string.URL_medicamentos),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray array = new JSONArray(response);
+                            //JSONObject jsonObject = new JSONObject(response);
+                            //JSONArray jsonArray = jsonObject.getJSONArray("MedicamentosBD");
+
+                            for (int i = 0; i < array.length(); i++) {
+                                 //JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                                JSONObject jsonObject1 = array.getJSONObject(i);
+                                medicamentosBD.add(
+                                        new MedicamentoBD(
+                                                jsonObject1.getInt("medicamentoID"),
+                                                jsonObject1.getString("nombre"),
+                                                jsonObject1.getInt("comprimido"),
+                                                jsonObject1.getInt("stock"),
+                                                jsonObject1.getDouble("precio"),
+                                                jsonObject1.getString("imagen")
+                                        )
+                                );
+                            }
+                            mostrar();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }
+                );
+        requestQueue.add(stringRequest);
+    }
+        /*Medicamento item = new Medicamento();
         item.setMedicamentoID(1);
         item.setNombre("Ibuprofeno");
         item.setComprimido(800);
@@ -93,50 +147,25 @@ public class HomeFragment extends Fragment {
         item.setImagen(R.drawable.ibuprofeno);
 
         medicamentos.add(item);
-        //
-        item = new Medicamento();
-        item.setMedicamentoID(2);
-        item.setNombre("Tafirol");
-        item.setComprimido(400);
-        item.setPrecio(500.00);
-        item.setImagen(R.drawable.fb8_deva);
 
-        medicamentos.add(item);
-        //
-        item = new Medicamento();
-        item.setMedicamentoID(3);
-        item.setNombre("Ibupirac");
-        item.setComprimido(600);
-        item.setPrecio(500.00);
-        item.setImagen(R.drawable.ibupirac_600_60b660d67d7c0);
-
-        medicamentos.add(item);
-
-        //
-        item = new Medicamento();
-        item.setMedicamentoID(4);
-        item.setNombre("Adermicina");
-        item.setComprimido(600);
-        item.setPrecio(500.00);
-        item.setImagen(R.drawable.ibupirac_600_60b660d67d7c0);
-
-        medicamentos.add(item);
-    }
+         */
 
     public void mostrar() {
-        recyclerViewMedicamentos.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new AdapterMedicamento(getContext(), medicamentos);
-        recyclerViewMedicamentos.setAdapter(adapter);
+         recyclerViewMedicamentos.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapterBD = new AdapterMedicamentoBD(getContext(), medicamentosBD);
+        recyclerViewMedicamentos.setAdapter(adapterBD);
 
-        adapter.setOnClickListener(new View.OnClickListener() {
+
+
+        adapterBD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("nombre", medicamentos.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getNombre());
-                bundle.putDouble("precio", medicamentos.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getPrecio());
-                bundle.putInt("comprimido",medicamentos.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getComprimido());
-                bundle.putInt("imagen", medicamentos.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getImagen());
-                bundle.putInt("medicamentoid", medicamentos.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getMedicamentoID());
+                bundle.putString("nombre", medicamentosBD.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getNombre());
+                bundle.putDouble("precio", medicamentosBD.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getPrecio());
+                bundle.putInt("comprimido",medicamentosBD.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getComprimido());
+                bundle.putString("imagen", medicamentosBD.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getImagen());
+                bundle.putInt("medicamentoid", medicamentosBD.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getMedicamentoID());
 
                 findNavController(v).navigate(R.id.action_nav_home_to_nav_detalle, bundle);
             }

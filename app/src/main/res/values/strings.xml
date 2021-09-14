@@ -23,4 +23,6 @@
     <string name="total">Total</string>
     <string name="buscador">¿Que desea buscar?</string>
 
+    <string name="URL_medicamentos">http://192.168.0.89/medicamentos_android/db.php</string>
+
 </resources>

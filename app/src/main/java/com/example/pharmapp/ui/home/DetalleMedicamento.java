@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.pharmapp.R;
 import com.example.pharmapp.db.DbHelper;
 import com.google.gson.Gson;
@@ -70,12 +71,14 @@ public class DetalleMedicamento extends Fragment {
         String nombre = bundle.getString("nombre");
         Double precio = bundle.getDouble("precio");
         Integer comprimido = bundle.getInt("comprimido");
-        int imagen = bundle.getInt("imagen");
+        String imagen = bundle.getString("imagen");
         int idmedicamento = bundle.getInt("medicamentoid");
 
         medicamentoNombre.setText(nombre);
         medicamentoPrecio.setText(String.valueOf(precio));
-        medicamentoImagen.setImageResource(imagen);
+        Glide.with(getContext())
+                .load(imagen)
+                .into(medicamentoImagen);
         medicamentoComprimido.setText(String.valueOf(comprimido));
         medicamentoId.setText(String.valueOf(idmedicamento));
 
