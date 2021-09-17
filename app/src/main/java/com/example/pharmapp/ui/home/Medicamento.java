@@ -14,6 +14,16 @@ public class Medicamento {
     private int cantidad;
     private double total;
 
+    public Integer getReceta() {
+        return receta;
+    }
+
+    public void setReceta(Integer receta) {
+        this.receta = receta;
+    }
+
+    private Integer receta;
+
     public int getMedicamentoID() {
         return medicamentoID;
     }

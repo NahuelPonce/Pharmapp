@@ -90,6 +90,7 @@ public class HomeFragment extends Fragment {
                 bundle.putInt("comprimido",filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getComprimido());
                 bundle.putString("imagen", filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getImagen());
                 bundle.putInt("medicamentoid", filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getMedicamentoID());
+                bundle.putInt("receta",filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getReceta());
 
                 findNavController(v).navigate(R.id.action_nav_home_to_nav_detalle, bundle);
             }
@@ -121,7 +122,8 @@ public class HomeFragment extends Fragment {
                                                 jsonObject1.getInt("comprimido"),
                                                 jsonObject1.getInt("stock"),
                                                 jsonObject1.getDouble("precio"),
-                                                jsonObject1.getString("imagen")
+                                                jsonObject1.getString("imagen"),
+                                                jsonObject1.getInt("receta")
                                         )
                                 );
                             }
@@ -166,7 +168,7 @@ public class HomeFragment extends Fragment {
                 bundle.putInt("comprimido",medicamentosBD.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getComprimido());
                 bundle.putString("imagen", medicamentosBD.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getImagen());
                 bundle.putInt("medicamentoid", medicamentosBD.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getMedicamentoID());
-
+                bundle.putInt("receta", medicamentosBD.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getReceta());
                 findNavController(v).navigate(R.id.action_nav_home_to_nav_detalle, bundle);
             }
         });

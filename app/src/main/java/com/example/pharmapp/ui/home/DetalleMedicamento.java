@@ -73,6 +73,7 @@ public class DetalleMedicamento extends Fragment {
         Integer comprimido = bundle.getInt("comprimido");
         String imagen = bundle.getString("imagen");
         int idmedicamento = bundle.getInt("medicamentoid");
+        Integer receta = bundle.getInt("receta");
 
         medicamentoNombre.setText(nombre);
         medicamentoPrecio.setText(String.valueOf(precio));
@@ -148,6 +149,7 @@ public class DetalleMedicamento extends Fragment {
                     values.put("comprimido",Integer.parseInt(medicamentoComprimido.getText().toString()));
                     values.put("cantidad", Integer.parseInt(medicamentoCantidad.getText().toString()));
                     values.put("total", Float.parseFloat(medicamentoPrecioTotal.getText().toString().replace("$", "")));
+                    values.put("receta",receta);
                     db.insert("t_carrito", null, values);
                 }
                 if (c.moveToFirst()) {

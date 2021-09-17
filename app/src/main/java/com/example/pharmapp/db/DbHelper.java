@@ -26,7 +26,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 "imagen INT," +
                 "cantidad INT," +
                 "total FLOAT,"+
-                "comprimido INT)");
+                "comprimido INT,"+
+                "receta INT)");
 
         db.execSQL("CREATE TABLE " + TABLE_RECETA + "(" +
                 "recetaId INTEGER PRIMARY KEY AUTOINCREMENT," +

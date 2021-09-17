@@ -8,13 +8,14 @@ public class MedicamentoBD {
 
 
 
-    public MedicamentoBD(int medicamentoID, String nombre, Integer comprimido, Integer stock, Double precio, String imagen) {
+    public MedicamentoBD(int medicamentoID, String nombre, Integer comprimido, Integer stock, Double precio, String imagen, Integer receta) {
         this.medicamentoID = medicamentoID;
         this.nombre = nombre;
         this.comprimido = comprimido;
         this.stock = stock;
         this.precio = precio;
         this.imagen = imagen;
+        this.receta = receta;
 
     }
     private int medicamentoID;
@@ -23,6 +24,7 @@ public class MedicamentoBD {
     private Integer stock;
     private Double precio;
     private String imagen;
+    private Integer receta;
 
 
     public int getMedicamentoID() {
@@ -73,6 +75,13 @@ public class MedicamentoBD {
         this.imagen = imagen;
     }
 
+    public Integer getReceta() {
+        return receta;
+    }
+
+    public void setReceta(Integer receta) {
+        this.receta = receta;
+    }
 
 
 

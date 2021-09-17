@@ -103,6 +103,7 @@
                     android:visibility="visible"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10sp"
+                    android:enabled="true"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/shapegallery"
                     app:layout_constraintStart_toStartOf="parent"

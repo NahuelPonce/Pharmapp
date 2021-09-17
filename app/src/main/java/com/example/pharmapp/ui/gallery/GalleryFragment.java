@@ -125,6 +125,7 @@ public class GalleryFragment<Total> extends Fragment {
         Cursor cursorMedicamento;
         cursorMedicamento = db.rawQuery("SELECT * FROM  t_carrito",null);
         double total = 0;
+        int tieneokreceta=0;
         if (cursorMedicamento.moveToFirst()){
             do {
                 medicamento = new Medicamento();
@@ -134,10 +135,10 @@ public class GalleryFragment<Total> extends Fragment {
                 medicamento.setPrecio(cursorMedicamento.getDouble(3));
                 medicamento.setTotal(cursorMedicamento.getDouble(6));
                 medicamento.setComprimido(cursorMedicamento.getInt(7));
+                medicamento.setReceta(cursorMedicamento.getInt(8));
 
                 total = cursorMedicamento.getDouble(6) + total;
-
-
+                tieneokreceta = cursorMedicamento.getInt(8) + tieneokreceta;
                 medicamentoArrayList.add(medicamento);
             } while (cursorMedicamento.moveToNext());
         }
@@ -190,6 +191,13 @@ public class GalleryFragment<Total> extends Fragment {
             db.delete("t_receta",null,null);
         } else {
 
+            if ( tieneokreceta == 0) {
+
+                este.setEnabled(false);
+
+            }else {
+                este.setEnabled(true);
+            }
             tot.setVisibility(getView().VISIBLE);
             tot2.setVisibility(getView().VISIBLE);
             pesos.setVisibility(getView().VISIBLE);
