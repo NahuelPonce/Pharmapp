@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+//import androidx.appcompat.widget.AbsActionBarView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -53,6 +54,8 @@ public class AdapterMedicamentoBD extends RecyclerView.Adapter<AdapterMedicament
         String comprimido = medicamentosBD.get(position).getComprimido().toString();
         String precio = medicamentosBD.get(position).getPrecio().toString();
         //String imagen = medicamentosBD.get(position).getImagen();
+        Integer receta = medicamentosBD.get(position).getReceta();
+
 
         Glide.with(context)
                 .load(medicamentosBD.get(position).getImagen())
@@ -62,6 +65,19 @@ public class AdapterMedicamentoBD extends RecyclerView.Adapter<AdapterMedicament
         holder.nombre.setText(nombre);
         holder.comprimido.setText(comprimido);
         holder.precio.setText(precio);
+
+
+        if (receta == 0){
+            holder.bajoreceta.setVisibility(View.INVISIBLE);
+        }
+
+
+        /*for(int i = 0; i < medicamentosBD.size(); i++) {
+            if (medicamentosBD.get(i).getReceta() == 1){
+                bajoreceta.setVisibility(getView().GONE);
+            }
+
+         */
         //holder.imagen.setImageResource(imagen);
 
     }
@@ -88,7 +104,7 @@ public class AdapterMedicamentoBD extends RecyclerView.Adapter<AdapterMedicament
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView nombre, comprimido, precio;
+        TextView nombre, comprimido, precio, bajoreceta;
         ImageView imagen;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
@@ -98,6 +114,7 @@ public class AdapterMedicamentoBD extends RecyclerView.Adapter<AdapterMedicament
             comprimido = itemView.findViewById(R.id.textComprimido);
             precio = itemView.findViewById(R.id.lvPrecio);
             imagen = itemView.findViewById(R.id.ivImagen);
+            bajoreceta = itemView.findViewById(R.id.textView5);
         }
     }
 }

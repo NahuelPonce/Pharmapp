@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.textclassifier.TextClassification;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -39,6 +40,7 @@ public class HomeFragment extends Fragment {
     AdapterMedicamento adapter;
     AdapterMedicamentoBD adapterBD;
     EditText svSearch;
+    TextView bajoreceta;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +48,8 @@ public class HomeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_home,container,false);
         recyclerViewMedicamentos = v.findViewById(R.id.lvLista);
         svSearch = v.findViewById(R.id.svSearch);
+        bajoreceta = v.findViewById(R.id.textView5);
+
         svSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -66,7 +70,11 @@ public class HomeFragment extends Fragment {
         medicamentos = new ArrayList<>();
         medicamentosBD = new ArrayList<>();
 
+
         llenar();
+
+
+
 
         //mostrar();
 
@@ -113,7 +121,7 @@ public class HomeFragment extends Fragment {
                             //JSONArray jsonArray = jsonObject.getJSONArray("MedicamentosBD");
 
                             for (int i = 0; i < array.length(); i++) {
-                                 //JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                                //JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                                 JSONObject jsonObject1 = array.getJSONObject(i);
                                 medicamentosBD.add(
                                         new MedicamentoBD(
@@ -126,8 +134,20 @@ public class HomeFragment extends Fragment {
                                                 jsonObject1.getInt("receta")
                                         )
                                 );
+                               /* for(int i = 0; i < medicamentosBD.size(); i++) {
+                                    if (medicamentosBD.get(i).getReceta() == 1){
+                                        bajoreceta.setVisibility(getView().GONE);
+                                    }
+
+                                */
+
+
+
                             }
+
                             mostrar();
+
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -140,6 +160,12 @@ public class HomeFragment extends Fragment {
         }
                 );
         requestQueue.add(stringRequest);
+
+
+
+
+
+
     }
         /*Medicamento item = new Medicamento();
         item.setMedicamentoID(1);
@@ -153,7 +179,9 @@ public class HomeFragment extends Fragment {
          */
 
     public void mostrar() {
-         recyclerViewMedicamentos.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+        recyclerViewMedicamentos.setLayoutManager(new LinearLayoutManager(getContext()));
         adapterBD = new AdapterMedicamentoBD(getContext(), medicamentosBD);
         recyclerViewMedicamentos.setAdapter(adapterBD);
 
@@ -172,6 +200,8 @@ public class HomeFragment extends Fragment {
                 findNavController(v).navigate(R.id.action_nav_home_to_nav_detalle, bundle);
             }
         });
+
+
     }
 
 }
