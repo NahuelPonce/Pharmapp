@@ -99,6 +99,7 @@ public class HomeFragment extends Fragment {
                 bundle.putString("imagen", filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getImagen());
                 bundle.putInt("medicamentoid", filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getMedicamentoID());
                 bundle.putInt("receta",filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getReceta());
+                bundle.putInt("stock",filteredList.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getStock());
 
                 findNavController(v).navigate(R.id.action_nav_home_to_nav_detalle, bundle);
             }
@@ -197,6 +198,7 @@ public class HomeFragment extends Fragment {
                 bundle.putString("imagen", medicamentosBD.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getImagen());
                 bundle.putInt("medicamentoid", medicamentosBD.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getMedicamentoID());
                 bundle.putInt("receta", medicamentosBD.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getReceta());
+                bundle.putInt("stock",medicamentosBD.get(recyclerViewMedicamentos.getChildAdapterPosition(v)).getStock());
                 findNavController(v).navigate(R.id.action_nav_home_to_nav_detalle, bundle);
             }
         });

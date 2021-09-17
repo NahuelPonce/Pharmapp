@@ -74,6 +74,7 @@ public class DetalleMedicamento extends Fragment {
         String imagen = bundle.getString("imagen");
         int idmedicamento = bundle.getInt("medicamentoid");
         Integer receta = bundle.getInt("receta");
+        Integer stock = bundle.getInt("stock");
 
         medicamentoNombre.setText(nombre);
         medicamentoPrecio.setText(String.valueOf(precio));
@@ -138,32 +139,40 @@ public class DetalleMedicamento extends Fragment {
         agregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cursor c = db.rawQuery("SELECT id, cantidad, total FROM t_carrito where medicamentoId=?", new String[]{(String) medicamentoId.getText().toString()});
-                ContentValues values = new ContentValues();
+                if(stock >= Integer.parseInt(medicamentoCantidad.getText().toString())) {
 
-                if(!c.moveToFirst()) {
-                    values.put("medicamentoId", Integer.parseInt(medicamentoId.getText().toString()));
-                    values.put("nombre", medicamentoNombre.getText().toString());
-                    values.put("precio", Float.parseFloat(medicamentoPrecio.getText().toString().replace("$","")));
-                    //values.put("imagen", Integer.parseInt(String.valueOf(medicamentoImagen)));
-                    values.put("comprimido",Integer.parseInt(medicamentoComprimido.getText().toString()));
-                    values.put("cantidad", Integer.parseInt(medicamentoCantidad.getText().toString()));
-                    values.put("total", Float.parseFloat(medicamentoPrecioTotal.getText().toString().replace("$", "")));
-                    values.put("receta",receta);
-                    db.insert("t_carrito", null, values);
+
+                    Cursor c = db.rawQuery("SELECT id, cantidad, total FROM t_carrito where medicamentoId=?", new String[]{(String) medicamentoId.getText().toString()});
+                    ContentValues values = new ContentValues();
+
+
+                    if (!c.moveToFirst()) {
+                        values.put("medicamentoId", Integer.parseInt(medicamentoId.getText().toString()));
+                        values.put("nombre", medicamentoNombre.getText().toString());
+                        values.put("precio", Float.parseFloat(medicamentoPrecio.getText().toString().replace("$", "")));
+                        //values.put("imagen", Integer.parseInt(String.valueOf(medicamentoImagen)));
+                        values.put("comprimido", Integer.parseInt(medicamentoComprimido.getText().toString()));
+                        values.put("cantidad", Integer.parseInt(medicamentoCantidad.getText().toString()));
+                        values.put("total", Float.parseFloat(medicamentoPrecioTotal.getText().toString().replace("$", "")));
+                        values.put("receta", receta);
+                        db.insert("t_carrito", null, values);
+                    }
+                    if (c.moveToFirst()) {
+
+                        int nuevaCantidad = c.getInt(1) + Integer.parseInt(medicamentoCantidad.getText().toString());
+                        float nuevototal = c.getFloat(2) + Float.parseFloat(medicamentoPrecioTotal.getText().toString().replace("$", ""));
+                        values.put("cantidad", nuevaCantidad);
+                        values.put("total", nuevototal);
+                        db.update("t_carrito", values, "medicamentoId=?", new String[]{medicamentoId.getText().toString()});
+
+                    }
+
+                    findNavController(v).navigate(R.id.action_nav_detalle_to_nav_home2);
+                    Toast.makeText(getActivity(), "Medicamento agregado al carrito exitosamente", Toast.LENGTH_LONG).show();
+                } else{
+                    findNavController(v).navigate(R.id.action_nav_detalle_to_nav_home2);
+                    Toast.makeText(getActivity(), "No hay tantos medicamentos en stock, intente con menos.", Toast.LENGTH_LONG).show();
                 }
-                if (c.moveToFirst()) {
-
-                    int nuevaCantidad= c.getInt(1) + Integer.parseInt(medicamentoCantidad.getText().toString());
-                    float nuevototal= c.getFloat(2) + Float.parseFloat(medicamentoPrecioTotal.getText().toString().replace("$",""));
-                    values.put("cantidad", nuevaCantidad);
-                    values.put("total", nuevototal);
-                    db.update("t_carrito",values,"medicamentoId=?",new String[]{medicamentoId.getText().toString()});
-
-                }
-
-                findNavController(v).navigate(R.id.action_nav_detalle_to_nav_home2);
-                Toast.makeText(getActivity(), "Medicamento agregado al carrito exitosamente", Toast.LENGTH_LONG ).show();
             }
         });
 
