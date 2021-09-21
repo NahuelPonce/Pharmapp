@@ -55,6 +55,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
+
+
             <EditText
                 android:id="@+id/nombre"
                 android:layout_width="match_parent"
@@ -116,7 +118,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:hint="Altura" />
 
             <EditText
@@ -147,7 +149,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:hint="Numero de afiliado" />
 
             <ImageView

@@ -5,7 +5,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -24,16 +23,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.util.Base64;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import static androidx.navigation.fragment.NavHostFragment.findNavController;
 
 public class registrarse extends AppCompatActivity {
 
@@ -49,9 +44,7 @@ public class registrarse extends AppCompatActivity {
     EditText depto;
     EditText obrasocial;
     EditText numafiliado;
-
-
-
+    Bitmap bitmap;
 
 
     @Override
@@ -64,21 +57,19 @@ public class registrarse extends AppCompatActivity {
                     @Override
                     public void onActivityResult(Uri uri) {
                         // Handle the returned Uri
-                        foto.setImageURI(uri);
-                        Bitmap bitmap = null;
-                        try {
-                            bitmap = MediaStore.Images.Media.getBitmap(registrarse.this.getContentResolver(), uri );
-                            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                            bitmap.compress(Bitmap.CompressFormat.PNG,100,bos);
-                            byte[] bArray = bos.toByteArray();
+                        //foto.setImageURI(uri);
 
+                        try {
+                            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri );
+                            //ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                            //bitmap.compress(Bitmap.CompressFormat.PNG,100,bos);
+                            //byte[] bArray = bos.toByteArray();
+                            foto.setImageBitmap(bitmap);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
                     }
                 });
-
 
 
         Button selectButton = findViewById(R.id.button7);
@@ -108,7 +99,14 @@ public class registrarse extends AppCompatActivity {
         registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String nom, ape,usu,con,cal,dp,os,ft;
+                final String nom;
+                final String ape;
+                final String usu;
+                final String con;
+                final String cal;
+                final String dp;
+                final String os;
+                final String ft;
                 final String dn;
                 final String alt;
                 final String na;
@@ -117,29 +115,37 @@ public class registrarse extends AppCompatActivity {
                 usu = String.valueOf(usuario.getText());
                 con = String.valueOf(contraseña.getText());
                 dn = String.valueOf(dni.getText());
-                ft= getResources()
+                ft=  String.valueOf(foto.getResources());
                 cal = String.valueOf(calle.getText());
                 alt = String.valueOf(altura.getText());
                 dp = String.valueOf(depto.getText());
                 os = String.valueOf(obrasocial.getText());
                 na = String.valueOf(numafiliado.getText());
 
+                if (nom.length() == 0 || ape.length() == 0 || usu.length() == 0 || con.length() == 0 || dn.length() == 0 || cal.length() == 0 || alt.length() == 0 || os.length() == 0 || na.length() == 0){
+                      Toast.makeText(registrarse.this,"Hay campos requeridos incompletos", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    registrarusuario(nom,ape,usu,con,dn,ft,cal,alt,dp,os,na);
+                    Intent intent = new Intent(registrarse.this, MainActivity.class);
+                    startActivity(intent);
+
+                }
 
 
-                registrarusuario(nom,ape,usu,con,dn,ft,cal,alt,dp,os,na);
-
-
-
-                Intent intent = new Intent(registrarse.this, MainActivity.class);
-                startActivity(intent);
             }
 
         });
 
 
+    }
 
-
-
+    public String getStringImagen(Bitmap bmp) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG,100,baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodeImage = Base64.getEncoder().encodeToString(imageBytes);
+        return encodeImage;
     }
 
 
@@ -166,12 +172,14 @@ public class registrarse extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> parametros=new HashMap<String, String>();
 
+                String foto= getStringImagen(bitmap);
+
                 parametros.put("usuario",usu);
                 parametros.put("contraseña",con);
                 parametros.put("nombre",nom);
                 parametros.put("apellido",ape);
                 parametros.put("dni",dn);
-                parametros.put("foto",ft);
+                parametros.put("foto",foto);
                 parametros.put("calle",cal);
                 parametros.put("altura",alt);
                 parametros.put("dpto",dp);
