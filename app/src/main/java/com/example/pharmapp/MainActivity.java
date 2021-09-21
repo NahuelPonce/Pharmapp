@@ -83,11 +83,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //metodo boton siguiente
-    /*public void Siguiente(View view) {
-        Intent siguiente = new Intent(this, Main2Activity.class);
+    public void Siguiente(View view) {
+        Intent siguiente = new Intent(this, registrarse.class);
         startActivity(siguiente);
     }
 
-     */
+
 
 }
