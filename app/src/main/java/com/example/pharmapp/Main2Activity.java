@@ -8,6 +8,15 @@ import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.pharmapp.db.DbHelper;
 import com.example.pharmapp.ui.gallery.GalleryFragment;
 import com.example.pharmapp.ui.home.AdapterMedicamento;
@@ -26,12 +35,22 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pharmapp.databinding.ActivityMain2Binding;
+import com.google.gson.JsonObject;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main2Activity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMain2Binding binding;
     //public static final String nombres ="usuario";
+    RequestQueue requestQueue;
 
 
 
@@ -41,6 +60,7 @@ public class Main2Activity extends AppCompatActivity {
         //Intent recibir = getIntent();
 
         //TextView nomreusu;
+        requestQueue = Volley.newRequestQueue(this);
 
 
         DbHelper dbHelper = new DbHelper(this);
@@ -73,9 +93,42 @@ public class Main2Activity extends AppCompatActivity {
             final View vistaHeader = binding.navView.getHeaderView(0);
 
             final TextView nomreusu = vistaHeader.findViewById(R.id.nombreusu);
+
             String usu = getIntent().getStringExtra("usuario");
+            //cargarusuario(usu,"http://192.168.0.87/medicamentos_android/buscarusuario.php?usuario="+usu);
             nomreusu.setText(usu);
     }
+
+    /*private void cargarusuario( String usu, String URL) {
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        final View vistaHeader = binding.navView.getHeaderView(0);
+        //final TextView obrasocial= vistaHeader.findViewById(R.id.textView);
+        final TextView nomreusu = vistaHeader.findViewById(R.id.nombreusu);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                    String nombre;
+
+                try {
+                    nombre = response.getString("usuario");
+                    nomreusu.setText(nombre);
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Main2Activity.this, "Si no entro lloro :)", Toast.LENGTH_SHORT).show();
+            }
+        }
+        );
+        requestQueue.add(jsonObjectRequest);
+    }
+
+     */
 
 
     @Override
