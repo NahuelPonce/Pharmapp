@@ -1,10 +1,7 @@
 package com.example.pharmapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +17,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.pharmapp.ui.gallery.GalleryFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,14 +36,14 @@ public class MainActivity extends AppCompatActivity {
         editTextTextPersonName = findViewById(R.id.editTextTextPersonName);
         button = findViewById(R.id.button);
 
+
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 validarUsuario("http://192.168.0.87/medicamentos_android/validarusuario.php");
             }
         });
-
-
     }
 
     private void validarUsuario(String URL){
@@ -56,11 +52,14 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 if(!response.isEmpty()){
                     Intent intent= new Intent(getApplicationContext(), Main2Activity.class);
+                    //Bundle parametros = new Bundle();
+                    //parametros.putString("usuario",editTextTextPersonName.getText().toString());
+
+                     //intent.putExtra(Main2Activity.nombres,editTextTextPersonName.getText());
+                    //intent.putExtra("usuario",editTextTextPersonName.getText());
                     startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, "Usuario o contraseña incorrecta", Toast.LENGTH_SHORT).show();
-
-
                 }
             }
         }, new Response.ErrorListener() {
@@ -87,7 +86,4 @@ public class MainActivity extends AppCompatActivity {
         Intent siguiente = new Intent(this, registrarse.class);
         startActivity(siguiente);
     }
-
-
-
 }

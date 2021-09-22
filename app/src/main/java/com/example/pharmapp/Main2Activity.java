@@ -1,9 +1,11 @@
 package com.example.pharmapp;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.example.pharmapp.db.DbHelper;
 import com.example.pharmapp.ui.gallery.GalleryFragment;
@@ -27,10 +29,17 @@ public class Main2Activity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMain2Binding binding;
+    //public static final String nombres ="usuario";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Intent recibir = getIntent();
+
+        //TextView nomreusu;
+
 
         DbHelper dbHelper = new DbHelper(this);
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -57,6 +66,15 @@ public class Main2Activity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main2);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
+
+           // nomreusu = (TextView) findViewById(R.id.nombreusu);
+            //String usu = getIntent().getStringExtra("usuario");
+            //nomreusu.setText(usu);
+
+
+
     }
 
 
