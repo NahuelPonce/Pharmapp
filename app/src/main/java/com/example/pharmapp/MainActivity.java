@@ -56,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
                     //parametros.putString("usuario",editTextTextPersonName.getText().toString());
 
                      //intent.putExtra(Main2Activity.nombres,editTextTextPersonName.getText());
-                    //intent.putExtra("usuario",editTextTextPersonName.getText());
+                    String valor = editTextTextPersonName.getText().toString();
+                    intent.putExtra("usuario",valor);
                     startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, "Usuario o contraseña incorrecta", Toast.LENGTH_SHORT).show();

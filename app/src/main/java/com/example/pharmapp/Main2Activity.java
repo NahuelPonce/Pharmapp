@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pharmapp.db.DbHelper;
 import com.example.pharmapp.ui.gallery.GalleryFragment;
+import com.example.pharmapp.ui.home.AdapterMedicamento;
 import com.example.pharmapp.ui.home.DetalleMedicamento;
 import com.example.pharmapp.ui.home.Medicamento;
 import com.google.android.material.snackbar.Snackbar;
@@ -68,13 +70,11 @@ public class Main2Activity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
+            final View vistaHeader = binding.navView.getHeaderView(0);
 
-           // nomreusu = (TextView) findViewById(R.id.nombreusu);
-            //String usu = getIntent().getStringExtra("usuario");
-            //nomreusu.setText(usu);
-
-
-
+            final TextView nomreusu = vistaHeader.findViewById(R.id.nombreusu);
+            String usu = getIntent().getStringExtra("usuario");
+            nomreusu.setText(usu);
     }
 
 
