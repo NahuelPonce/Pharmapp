@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +13,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.Response.ErrorListener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -22,6 +24,7 @@ import com.example.pharmapp.ui.gallery.GalleryFragment;
 import com.example.pharmapp.ui.home.AdapterMedicamento;
 import com.example.pharmapp.ui.home.DetalleMedicamento;
 import com.example.pharmapp.ui.home.Medicamento;
+import com.example.pharmapp.ui.home.MedicamentoBD;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -36,6 +39,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pharmapp.databinding.ActivityMain2Binding;
 import com.google.gson.JsonObject;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,17 +53,12 @@ public class Main2Activity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMain2Binding binding;
-    //public static final String nombres ="usuario";
+
     RequestQueue requestQueue;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Intent recibir = getIntent();
-
-        //TextView nomreusu;
         requestQueue = Volley.newRequestQueue(this);
 
 
@@ -90,45 +89,64 @@ public class Main2Activity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
-            final View vistaHeader = binding.navView.getHeaderView(0);
 
-            final TextView nomreusu = vistaHeader.findViewById(R.id.nombreusu);
+            String usuario = getIntent().getStringExtra("usuario");
 
-            String usu = getIntent().getStringExtra("usuario");
-            //cargarusuario(usu,"http://192.168.0.87/medicamentos_android/buscarusuario.php?usuario="+usu);
-            nomreusu.setText(usu);
+
+        cargarusuario("http://192.168.0.87/medicamentos_android/buscarusuario.php?usuario="+usuario);
+            //nomreusu.setText(usu);
     }
 
-    /*private void cargarusuario( String usu, String URL) {
-        RequestQueue requestQueue= Volley.newRequestQueue(this);
-        final View vistaHeader = binding.navView.getHeaderView(0);
-        //final TextView obrasocial= vistaHeader.findViewById(R.id.textView);
+    private void cargarusuario(String URL) {       final View vistaHeader = binding.navView.getHeaderView(0);
+        final TextView obrasocial= vistaHeader.findViewById(R.id.textView);
         final TextView nomreusu = vistaHeader.findViewById(R.id.nombreusu);
+        final ImageView perfil = vistaHeader.findViewById(R.id.imageView);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONObject response) {
-                    String nombre;
+            public void onResponse(String response) {
+                String usuario, contraseña, nombre, apellido,nombrecompleto,foto, url, os,obr;
 
+                //Toast.makeText(Main2Activity.this,response,Toast.LENGTH_SHORT).show();
                 try {
-                    nombre = response.getString("usuario");
-                    nomreusu.setText(nombre);
-                }catch (JSONException e){
+
+                    JSONObject obj = new JSONObject(response);
+                    usuario = obj.getString("usuario");
+                    nombre = obj.getString("nombre");
+                    apellido = obj.getString("apellido");
+                    os = obj.getString("obrasocial");
+                    nombrecompleto = nombre+"  "+apellido;
+                    obr = "Obra Social:  "+os;
+                    nomreusu.setText(nombrecompleto);
+                    obrasocial.setText(obr);
+
+                    /*url = "http://192.168.0.87/medicamentos_android/drawable/"+usuario+".png";
+                    Picasso.with(getApplicationContext())
+                            .load(url)
+                            .resize(50, 50)
+                            .centerCrop()
+                            .into(perfil);
+
+                     */
+
+                } catch (JSONException e) {
+                    Toast.makeText(Main2Activity.this,e.toString(),Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Main2Activity.this, "Si no entro lloro :)", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Main2Activity.this,error.toString(),Toast.LENGTH_SHORT).show();
             }
-        }
-        );
-        requestQueue.add(jsonObjectRequest);
+        });
+
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
-     */
+
 
 
     @Override
