@@ -115,20 +115,20 @@ public class Main2Activity extends AppCompatActivity {
                     nombre = obj.getString("nombre");
                     apellido = obj.getString("apellido");
                     os = obj.getString("obrasocial");
+                    foto=obj.getString("foto");
                     nombrecompleto = nombre+"  "+apellido;
                     obr = "Obra Social:  "+os;
                     nomreusu.setText(nombrecompleto);
                     obrasocial.setText(obr);
 
-                    /*url = "http://192.168.0.87/medicamentos_android/drawable/"+usuario+".png";
-                    Picasso.with(getApplicationContext())
-                            .load(url)
-                            .resize(50, 50)
-                            .centerCrop()
-                            .into(perfil);
-
-                     */
-
+                    if(foto.isEmpty()){
+                        perfil.setImageResource(R.drawable.blue_modern_icons_maternity_doctor_logo);
+                    }else {
+                        url = "http://192.168.0.87/medicamentos_android/drawable/"+usuario+".png";
+                        Picasso.with(getApplicationContext())
+                                .load(url)
+                                .into(perfil);
+                    }
                 } catch (JSONException e) {
                     Toast.makeText(Main2Activity.this,e.toString(),Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
