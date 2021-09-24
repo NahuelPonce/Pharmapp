@@ -1,6 +1,8 @@
 package com.example.pharmapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +25,7 @@ import com.example.pharmapp.db.DbHelper;
 import com.example.pharmapp.ui.gallery.GalleryFragment;
 import com.example.pharmapp.ui.home.AdapterMedicamento;
 import com.example.pharmapp.ui.home.DetalleMedicamento;
+import com.example.pharmapp.ui.home.HomeFragment;
 import com.example.pharmapp.ui.home.Medicamento;
 import com.example.pharmapp.ui.home.MedicamentoBD;
 import com.google.android.material.snackbar.Snackbar;
@@ -62,6 +65,10 @@ public class Main2Activity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
 
+
+
+
+
         DbHelper dbHelper = new DbHelper(this);
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -90,8 +97,11 @@ public class Main2Activity extends AppCompatActivity {
 
 
 
-            String usuario = getIntent().getStringExtra("usuario");
-
+             String usuario = getIntent().getStringExtra("usuario");
+             SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
+             SharedPreferences.Editor editor= preferences.edit();
+             editor.putString("user",usuario);
+             editor.commit();
 
         cargarusuario("http://192.168.0.87/medicamentos_android/buscarusuario.php?usuario="+usuario);
             //nomreusu.setText(usu);

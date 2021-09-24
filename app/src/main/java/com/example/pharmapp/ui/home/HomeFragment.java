@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.textclassifier.TextClassification;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -50,6 +51,7 @@ public class HomeFragment extends Fragment {
         svSearch = v.findViewById(R.id.svSearch);
         bajoreceta = v.findViewById(R.id.textView5);
 
+
         svSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -72,8 +74,6 @@ public class HomeFragment extends Fragment {
 
 
         llenar();
-
-
 
 
         //mostrar();

@@ -2,16 +2,15 @@ package com.example.pharmapp.ui.gallery;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -20,38 +19,48 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.pharmapp.R;
 import com.example.pharmapp.db.DbHelper;
 import com.example.pharmapp.ui.home.Medicamento;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.database.Cursor;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class GalleryFragment<Total> extends Fragment {
+
 
     Context context;
     ArrayList<Medicamento> medicamentoArrayList;
     RecyclerView recyclerViewMedicamentos;
     AdapterMedicamento2 adapter;
     DbHelper dbHelper;
-    Button este, continuar;
+    Button este, continuar,comprar;
     ImageView foto;
     GridView gvImagenes;
     GridViewAdapter baseAdapter;
@@ -107,6 +116,12 @@ public class GalleryFragment<Total> extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_gallery, container,false);
+
+
+
+        //SharedPreferences preferences = context.getSharedPreferences("usuario",Context.MODE_PRIVATE);
+        SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String user=preferences.getString("user","No exite la informacion");
 
         recyclerViewMedicamentos = v.findViewById(R.id.lvLista2);
         este = v.findViewById(R.id.button4);
@@ -204,33 +219,169 @@ public class GalleryFragment<Total> extends Fragment {
             vacio.setVisibility(getView().GONE);
             gvImagenes.setVisibility(getView().VISIBLE);
             tot.setText(String.valueOf(total));
-
-
         }
 
-       /* if (recetas.isEmpty()){
-            gvImagenes.setVisibility(getView().GONE);
 
 
-        } else{
-            gvImagenes.setVisibility(getView().VISIBLE);
-        }
-*/
 
+        //REALIZAR COMPRA
+        comprar= v.findViewById(R.id.button2);
+
+
+        comprar.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                dbHelper = new DbHelper(v.getContext());
+                final SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+                Cursor cursorMedicamento;
+                cursorMedicamento = db.rawQuery("SELECT * FROM  t_carrito",null);
+                hacercompra(cursorMedicamento, user);
+            }
+
+        });
         return v;
     }
 
-    /*public void actualizar(List<Receta> recetas, View view) {
-        if (recetas.isEmpty()){
-            gvImagenes.setVisibility(getView().GONE);
-            Navigation.findNavController(view).navigate(R.id.action_nav_gallery_self);
 
-        } else{
-            gvImagenes.setVisibility(getView().VISIBLE);
-        }
+    public void hacercompra(Cursor cursorMedicamento, String user){
+
+
+        //traer usuario
+        String URLUSUARIO="http://192.168.0.87/medicamentos_android/buscarusuario.php?usuario="+user;
+
+        StringRequest stringRequ = new StringRequest(Request.Method.GET, URLUSUARIO, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String usuario, contraseña, nombre, apellido,nombrecompleto,foto, url, os,obr, calle,altura, direccion;
+
+                //Toast.makeText(Main2Activity.this,response,Toast.LENGTH_SHORT).show();
+                try {
+
+                    JSONObject obj = new JSONObject(response);
+                    usuario = obj.getString("usuario");
+                    nombre = obj.getString("nombre");
+                    apellido = obj.getString("apellido");
+                    calle = obj.getString("calle");
+                    altura = obj.getString("altura");
+                    direccion=calle+" "+altura;
+                    os = obj.getString("obrasocial");
+                    nombrecompleto = nombre+" "+apellido+" "+os;
+                    shop(nombrecompleto,cursorMedicamento,usuario,direccion);
+
+                } catch (JSONException e) {
+                    Toast.makeText(getActivity(),e.toString(),Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(),error.toString(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        RequestQueue requestQue= Volley.newRequestQueue(getContext());
+        requestQue.add(stringRequ);
+
+
 
 
     }
-    */
+
+    public void shop(String nombrecompleto, Cursor cursorMedicamento,  String usuario, String direccion){
+
+        String nombre = new String();
+        Double preciototal,total;
+        total = 0.0;
+        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+        String URL = "http://192.168.0.87/medicamentos_android/insertarpedidocliente.php";
+
+
+        if (cursorMedicamento.moveToFirst()){
+            do {
+
+                String idmedicamento = String.valueOf(cursorMedicamento.getInt(1));
+                String nombremedicamento = String.valueOf(cursorMedicamento.getString(2));
+                String comprimido = String.valueOf(cursorMedicamento.getInt(7));
+                String cantidad = String.valueOf(cursorMedicamento.getInt(5));
+                String precio = String.valueOf(cursorMedicamento.getDouble(3));
+
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //nada
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(),error.toString(),Toast.LENGTH_SHORT).show();
+                    }
+                }){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String,String> parametros=new HashMap<String, String>();
+                        parametros.put("nombrecomprador",nombrecompleto);
+                        parametros.put("usuariocomprador",usuario);
+                        parametros.put("idmedicamento",idmedicamento);
+                        parametros.put("nombremedicamento",nombremedicamento);
+                        parametros.put("comprimido",comprimido);
+                        parametros.put("cantidad",cantidad);
+                        parametros.put("fecha",currentDateTimeString);
+                        parametros.put("direccion",direccion);
+                        parametros.put("precio",precio);
+
+                        return parametros;
+
+                    }
+                };
+
+                RequestQueue requestQueue= Volley.newRequestQueue(getContext());
+                requestQueue.add(stringRequest);
+                    } while (cursorMedicamento.moveToNext());
+                }
+
+        /*
+        String URL = "http://192.168.0.87/medicamentos_android/insertarpedido.php";
+        String finalNombre = nombre;
+        String comprador = "violeta";
+        String direccion = "prueba";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //nada
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(),error.toString(),Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> parametros=new HashMap<String, String>();
+
+                parametros.put("comprador",nombrecompleto);
+                parametros.put("direccion",direccion);
+                parametros.put("descripcion", finalNombre);
+
+
+                return parametros;
+            }
+        };
+
+        RequestQueue requestQueue= Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+
+         */
+
+
+
+    }
+
+
 
 }

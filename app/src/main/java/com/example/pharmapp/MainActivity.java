@@ -1,8 +1,11 @@
 package com.example.pharmapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +20,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.pharmapp.databinding.FragmentGalleryBinding;
+import com.example.pharmapp.ui.gallery.GalleryFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,11 +35,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
         imagen = findViewById(R.id.logo);
         imagen.setImageResource(R.drawable.logo);
         editTextTextPassword = findViewById(R.id.editTextTextPassword);
         editTextTextPersonName = findViewById(R.id.editTextTextPersonName);
         button = findViewById(R.id.button);
+
 
 
 
@@ -55,10 +64,14 @@ public class MainActivity extends AppCompatActivity {
                     //Bundle parametros = new Bundle();
                     //parametros.putString("usuario",editTextTextPersonName.getText().toString());
 
-                     //intent.putExtra(Main2Activity.nombres,editTextTextPersonName.getText());
+
+
+                    //intent.putExtra(Main2Activity.nombres,editTextTextPersonName.getText());
                     String valor = editTextTextPersonName.getText().toString();
                     intent.putExtra("usuario",valor);
                     startActivity(intent);
+
+
                 } else {
                     Toast.makeText(MainActivity.this, "Usuario o contraseña incorrecta", Toast.LENGTH_SHORT).show();
                 }
