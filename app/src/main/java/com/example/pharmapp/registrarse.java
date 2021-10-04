@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -44,6 +45,7 @@ public class registrarse extends AppCompatActivity {
     EditText depto;
     EditText obrasocial;
     EditText numafiliado;
+    EditText localidad;
     Bitmap bitmap;
 
 
@@ -81,11 +83,28 @@ public class registrarse extends AppCompatActivity {
         usuario = findViewById(R.id.usuario);
         contraseña = findViewById(R.id.contraseña);
         dni = findViewById(R.id.dni);
+        localidad = findViewById(R.id.localidad);
         calle = findViewById(R.id.calle);
         altura = findViewById(R.id.altura);
         depto = findViewById(R.id.depto);
         obrasocial = findViewById(R.id.obrasocial);
         numafiliado = findViewById(R.id.numeroafiliado);
+
+        findViewById(R.id.checkBox).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckBox opcionMostrar = (CheckBox) findViewById(R.id.checkBox);
+                if(opcionMostrar.isChecked()){
+                    depto.setVisibility(View.VISIBLE);
+                }
+                else {
+
+                        depto.setVisibility(View.GONE);
+
+                }
+
+            }
+        });
 
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,23 +129,27 @@ public class registrarse extends AppCompatActivity {
                 final String dn;
                 final String alt;
                 final String na;
+                final String lo;
                 nom = String.valueOf(nombre.getText());
                 ape = String.valueOf(apellido.getText());
                 usu = String.valueOf(usuario.getText());
                 con = String.valueOf(contraseña.getText());
                 dn = String.valueOf(dni.getText());
                 ft=  String.valueOf(foto.getResources());
+                lo= String.valueOf(localidad.getText());
                 cal = String.valueOf(calle.getText());
                 alt = String.valueOf(altura.getText());
                 dp = String.valueOf(depto.getText());
                 os = String.valueOf(obrasocial.getText());
                 na = String.valueOf(numafiliado.getText());
 
-                if (nom.length() == 0 || ape.length() == 0 || usu.length() == 0 || con.length() == 0 || dn.length() == 0 || cal.length() == 0 || alt.length() == 0 || os.length() == 0 || na.length() == 0){
+                if (nom.length() == 0 || ape.length() == 0 || usu.length() == 0 || con.length() == 0 || dn.length() == 0 || lo.length() == 0 || cal.length() == 0 || alt.length() == 0 || os.length() == 0 || na.length() == 0){
                       Toast.makeText(registrarse.this,"Hay campos requeridos incompletos", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    registrarusuario(nom,ape,usu,con,dn,ft,cal,alt,dp,os,na);
+
+
+                    registrarusuario(nom,ape,usu,con,dn,ft,lo,cal,alt,dp,os,na);
                     Intent intent = new Intent(registrarse.this, MainActivity.class);
                     startActivity(intent);
 
@@ -149,7 +172,7 @@ public class registrarse extends AppCompatActivity {
     }
 
 
-    private void registrarusuario(String nom, String ape, String usu, String con, String dn, String ft, String cal, String alt, String dp, String os, String  na){
+    private void registrarusuario(String nom, String ape, String usu, String con, String dn, String ft, String lo,String cal, String alt, String dp, String os, String na){
         String URL = "http://192.168.0.87/medicamentos_android/insertar.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -180,6 +203,7 @@ public class registrarse extends AppCompatActivity {
                 parametros.put("apellido",ape);
                 parametros.put("dni",dn);
                 parametros.put("foto",foto);
+                parametros.put("localidad",lo);
                 parametros.put("calle",cal);
                 parametros.put("altura",alt);
                 parametros.put("dpto",dp);

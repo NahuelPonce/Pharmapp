@@ -106,6 +106,14 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/localidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Localidad" />
+
+            <EditText
                 android:id="@+id/calle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -121,11 +129,18 @@
                 android:inputType="number"
                 android:hint="Altura" />
 
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Depto" />
+
             <EditText
                 android:id="@+id/depto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:visibility="gone"
                 android:inputType="textPersonName"
                 android:hint="Depto" />
 

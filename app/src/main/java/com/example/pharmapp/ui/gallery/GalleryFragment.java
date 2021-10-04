@@ -21,6 +21,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,7 +39,9 @@ import com.example.pharmapp.ui.home.Medicamento;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -116,8 +119,6 @@ public class GalleryFragment<Total> extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_gallery, container,false);
-
-
 
         //SharedPreferences preferences = context.getSharedPreferences("usuario",Context.MODE_PRIVATE);
         SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
@@ -238,7 +239,9 @@ public class GalleryFragment<Total> extends Fragment {
 
                 Cursor cursorMedicamento;
                 cursorMedicamento = db.rawQuery("SELECT * FROM  t_carrito",null);
-                hacercompra(cursorMedicamento, user);
+                hacercompra(cursorMedicamento, user,db);
+
+                Toast.makeText(getActivity(),"Compra realizada con exito, espere la confirmacion",Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -246,7 +249,7 @@ public class GalleryFragment<Total> extends Fragment {
     }
 
 
-    public void hacercompra(Cursor cursorMedicamento, String user){
+    public void hacercompra(Cursor cursorMedicamento, String user, SQLiteDatabase db){
 
 
         //traer usuario
@@ -255,7 +258,7 @@ public class GalleryFragment<Total> extends Fragment {
         StringRequest stringRequ = new StringRequest(Request.Method.GET, URLUSUARIO, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                String usuario, contraseña, nombre, apellido,nombrecompleto,foto, url, os,obr, calle,altura, direccion;
+                String usuario, contraseña, nombre, apellido,nombrecompleto,foto, url, os,localidad, calle,altura, direccion;
 
                 //Toast.makeText(Main2Activity.this,response,Toast.LENGTH_SHORT).show();
                 try {
@@ -264,12 +267,14 @@ public class GalleryFragment<Total> extends Fragment {
                     usuario = obj.getString("usuario");
                     nombre = obj.getString("nombre");
                     apellido = obj.getString("apellido");
+                    localidad = obj.getString("localidad");
                     calle = obj.getString("calle");
                     altura = obj.getString("altura");
-                    direccion=calle+" "+altura;
+                    direccion=calle+" "+altura+" "+localidad;
                     os = obj.getString("obrasocial");
-                    nombrecompleto = nombre+" "+apellido+" "+os;
-                    shop(nombrecompleto,cursorMedicamento,usuario,direccion);
+                    nombrecompleto = nombre+" "+apellido;
+                    //shop(nombrecompleto,cursorMedicamento,usuario,direccion);
+                    shop2(nombrecompleto,os,cursorMedicamento,usuario,direccion,db);
 
                 } catch (JSONException e) {
                     Toast.makeText(getActivity(),e.toString(),Toast.LENGTH_SHORT).show();
@@ -292,6 +297,8 @@ public class GalleryFragment<Total> extends Fragment {
 
     }
 
+
+/*
     public void shop(String nombrecompleto, Cursor cursorMedicamento,  String usuario, String direccion){
 
         String nombre = new String();
@@ -344,11 +351,36 @@ public class GalleryFragment<Total> extends Fragment {
                     } while (cursorMedicamento.moveToNext());
                 }
 
-        /*
+
+
+    }*/
+
+    public void shop2(String nombrecompleto,String os, Cursor cursorMedicamento, String usuario, String direccion, SQLiteDatabase db){
+
+        String identificadormedicamento = new String();
+        String cantidades = new String();
+
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+        // formattedDate have current date/time
+
+
+        if (cursorMedicamento.moveToFirst()){
+            do {
+                String idmedicamento = String.valueOf(cursorMedicamento.getInt(1));
+                String cantidad = String.valueOf(cursorMedicamento.getInt(5));
+
+                identificadormedicamento = idmedicamento + ";"+ identificadormedicamento;
+                cantidades = cantidad+";"+cantidades;
+
+            } while (cursorMedicamento.moveToNext());
+        }
         String URL = "http://192.168.0.87/medicamentos_android/insertarpedido.php";
-        String finalNombre = nombre;
-        String comprador = "violeta";
-        String direccion = "prueba";
+        String finalIdentificadormedicamento = identificadormedicamento;
+
+        String finalCantidades = cantidades;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -364,20 +396,23 @@ public class GalleryFragment<Total> extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> parametros=new HashMap<String, String>();
 
-                parametros.put("comprador",nombrecompleto);
+                parametros.put("fecha",formattedDate);
+                parametros.put("nombrecomprador",nombrecompleto);
+                parametros.put("usuariocomprador",usuario);
+                parametros.put("obrasocial",os);
                 parametros.put("direccion",direccion);
-                parametros.put("descripcion", finalNombre);
-
+                parametros.put("medicamentosid", finalIdentificadormedicamento);
+                parametros.put("cantidades", finalCantidades);
 
                 return parametros;
+
             }
         };
 
         RequestQueue requestQueue= Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
-
-         */
-
+        db.delete("t_carrito",null,null);
+        Navigation.findNavController(getView()).navigate(R.id.action_nav_gallery_self);
 
 
     }

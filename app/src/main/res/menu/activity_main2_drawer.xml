@@ -14,7 +14,7 @@
             android:title="Carrito de Compras" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/user"
             android:title="@string/menu_slideshow" />
     </group>
 </menu>

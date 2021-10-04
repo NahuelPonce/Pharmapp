@@ -63,9 +63,6 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent= new Intent(getApplicationContext(), Main2Activity.class);
                     //Bundle parametros = new Bundle();
                     //parametros.putString("usuario",editTextTextPersonName.getText().toString());
-
-
-
                     //intent.putExtra(Main2Activity.nombres,editTextTextPersonName.getText());
                     String valor = editTextTextPersonName.getText().toString();
                     intent.putExtra("usuario",valor);
