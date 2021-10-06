@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -29,57 +28,62 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="407dp"
-                android:layout_height="347dp">
+                android:layout_height="457dp">
 
                 <TextView
                     android:id="@+id/tex15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="69dp"
+                    android:layout_height="32dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Nombre:"
+                    android:textSize="16dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <EditText
                     android:id="@+id/nomperfil"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
+                    android:layout_height="37dp"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
                     android:text="nombre"
+                    android:textSize="16sp"
                     app:layout_constraintStart_toEndOf="@+id/tex15"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/text19"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="69dp"
+                    android:layout_height="32dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="17dp"
                     android:text="Apellido"
+                    android:textSize="16dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tex15" />
 
-                <TextView
+                <EditText
                     android:id="@+id/apeperfil"
-                    android:layout_width="61dp"
-                    android:layout_height="16dp"
-                    android:layout_marginStart="40dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="37dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="12dp"
                     android:text="apellido"
+                    android:textSize="16dp"
                     app:layout_constraintStart_toEndOf="@+id/text19"
                     app:layout_constraintTop_toBottomOf="@+id/nomperfil" />
 
                 <TextView
                     android:id="@+id/text21"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="61dp"
+                    android:layout_height="33dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginTop="20dp"
                     android:text="Usuario"
+                    android:textSize="16dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text19" />
@@ -89,29 +93,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginTop="20dp"
                     android:text="Obra social:"
+                    android:textSize="16dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text21" />
 
-                <TextView
+                <EditText
                     android:id="@+id/usuperfil"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="44dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_height="37dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="12dp"
                     android:text="usuario"
+                    android:textSize="16dp"
                     app:layout_constraintStart_toEndOf="@+id/text21"
                     app:layout_constraintTop_toBottomOf="@+id/apeperfil" />
 
-                <TextView
+                <EditText
                     android:id="@+id/obraperfil"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_height="37dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="12dp"
                     android:text="obrasocial"
+                    android:textSize="16dp"
                     app:layout_constraintStart_toEndOf="@+id/text22"
                     app:layout_constraintTop_toBottomOf="@+id/usuperfil" />
 
@@ -120,8 +127,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginTop="32dp"
                     android:text="Localidad:"
+                    android:textSize="16dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text22" />
@@ -131,28 +139,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginTop="24dp"
                     android:text="Calle"
+                    android:textSize="16dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text29" />
 
-                <TextView
+                <EditText
                     android:id="@+id/locperfil"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_height="37dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     android:text="localidad"
+                    android:textSize="16dp"
                     app:layout_constraintStart_toEndOf="@+id/text23"
                     app:layout_constraintTop_toBottomOf="@+id/obraperfil" />
 
-                <TextView
+                <EditText
                     android:id="@+id/caperfil"
                     android:layout_width="wrap_content"
-                    android:layout_height="19dp"
-                    android:layout_marginStart="60dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_height="37dp"
+                    android:layout_marginStart="56dp"
+                    android:layout_marginTop="12dp"
                     android:text="calle"
                     app:layout_constraintStart_toEndOf="@+id/text24"
                     app:layout_constraintTop_toBottomOf="@+id/numperfil" />
@@ -162,19 +172,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginTop="32dp"
                     android:text="Altura"
+                    android:textSize="16dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text24" />
 
-                <TextView
+                <EditText
                     android:id="@+id/altperfil"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="52dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_height="37dp"
+                    android:layout_marginStart="44dp"
+                    android:layout_marginTop="12dp"
                     android:text="altura"
+                    android:textSize="16dp"
                     app:layout_constraintStart_toEndOf="@+id/text25"
                     app:layout_constraintTop_toBottomOf="@+id/caperfil" />
 
@@ -183,18 +195,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginTop="20dp"
                     android:text="Depto"
+                    android:textSize="16dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text25" />
 
-                <TextView
+                <EditText
                     android:id="@+id/dpperfil"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="56dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_height="37dp"
+                    android:layout_marginStart="44dp"
+                    android:layout_marginTop="8dp"
                     android:text="depto"
                     app:layout_constraintStart_toEndOf="@+id/text27"
                     app:layout_constraintTop_toBottomOf="@+id/altperfil" />
@@ -204,21 +217,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginTop="32dp"
                     android:text="N° afiliado"
+                    android:textSize="16dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text23" />
 
-                <TextView
+                <EditText
                     android:id="@+id/numperfil"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
                     android:text="numeroafiliado"
+                    android:textSize="16dp"
                     app:layout_constraintStart_toEndOf="@+id/text29"
                     app:layout_constraintTop_toBottomOf="@+id/locperfil" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button

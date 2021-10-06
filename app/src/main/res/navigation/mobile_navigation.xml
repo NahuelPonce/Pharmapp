@@ -32,7 +32,12 @@
         android:id="@+id/nav_slideshow"
         android:name="com.example.pharmapp.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_slideshow" >
+        <action
+            android:id="@+id/action_nav_slideshow_to_editarPerfilUsuario"
+            app:destination="@id/editarPerfilUsuario" />
+    </fragment>
+
 
     <fragment
         android:id="@+id/nav_detalle"
@@ -52,5 +57,13 @@
         <action
             android:id="@+id/action_nav_visor_receta_to_nav_gallery"
             app:destination="@id/nav_gallery" />
+    </fragment>
+    <fragment
+        android:id="@+id/editarPerfilUsuario"
+        android:name="com.example.pharmapp.EditarPerfilUsuario"
+        android:label="EditarPerfilUsuario" >
+        <action
+            android:id="@+id/action_editarPerfilUsuario_to_nav_slideshow"
+            app:destination="@id/nav_slideshow" />
     </fragment>
 </navigation>

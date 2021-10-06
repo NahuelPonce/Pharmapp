@@ -1,18 +1,18 @@
-package com.example.pharmapp.ui.slideshow;
+package com.example.pharmapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,7 +20,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.pharmapp.R;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -28,35 +27,35 @@ import org.json.JSONObject;
 
 import static androidx.navigation.Navigation.findNavController;
 
-public class SlideshowFragment extends Fragment {
+
+public class EditarPerfilUsuario extends Fragment {
 
 
-
-
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-
-        View v = inflater.inflate(R.layout.fragment_slideshow, container,false);
-
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_editar_perfil_usuario, container, false);
         SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
         String user=preferences.getString("user","No exite la informacion");
 
         //traer usuario
         String URLUSUARIO="http://192.168.0.87/medicamentos_android/buscarusuario.php?usuario="+user;
 
+
         StringRequest stringRequ = new StringRequest(Request.Method.GET, URLUSUARIO, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 String usuario, contraseña, nombre, apellido,nombrecompleto,foto, url, os,localidad, calle,altura, direccion,dpto, numos;
-                TextView nombreperfil= v.findViewById(R.id.nomperfil);
-                TextView apellidoperfil = v.findViewById(R.id.apeperfil);
-                TextView usuarioperfil = v.findViewById(R.id.usuperfil);
-                TextView obrasocialperfil = v.findViewById(R.id.obraperfil);
-                TextView numeroafiliadoperfil = v.findViewById(R.id.numperfil);
-                TextView localidadperfil = v.findViewById(R.id.locperfil);
-                TextView calleperfil= v.findViewById(R.id.caperfil);
-                TextView alturaperfil = v.findViewById(R.id.altperfil);
-                TextView dptoperfil = v.findViewById(R.id.dpperfil);
+                EditText nombreperfil= v.findViewById(R.id.nomperfil);
+                EditText apellidoperfil = v.findViewById(R.id.apeperfil);
+                EditText usuarioperfil = v.findViewById(R.id.usuperfil);
+                EditText obrasocialperfil = v.findViewById(R.id.obraperfil);
+                EditText numeroafiliadoperfil = v.findViewById(R.id.numperfil);
+                EditText localidadperfil = v.findViewById(R.id.locperfil);
+                EditText calleperfil= v.findViewById(R.id.caperfil);
+                EditText alturaperfil = v.findViewById(R.id.altperfil);
+                EditText dptoperfil = v.findViewById(R.id.dpperfil);
 
                 ImageView fotoperfil = v.findViewById(R.id.imagperfil);
 
@@ -111,21 +110,8 @@ public class SlideshowFragment extends Fragment {
         RequestQueue requestQue= Volley.newRequestQueue(getContext());
         requestQue.add(stringRequ);
 
-        Button editar = v.findViewById(R.id.buttoneditar);
-
-        editar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                findNavController(v).navigate(R.id.action_nav_slideshow_to_editarPerfilUsuario);
-            }
-            });
 
 
-
-        return v;
+        return  v;
     }
-
-
-
 }
