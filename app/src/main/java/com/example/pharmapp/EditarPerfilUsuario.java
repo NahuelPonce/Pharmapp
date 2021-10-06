@@ -1,12 +1,23 @@
 package com.example.pharmapp;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,18 +35,29 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.pharmapp.db.DbHelper;
+import com.example.pharmapp.ui.gallery.GridViewAdapter;
+import com.example.pharmapp.ui.gallery.Receta;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static androidx.navigation.Navigation.findNavController;
 
 
 public class EditarPerfilUsuario extends Fragment {
+    ImageView fotoperfil;
 
 
     @Override
@@ -46,6 +68,36 @@ public class EditarPerfilUsuario extends Fragment {
         SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
         String user=preferences.getString("user","No exite la informacion");
 
+        ImageView fotoperfil = v.findViewById(R.id.imagperfil);
+
+        ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+                new ActivityResultCallback<Uri> () {
+                    @Override
+                    public void onActivityResult(Uri uri) {
+                        //foto.setImageURI((Uri) result);
+                            try {
+
+                                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri );
+                                fotoperfil.setImageBitmap(bitmap);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                    }
+                });
+        Button foto = v.findViewById(R.id.buttonperfil);
+
+        foto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Pass in the mime type you'd like to allow the user to select
+                // as the input
+                mGetContent.launch("image/*");
+            }
+        });
+
+
+
 
         EditText nombreperfil= v.findViewById(R.id.nomperfil);
         EditText apellidoperfil = v.findViewById(R.id.apeperfil);
@@ -54,12 +106,14 @@ public class EditarPerfilUsuario extends Fragment {
         EditText obrasocialperfil = v.findViewById(R.id.obraperfil);
         EditText numeroafiliadoperfil = v.findViewById(R.id.numperfil);
         EditText dniperfil = v.findViewById(R.id.dniperf);
+
         EditText localidadperfil = v.findViewById(R.id.locperfil);
         EditText calleperfil= v.findViewById(R.id.caperfil);
         EditText alturaperfil = v.findViewById(R.id.altperfil);
         EditText dptoperfil = v.findViewById(R.id.dpperfil);
 
-        ImageView fotoperfil = v.findViewById(R.id.imagperfil);
+
+
 
         //traer usuario
         String URLUSUARIO="http://192.168.0.87/medicamentos_android/buscarusuario.php?usuario="+user;
@@ -86,7 +140,7 @@ public class EditarPerfilUsuario extends Fragment {
                     dpto = obj.getString("dpto");
                     os = obj.getString("obrasocial");
                     numos = obj.getString("numafiliado");
-                    foto=obj.getString("foto");
+                    foto= obj.getString("foto");
 
                     nombreperfil.setText(nombre);
                     apellidoperfil.setText(apellido);
@@ -106,6 +160,8 @@ public class EditarPerfilUsuario extends Fragment {
                         url = "http://192.168.0.87/medicamentos_android/drawable/"+usuario+".png";
                         Picasso.with(getActivity())
                                 .load(url)
+                                .networkPolicy(NetworkPolicy.NO_CACHE)
+                                .memoryPolicy(MemoryPolicy.NO_CACHE)
                                 .into(fotoperfil);
                     }
 
@@ -132,7 +188,6 @@ public class EditarPerfilUsuario extends Fragment {
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText nombre_p,apellido_p,dni_p,contra_p,obrasocial_p,numeroafiliado_p,localidad_p,calle_p,altura_p;
                 /*nombre_p= v.findViewById(R.id.nomperfil);
                 apellido_p = v.findViewById(R.id.apeperfil);
                 dni_p= v.findViewById(R.id.dniperf);
@@ -167,7 +222,7 @@ public class EditarPerfilUsuario extends Fragment {
                 ape = String.valueOf(apellidoperfil.getText());
                 con = String.valueOf(contraperfil.getText());
                 dn = String.valueOf(dniperfil.getText());
-                //ft=  String.valueOf(foto.getResources());
+                //ft=  String.valueOf(fotoperfil.getResources());
                 lo= String.valueOf(localidadperfil.getText());
                 cal = String.valueOf(calleperfil.getText());
                 alt = String.valueOf(alturaperfil.getText());
@@ -176,13 +231,13 @@ public class EditarPerfilUsuario extends Fragment {
                 na = String.valueOf(numeroafiliadoperfil.getText());
 
 
-                if (nom.length() == 0 || nom.length() == 0 || os.length() == 0 || lo.length() == 0 || cal.length() == 0 || alt.length() == 0 || na.length() == 0){
+                if (nom.length() == 0 || ape.length() == 0 || os.length() == 0 || lo.length() == 0 || cal.length() == 0 || alt.length() == 0 || na.length() == 0){
                     Toast.makeText(getActivity(),"Hay campos requeridos incompletos", Toast.LENGTH_SHORT).show();
 
                 } else {
 
 
-                    registrarusuario(usu,nom,ape,con,dn,lo,cal,alt,os,na);
+                    registrarusuario(usu,nom,ape,con,dn,lo,cal,alt,os,na,fotoperfil);
 
                     findNavController(v).navigate(R.id.action_editarPerfilUsuario_to_nav_slideshow);
 
@@ -195,9 +250,15 @@ public class EditarPerfilUsuario extends Fragment {
         });
         return  v;
     }
+    public String getStringImagen(Bitmap bmp) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG,100,baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodeImage = Base64.getEncoder().encodeToString(imageBytes);
+        return encodeImage;
+    }
 
-
-    private void registrarusuario(String usu, String nom, String ape, String con,String dn, String lo, String cal,String alt,String os,String na){
+    private void registrarusuario(String usu, String nom, String ape, String con, String dn, String lo, String cal, String alt, String os, String na, ImageView fotoperfil){
         String URL = "http://192.168.0.87/medicamentos_android/actualizarusuario.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -214,11 +275,17 @@ public class EditarPerfilUsuario extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> parametros=new HashMap<String, String>();
+
+                Bitmap bitmap = ((BitmapDrawable)fotoperfil.getDrawable()).getBitmap();
+
+                String foto= getStringImagen(bitmap);
+
                 parametros.put("usuario",usu);
                 parametros.put("contraseña",con);
                 parametros.put("nombre",nom);
                 parametros.put("apellido",ape);
                 parametros.put("dni",dn);
+                parametros.put("foto",foto);
                 parametros.put("localidad",lo);
                 parametros.put("calle",cal);
                 parametros.put("altura",alt);

@@ -42,6 +42,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pharmapp.databinding.ActivityMain2Binding;
 import com.google.gson.JsonObject;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -137,6 +139,8 @@ public class Main2Activity extends AppCompatActivity {
                         url = "http://192.168.0.87/medicamentos_android/drawable/"+usuario+".png";
                         Picasso.with(getApplicationContext())
                                 .load(url)
+                                .networkPolicy(NetworkPolicy.NO_CACHE)
+                                .memoryPolicy(MemoryPolicy.NO_CACHE)
                                 .into(perfil);
                     }
                 } catch (JSONException e) {

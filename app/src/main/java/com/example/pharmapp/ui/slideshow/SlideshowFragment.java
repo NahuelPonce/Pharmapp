@@ -21,6 +21,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.pharmapp.R;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -91,6 +93,8 @@ public class SlideshowFragment extends Fragment {
                         url = "http://192.168.0.87/medicamentos_android/drawable/"+usuario+".png";
                         Picasso.with(getActivity())
                                 .load(url)
+                                .networkPolicy(NetworkPolicy.NO_CACHE)
+                                .memoryPolicy(MemoryPolicy.NO_CACHE)
                                 .into(fotoperfil);
                     }
 
