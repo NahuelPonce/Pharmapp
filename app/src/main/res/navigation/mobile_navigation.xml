@@ -63,7 +63,7 @@
         android:name="com.example.pharmapp.EditarPerfilUsuario"
         android:label="EditarPerfilUsuario" >
         <action
-            android:id="@+id/action_editarPerfilUsuario_to_nav_slideshow"
-            app:destination="@id/nav_slideshow" />
+            android:id="@+id/action_editarPerfilUsuario_to_nav_home"
+            app:destination="@id/nav_home" />
     </fragment>
 </navigation>

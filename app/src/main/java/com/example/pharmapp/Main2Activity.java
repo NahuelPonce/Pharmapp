@@ -63,13 +63,9 @@ public class Main2Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         requestQueue = Volley.newRequestQueue(this);
-
-
-
-
-
 
         DbHelper dbHelper = new DbHelper(this);
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -107,6 +103,7 @@ public class Main2Activity extends AppCompatActivity {
 
         cargarusuario("http://192.168.0.87/medicamentos_android/buscarusuario.php?usuario="+usuario);
             //nomreusu.setText(usu);
+
     }
 
     private void cargarusuario(String URL) {       final View vistaHeader = binding.navView.getHeaderView(0);

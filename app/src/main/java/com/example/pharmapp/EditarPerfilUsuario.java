@@ -216,7 +216,6 @@ public class EditarPerfilUsuario extends Fragment {
 
 
                 nom = String.valueOf(nombreperfil.getText());
-                Toast.makeText(getActivity(),nom,Toast.LENGTH_SHORT).show();
                 usu =String.valueOf(usuarioperfil.getText());
 
                 ape = String.valueOf(apellidoperfil.getText());
@@ -231,7 +230,7 @@ public class EditarPerfilUsuario extends Fragment {
                 na = String.valueOf(numeroafiliadoperfil.getText());
 
 
-                if (nom.length() == 0 || ape.length() == 0 || os.length() == 0 || lo.length() == 0 || cal.length() == 0 || alt.length() == 0 || na.length() == 0){
+                if (nom.length() == 0 || ape.length() == 0 || con.length() == 0 || dn.length() == 0 || os.length() == 0 || lo.length() == 0 || cal.length() == 0 || alt.length() == 0 || na.length() == 0){
                     Toast.makeText(getActivity(),"Hay campos requeridos incompletos", Toast.LENGTH_SHORT).show();
 
                 } else {
@@ -239,7 +238,13 @@ public class EditarPerfilUsuario extends Fragment {
 
                     registrarusuario(usu,nom,ape,con,dn,lo,cal,alt,os,na,fotoperfil);
 
-                    findNavController(v).navigate(R.id.action_editarPerfilUsuario_to_nav_slideshow);
+
+                    findNavController(v).navigate(R.id.action_editarPerfilUsuario_to_nav_home);
+
+
+
+                    //Intent intent= new Intent(getActivity(), Main2Activity.class);
+                    //startActivity(intent);
 
                 }
 
@@ -250,6 +255,7 @@ public class EditarPerfilUsuario extends Fragment {
         });
         return  v;
     }
+
     public String getStringImagen(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG,100,baos);
@@ -300,4 +306,6 @@ public class EditarPerfilUsuario extends Fragment {
         RequestQueue requestQueue= Volley.newRequestQueue(getActivity());
         requestQueue.add(stringRequest);
     }
+
+
 }
