@@ -116,7 +116,7 @@ public class EditarPerfilUsuario extends Fragment {
 
 
         //traer usuario
-        String URLUSUARIO="http://192.168.0.87/medicamentos_android/buscarusuario.php?usuario="+user;
+        String URLUSUARIO="http://192.168.0.39/medicamentos_android/buscarusuario.php?usuario="+user;
 
 
         StringRequest stringRequ = new StringRequest(Request.Method.GET, URLUSUARIO, new Response.Listener<String>() {
@@ -157,7 +157,7 @@ public class EditarPerfilUsuario extends Fragment {
                     if(foto.isEmpty()){
                         fotoperfil.setImageResource(R.drawable.blue_modern_icons_maternity_doctor_logo);
                     }else {
-                        url = "http://192.168.0.87/medicamentos_android/drawable/"+usuario+".png";
+                        url = "http://192.168.0.39/medicamentos_android/drawable/"+usuario+".png";
                         Picasso.with(getActivity())
                                 .load(url)
                                 .networkPolicy(NetworkPolicy.NO_CACHE)
@@ -265,7 +265,7 @@ public class EditarPerfilUsuario extends Fragment {
     }
 
     private void registrarusuario(String usu, String nom, String ape, String con, String dn, String lo, String cal, String alt, String os, String na, ImageView fotoperfil){
-        String URL = "http://192.168.0.87/medicamentos_android/actualizarusuario.php";
+        String URL = "http://192.168.0.39/medicamentos_android/actualizarusuario.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validarUsuario("http://192.168.0.87/medicamentos_android/validarusuario.php");
+                validarUsuario("http://192.168.0.39/medicamentos_android/validarusuario.php");
             }
         });
     }

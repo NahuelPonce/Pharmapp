@@ -208,7 +208,7 @@ public class GalleryFragment<Total> extends Fragment {
             gvImagenes.setVisibility(getView().GONE);
 
             //dbHelper =new DbHelper(getContext());
-            //db.delete("t_receta",null,null);
+            db.delete("t_receta",null,null);
         } else {
 
             if ( tieneokreceta == 0) {
@@ -263,7 +263,7 @@ public class GalleryFragment<Total> extends Fragment {
 
 
         //traer usuario
-        String URLUSUARIO="http://192.168.0.87/medicamentos_android/buscarusuario.php?usuario="+user;
+        String URLUSUARIO="http://192.168.0.39/medicamentos_android/buscarusuario.php?usuario="+user;
 
         StringRequest stringRequ = new StringRequest(Request.Method.GET, URLUSUARIO, new Response.Listener<String>() {
             @Override
@@ -310,62 +310,6 @@ public class GalleryFragment<Total> extends Fragment {
     }
 
 
-/*
-    public void shop(String nombrecompleto, Cursor cursorMedicamento,  String usuario, String direccion){
-
-        String nombre = new String();
-        Double preciototal,total;
-        total = 0.0;
-        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
-        String URL = "http://192.168.0.87/medicamentos_android/insertarpedidocliente.php";
-
-
-        if (cursorMedicamento.moveToFirst()){
-            do {
-
-                String idmedicamento = String.valueOf(cursorMedicamento.getInt(1));
-                String nombremedicamento = String.valueOf(cursorMedicamento.getString(2));
-                String comprimido = String.valueOf(cursorMedicamento.getInt(7));
-                String cantidad = String.valueOf(cursorMedicamento.getInt(5));
-                String precio = String.valueOf(cursorMedicamento.getDouble(3));
-
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //nada
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(),error.toString(),Toast.LENGTH_SHORT).show();
-                    }
-                }){
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String,String> parametros=new HashMap<String, String>();
-                        parametros.put("nombrecomprador",nombrecompleto);
-                        parametros.put("usuariocomprador",usuario);
-                        parametros.put("idmedicamento",idmedicamento);
-                        parametros.put("nombremedicamento",nombremedicamento);
-                        parametros.put("comprimido",comprimido);
-                        parametros.put("cantidad",cantidad);
-                        parametros.put("fecha",currentDateTimeString);
-                        parametros.put("direccion",direccion);
-                        parametros.put("precio",precio);
-
-                        return parametros;
-
-                    }
-                };
-
-                RequestQueue requestQueue= Volley.newRequestQueue(getContext());
-                requestQueue.add(stringRequest);
-                    } while (cursorMedicamento.moveToNext());
-                }
-
-
-
-    }*/
 
     public void shop2(String nombrecompleto,String os, Cursor cursorMedicamento, String usuario, String direccion, SQLiteDatabase db, Cursor  cursorReceta) throws InterruptedException {
 
@@ -389,7 +333,7 @@ public class GalleryFragment<Total> extends Fragment {
 
             } while (cursorMedicamento.moveToNext());
         }
-        String URL = "http://192.168.0.87/medicamentos_android/insertarpedido.php";
+        String URL = "http://192.168.0.39/medicamentos_android/insertarpedido.php";
         String finalIdentificadormedicamento = identificadormedicamento;
 
         String finalCantidades = cantidades;
@@ -433,7 +377,7 @@ public class GalleryFragment<Total> extends Fragment {
     private void traeridpedido(String formattedDate, String usuario, SQLiteDatabase db, Cursor cursorReceta) {
 
         /// persito recetas
-        String URLpedido = "http://192.168.0.87/medicamentos_android/traerpedido.php?usuario="+usuario+"&fecha="+formattedDate;
+        String URLpedido = "http://192.168.0.39/medicamentos_android/traerpedido.php?usuario="+usuario+"&fecha="+formattedDate;
 
         StringRequest stringRequest2 = new StringRequest(Request.Method.GET, URLpedido, new Response.Listener<String>() {
             @Override
@@ -482,28 +426,20 @@ public class GalleryFragment<Total> extends Fragment {
 
     public void receta(String idped, String fech, SQLiteDatabase db, Cursor cursorReceta){
 
-        String URLreceta = "http://192.168.0.87/medicamentos_android/insertarreceta.php";
+        String URLreceta = "http://192.168.0.39/medicamentos_android/insertarreceta.php";
         Toast.makeText(getActivity(),idped,Toast.LENGTH_SHORT).show();
-
 
         Integer i = 0;
         if (cursorReceta.moveToFirst() && cursorReceta != null){
             do {
-                byte[] receta = cursorReceta.getBlob(1);
-                ByteArrayInputStream bais = new ByteArrayInputStream(receta);
-                Bitmap bitmap = BitmapFactory.decodeStream(bais);
-
-                //recetaImagen.setImageBitmap(bitmap);
-                //ByteArrayOutputStream boas = new ByteArrayOutputStream();
-                //byte[] byteArray = cursorReceta.getBlob(1);
-                //Bitmap bm = BitmapFactory.decodeByteArray(byteArray, 0 ,byteArray.length);
-                //byte[] byteArray = cursorReceta.getBlob(1);
-                //Bitmap bm = BitmapFactory.decodeByteArray(byteArray, 0 ,byteArray.length);
-                String foto= getStringImagen(bitmap);
 
                 i=i+1;
                 Integer finalI = i;
                 String num= String.valueOf(finalI);
+                byte[] receta = cursorReceta.getBlob(1);
+                ByteArrayInputStream bais = new ByteArrayInputStream(receta);
+                Bitmap bitmap = BitmapFactory.decodeStream(bais);
+                String foto= getStringImagen(bitmap);
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URLreceta, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -521,7 +457,6 @@ public class GalleryFragment<Total> extends Fragment {
 
                         parametros.put("idpedido",idped);
                         parametros.put("foto",foto);
-                        parametros.put("fecha",fech);
                         parametros.put("num",num);
 
                         return parametros;

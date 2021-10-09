@@ -101,7 +101,7 @@ public class Main2Activity extends AppCompatActivity {
              editor.putString("user",usuario);
              editor.commit();
 
-        cargarusuario("http://192.168.0.87/medicamentos_android/buscarusuario.php?usuario="+usuario);
+        cargarusuario("http://192.168.0.39/medicamentos_android/buscarusuario.php?usuario="+usuario);
             //nomreusu.setText(usu);
 
     }
@@ -133,7 +133,7 @@ public class Main2Activity extends AppCompatActivity {
                     if(foto.isEmpty()){
                         perfil.setImageResource(R.drawable.blue_modern_icons_maternity_doctor_logo);
                     }else {
-                        url = "http://192.168.0.87/medicamentos_android/drawable/"+usuario+".png";
+                        url = "http://192.168.0.39/medicamentos_android/drawable/"+usuario+".png";
                         Picasso.with(getApplicationContext())
                                 .load(url)
                                 .networkPolicy(NetworkPolicy.NO_CACHE)
