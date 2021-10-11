@@ -236,6 +236,7 @@ public class GalleryFragment<Total> extends Fragment {
         comprar= v.findViewById(R.id.button2);
 
 
+        double finalTotal = total;
         comprar.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -250,7 +251,7 @@ public class GalleryFragment<Total> extends Fragment {
                 Cursor cursorReceta;
                 cursorReceta = db.rawQuery("SELECT * FROM t_receta", null);
 
-                hacercompra(cursorMedicamento, user,db,cursorReceta);
+                hacercompra(cursorMedicamento, user,db,cursorReceta, finalTotal);
 
                 Toast.makeText(getActivity(),"Compra realizada con exito, espere la confirmacion",Toast.LENGTH_SHORT).show();
 
@@ -262,7 +263,7 @@ public class GalleryFragment<Total> extends Fragment {
     }
 
 
-    public void hacercompra(Cursor cursorMedicamento, String user, SQLiteDatabase db, Cursor cursorReceta){
+    public void hacercompra(Cursor cursorMedicamento, String user, SQLiteDatabase db, Cursor cursorReceta, double total){
 
 
         //traer usuario
@@ -287,7 +288,7 @@ public class GalleryFragment<Total> extends Fragment {
                     os = obj.getString("obrasocial");
                     nombrecompleto = nombre+" "+apellido;
                     //shop(nombrecompleto,cursorMedicamento,usuario,direccion);
-                    shop2(nombrecompleto,os,cursorMedicamento,usuario,direccion,db,cursorReceta);
+                    shop2(nombrecompleto,os,cursorMedicamento,usuario,direccion,db,cursorReceta,total);
 
                 } catch (JSONException e) {
                     Toast.makeText(getActivity(),e.toString(),Toast.LENGTH_SHORT).show();
@@ -314,7 +315,7 @@ public class GalleryFragment<Total> extends Fragment {
 
 
 
-    public void shop2(String nombrecompleto,String os, Cursor cursorMedicamento, String usuario, String direccion, SQLiteDatabase db, Cursor  cursorReceta) throws InterruptedException {
+    public void shop2(String nombrecompleto, String os, Cursor cursorMedicamento, String usuario, String direccion, SQLiteDatabase db, Cursor cursorReceta, double total) throws InterruptedException {
 
         String identificadormedicamento = new String();
         String cantidades = new String();
@@ -362,6 +363,7 @@ public class GalleryFragment<Total> extends Fragment {
                 parametros.put("direccion", direccion);
                 parametros.put("medicamentosid", finalIdentificadormedicamento);
                 parametros.put("cantidades", finalCantidades);
+                parametros.put("preciototal", String.valueOf(total));
 
                 return parametros;
 
@@ -392,8 +394,11 @@ public class GalleryFragment<Total> extends Fragment {
                     JSONObject obj = new JSONObject(response);
                     idped = obj.getString("idpedido");
                     fech = obj.getString("fecha");
-                    Toast.makeText(getActivity(),idped+"ACAAAA",Toast.LENGTH_SHORT).show();
-                    receta(idped,fech,db,cursorReceta);
+
+                    if(cursorReceta.moveToFirst() && cursorReceta != null){
+                        receta(idped,fech,db,cursorReceta);
+                    }
+
 
                 } catch (JSONException e) {
                     Toast.makeText(getActivity(),e.toString()+"ACA",Toast.LENGTH_SHORT).show();
