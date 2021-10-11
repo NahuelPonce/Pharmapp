@@ -26,6 +26,7 @@ import com.example.pharmapp.ui.home.Medicamento;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.BreakIterator;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 //extends RecyclerView.Adapter<AdapterMedicamento.ViewHolder> implements View.OnClickListener
 public class AdapterMedicamento2 extends RecyclerView.Adapter<AdapterMedicamento2.ViewHolder> implements  View.OnClickListener {
@@ -57,13 +58,15 @@ public class AdapterMedicamento2 extends RecyclerView.Adapter<AdapterMedicamento
     @Override
     public void onBindViewHolder(@NonNull @NotNull AdapterMedicamento2.ViewHolder holder, int position) {
         String nombre = medicamentos.get(position).getNombre();
-        String precio = String.valueOf(medicamentos.get(position).getTotal());
+        Double precio = medicamentos.get(position).getTotal();
         String cantidad = String.valueOf(medicamentos.get(position).getCantidad());
         String comprimido = String.valueOf(medicamentos.get(position).getComprimido());
+        DecimalFormat df = new DecimalFormat("#.00");
+
 
         holder.cantidad.setText(cantidad);
         holder.nombre.setText(nombre);
-        holder.precio.setText(precio);
+        holder.precio.setText(df.format(precio));
         holder.comprimido.setText(comprimido);
 
 

@@ -144,7 +144,9 @@ public class DetalleMedicamento extends Fragment {
 
                     Cursor c = db.rawQuery("SELECT id, cantidad, total FROM t_carrito where medicamentoId=?", new String[]{(String) medicamentoId.getText().toString()});
                     ContentValues values = new ContentValues();
+                    DecimalFormat df = new DecimalFormat("#.00");
 
+                    //medicamentoPrecioTotal.setText(formatter.format(resultado));
 
                     if (!c.moveToFirst()) {
                         values.put("medicamentoId", Integer.parseInt(medicamentoId.getText().toString()));
@@ -161,6 +163,7 @@ public class DetalleMedicamento extends Fragment {
 
                         int nuevaCantidad = c.getInt(1) + Integer.parseInt(medicamentoCantidad.getText().toString());
                         float nuevototal = c.getFloat(2) + Float.parseFloat(medicamentoPrecioTotal.getText().toString().replace("$", ""));
+
                         values.put("cantidad", nuevaCantidad);
                         values.put("total", nuevototal);
                         db.update("t_carrito", values, "medicamentoId=?", new String[]{medicamentoId.getText().toString()});
@@ -190,7 +193,8 @@ public class DetalleMedicamento extends Fragment {
         double resultado = 0;
         double medicamentop= precio;
         resultado=cantidad*medicamentop;
-        //medicamentoPrecioTotal.setText(formatter.format(resultado));
-        medicamentoPrecioTotal.setText(String.valueOf(resultado));
+        DecimalFormat df = new DecimalFormat("#.00");
+        medicamentoPrecioTotal.setText(String.valueOf(df.format(resultado)));
+
     }
 }

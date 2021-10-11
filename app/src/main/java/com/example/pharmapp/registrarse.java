@@ -173,7 +173,7 @@ public class registrarse extends AppCompatActivity {
 
 
     private void registrarusuario(String nom, String ape, String usu, String con, String dn, String ft, String lo,String cal, String alt, String dp, String os, String na){
-        String URL = "http://192.168.0.39/medicamentos_android/insertar.php";
+        String URL = "http://192.168.0.87/medicamentos_android/insertar.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

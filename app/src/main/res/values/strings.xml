@@ -23,7 +23,7 @@
     <string name="total">Total</string>
     <string name="buscador">¿Que desea buscar?</string>
 
-    <string name="URL_medicamentos">http://192.168.0.39/medicamentos_android/db.php</string>
+    <string name="URL_medicamentos">http://192.168.0.87/medicamentos_android/db.php</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

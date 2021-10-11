@@ -42,6 +42,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Blob;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -208,7 +209,7 @@ public class GalleryFragment<Total> extends Fragment {
             gvImagenes.setVisibility(getView().GONE);
 
             //dbHelper =new DbHelper(getContext());
-            db.delete("t_receta",null,null);
+            //db.delete("t_receta",null,null);
         } else {
 
             if ( tieneokreceta == 0) {
@@ -223,7 +224,9 @@ public class GalleryFragment<Total> extends Fragment {
             pesos.setVisibility(getView().VISIBLE);
             vacio.setVisibility(getView().GONE);
             gvImagenes.setVisibility(getView().VISIBLE);
-            tot.setText(String.valueOf(total));
+            DecimalFormat df = new DecimalFormat("#.00");
+            tot.setText(df.format(total));
+
         }
 
 
@@ -263,7 +266,7 @@ public class GalleryFragment<Total> extends Fragment {
 
 
         //traer usuario
-        String URLUSUARIO="http://192.168.0.39/medicamentos_android/buscarusuario.php?usuario="+user;
+        String URLUSUARIO="http://192.168.0.87/medicamentos_android/buscarusuario.php?usuario="+user;
 
         StringRequest stringRequ = new StringRequest(Request.Method.GET, URLUSUARIO, new Response.Listener<String>() {
             @Override
@@ -333,7 +336,7 @@ public class GalleryFragment<Total> extends Fragment {
 
             } while (cursorMedicamento.moveToNext());
         }
-        String URL = "http://192.168.0.39/medicamentos_android/insertarpedido.php";
+        String URL = "http://192.168.0.87/medicamentos_android/insertarpedido.php";
         String finalIdentificadormedicamento = identificadormedicamento;
 
         String finalCantidades = cantidades;
@@ -377,7 +380,7 @@ public class GalleryFragment<Total> extends Fragment {
     private void traeridpedido(String formattedDate, String usuario, SQLiteDatabase db, Cursor cursorReceta) {
 
         /// persito recetas
-        String URLpedido = "http://192.168.0.39/medicamentos_android/traerpedido.php?usuario="+usuario+"&fecha="+formattedDate;
+        String URLpedido = "http://192.168.0.87/medicamentos_android/traerpedido.php?usuario="+usuario+"&fecha="+formattedDate;
 
         StringRequest stringRequest2 = new StringRequest(Request.Method.GET, URLpedido, new Response.Listener<String>() {
             @Override
@@ -426,7 +429,7 @@ public class GalleryFragment<Total> extends Fragment {
 
     public void receta(String idped, String fech, SQLiteDatabase db, Cursor cursorReceta){
 
-        String URLreceta = "http://192.168.0.39/medicamentos_android/insertarreceta.php";
+        String URLreceta = "http://192.168.0.87/medicamentos_android/insertarreceta.php";
         Toast.makeText(getActivity(),idped,Toast.LENGTH_SHORT).show();
 
         Integer i = 0;
@@ -469,7 +472,7 @@ public class GalleryFragment<Total> extends Fragment {
             } while (cursorReceta.moveToNext());
 
         }
-
+        db.delete("t_receta",null,null);
 
 
     }

@@ -44,7 +44,7 @@ public class SlideshowFragment extends Fragment {
         String user=preferences.getString("user","No exite la informacion");
 
         //traer usuario
-        String URLUSUARIO="http://192.168.0.39/medicamentos_android/buscarusuario.php?usuario="+user;
+        String URLUSUARIO="http://192.168.0.87/medicamentos_android/buscarusuario.php?usuario="+user;
 
         StringRequest stringRequ = new StringRequest(Request.Method.GET, URLUSUARIO, new Response.Listener<String>() {
             @Override
@@ -90,7 +90,7 @@ public class SlideshowFragment extends Fragment {
                     if(foto.isEmpty()){
                         fotoperfil.setImageResource(R.drawable.blue_modern_icons_maternity_doctor_logo);
                     }else {
-                        url = "http://192.168.0.39/medicamentos_android/drawable/"+usuario+".png";
+                        url = "http://192.168.0.87/medicamentos_android/drawable/"+usuario+".png";
                         Picasso.with(getActivity())
                                 .load(url)
                                 .networkPolicy(NetworkPolicy.NO_CACHE)
