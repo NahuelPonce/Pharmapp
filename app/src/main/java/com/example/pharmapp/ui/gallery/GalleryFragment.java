@@ -115,7 +115,7 @@ public class GalleryFragment<Total> extends Fragment {
 
                     baseAdapter = new GridViewAdapter(getContext(),recetas);
                     gvImagenes.setAdapter(baseAdapter);
-
+                    Navigation.findNavController(getView()).navigate(R.id.action_nav_gallery_self);
 
                 }
             });
@@ -190,6 +190,7 @@ public class GalleryFragment<Total> extends Fragment {
         gvImagenes.setAdapter(baseAdapter);
 
 
+
         este.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -237,6 +238,19 @@ public class GalleryFragment<Total> extends Fragment {
 
 
         double finalTotal = total;
+
+
+        if (tieneokreceta != 0) {
+            if (cursorReceta.moveToFirst()){
+                comprar.setEnabled(true);
+            } else {
+                comprar.setEnabled(false);
+            }
+
+        } else {
+            comprar.setEnabled(true);
+        }
+
         comprar.setOnClickListener(new View.OnClickListener() {
 
             @Override

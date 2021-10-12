@@ -60,15 +60,17 @@ public class registrarse extends AppCompatActivity {
                     public void onActivityResult(Uri uri) {
                         // Handle the returned Uri
                         //foto.setImageURI(uri);
+                        if (uri != null) {
 
-                        try {
-                            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri );
-                            //ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                            //bitmap.compress(Bitmap.CompressFormat.PNG,100,bos);
-                            //byte[] bArray = bos.toByteArray();
-                            foto.setImageBitmap(bitmap);
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                            try {
+                                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                                //ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                                //bitmap.compress(Bitmap.CompressFormat.PNG,100,bos);
+                                //byte[] bArray = bos.toByteArray();
+                                foto.setImageBitmap(bitmap);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 });
