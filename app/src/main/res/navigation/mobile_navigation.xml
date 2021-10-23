@@ -43,6 +43,16 @@
         android:name="com.example.pharmapp.ui.orden.OrdenFragment"
         android:label="Estado de las ordenes"
         tools:layout="@layout/fragment_orden" >
+        <action
+            android:id="@+id/action_nav_orden_self"
+            app:destination="@id/nav_orden" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_historial"
+        android:name="com.example.pharmapp.ui.historial.HistorialFragment"
+        android:label="Historial de pedidos"
+        tools:layout="@layout/fragment_orden" >
     </fragment>
 
 

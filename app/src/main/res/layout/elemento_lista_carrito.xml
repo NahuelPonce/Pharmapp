@@ -16,7 +16,7 @@
 
 
         <TextView
-            android:id="@+id/lvTitulo"
+            android:id="@+id/lvpedidoid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -30,7 +30,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/lvPrecio"
+            android:id="@+id/preciolv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView2"
@@ -41,10 +41,10 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/textComprimido"
+            android:id="@+id/medica_lv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lvTitulo"
+            android:layout_below="@+id/lvpedidoid"
             android:layout_alignParentStart="true"
             android:layout_marginStart="17dp"
             android:layout_marginTop="5dp"
@@ -54,7 +54,7 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textComprimido"
+            android:layout_below="@+id/medica_lv"
             android:layout_alignParentStart="true"
             android:layout_marginStart="17dp"
             android:layout_marginTop="5dp"
@@ -72,13 +72,13 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/medicamentoslist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lvTitulo"
+            android:layout_below="@+id/lvpedidoid"
             android:layout_marginStart="10dp"
             android:layout_marginTop="3dp"
-            android:layout_toEndOf="@+id/textComprimido"
+            android:layout_toEndOf="@+id/medica_lv"
             android:text="Comprimido" />
 
         <TextView
@@ -97,14 +97,14 @@
             android:id="@+id/peso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lvTitulo"
+            android:layout_below="@+id/lvpedidoid"
             android:layout_marginStart="10dp"
             android:layout_marginTop="2dp"
-            android:layout_toEndOf="@+id/textView8"
+            android:layout_toEndOf="@+id/medicamentoslist"
             android:text="mg" />
 
         <ImageButton
-            android:id="@+id/btnEliminar"
+            android:id="@+id/btnEliminar2"
             android:layout_width="wrap_content"
             android:layout_height="41dp"
             android:layout_alignParentTop="true"
@@ -117,7 +117,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textComprimido"
+            android:layout_below="@+id/medica_lv"
             android:layout_marginStart="36dp"
             android:layout_marginTop="5dp"
 

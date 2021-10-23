@@ -17,6 +17,10 @@
             android:icon="@drawable/orden"
             android:title="Ordenes" />
         <item
+            android:id="@+id/nav_historial"
+            android:icon="@drawable/buscar"
+            android:title="Historial" />
+        <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/user"
             android:title="@string/menu_slideshow" />

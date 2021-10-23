@@ -38,7 +38,6 @@ public class HomeFragment extends Fragment {
     ArrayList<Medicamento> medicamentos;
     ArrayList<MedicamentoBD> medicamentosBD;
     RecyclerView recyclerViewMedicamentos;
-    AdapterMedicamento adapter;
     AdapterMedicamentoBD adapterBD;
     EditText svSearch;
     TextView bajoreceta;

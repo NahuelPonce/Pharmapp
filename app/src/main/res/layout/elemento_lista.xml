@@ -14,7 +14,7 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/lvTitulo"
+            android:id="@+id/lvpedidoid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
@@ -26,10 +26,10 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textComprimido"
+            android:id="@+id/medica_lv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lvTitulo"
+            android:layout_below="@+id/lvpedidoid"
             android:layout_marginStart="14dp"
             android:layout_marginLeft="14dp"
             android:layout_marginTop="23dp"
@@ -45,10 +45,10 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/lvPrecio"
+            android:id="@+id/preciolv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textComprimido"
+            android:layout_below="@+id/medica_lv"
             android:layout_marginStart="8dp"
             android:layout_marginTop="21dp"
             android:layout_toEndOf="@+id/textView4"
@@ -59,7 +59,7 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textComprimido"
+            android:layout_below="@+id/medica_lv"
             android:layout_marginStart="15dp"
             android:layout_marginTop="22dp"
             android:layout_toEndOf="@+id/ivImagen"
@@ -70,17 +70,17 @@
             android:id="@+id/peso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lvTitulo"
+            android:layout_below="@+id/lvpedidoid"
             android:layout_marginStart="6dp"
             android:layout_marginTop="23dp"
-            android:layout_toEndOf="@+id/textComprimido"
+            android:layout_toEndOf="@+id/medica_lv"
             android:text="mg" />
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="43dp"
-            android:layout_below="@+id/lvTitulo"
+            android:layout_below="@+id/lvpedidoid"
             android:layout_marginStart="73dp"
             android:layout_marginTop="18dp"
             android:layout_toEndOf="@+id/peso"
@@ -98,7 +98,7 @@
             android:paddingStart="5sp"
             android:paddingEnd="5sp"
             android:textAlignment="center"
-            android:layout_toEndOf="@+id/lvPrecio"
+            android:layout_toEndOf="@+id/preciolv"
             android:background="@color/rosa_500"
             android:visibility="visible"
             android:text="Bajo receta" />

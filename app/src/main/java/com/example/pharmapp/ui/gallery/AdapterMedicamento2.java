@@ -8,24 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pharmapp.Main2Activity;
 import com.example.pharmapp.R;
 import com.example.pharmapp.db.DbHelper;
-import com.example.pharmapp.ui.gallery.AdapterMedicamento2;
-import com.example.pharmapp.ui.home.AdapterMedicamento;
 import com.example.pharmapp.ui.home.Medicamento;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.BreakIterator;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 //extends RecyclerView.Adapter<AdapterMedicamento.ViewHolder> implements View.OnClickListener
@@ -94,12 +88,12 @@ public class AdapterMedicamento2 extends RecyclerView.Adapter<AdapterMedicamento
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
 
-            nombre = itemView.findViewById(R.id.lvTitulo);
-            precio = itemView.findViewById(R.id.lvPrecio);
+            nombre = itemView.findViewById(R.id.lvpedidoid);
+            precio = itemView.findViewById(R.id.preciolv);
             cantidad = itemView.findViewById(R.id.textView2);
-            comprimido =itemView.findViewById(R.id.textView8);
+            comprimido =itemView.findViewById(R.id.medicamentoslist);
 
-            btnEliminar = itemView.findViewById(R.id.btnEliminar);
+            btnEliminar = itemView.findViewById(R.id.btnEliminar2);
             btnEliminar.setOnClickListener(this);
 
         }

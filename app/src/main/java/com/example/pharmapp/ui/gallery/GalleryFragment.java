@@ -256,6 +256,10 @@ public class GalleryFragment<Total> extends Fragment {
             @Override
             public void onClick(View view) {
 
+                //Agrego al historial
+
+                //Elimino del carrito
+
                 dbHelper = new DbHelper(v.getContext());
                 final SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -388,10 +392,35 @@ public class GalleryFragment<Total> extends Fragment {
         requestQueue.add(stringRequest);
 
         Thread.sleep(1000L);
+
         traeridpedido(formattedDate,usuario,db,cursorReceta);
 
 
     }
+
+    private void crearorden(String idpedido, String fecha, String usuario, String preciototal, String obrasocial, String medicamentosid, String cantidades) {
+
+
+        String URLpedido = "http://192.168.0.87/medicamentos_android/generarorden.php?idpedido="+idpedido+"&usuario="+usuario+"&fecha="+fecha+"&medicamentosid="+medicamentosid+"&cantidades="+cantidades+"&preciototal="+preciototal+"&obrasocial="+obrasocial;
+
+        StringRequest stringRequest2 = new StringRequest(Request.Method.GET, URLpedido, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(),error.toString(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        RequestQueue requestQueue2= Volley.newRequestQueue(getContext());
+        requestQueue2.add(stringRequest2);
+        }
+
 
     private void traeridpedido(String formattedDate, String usuario, SQLiteDatabase db, Cursor cursorReceta) {
 
@@ -401,21 +430,28 @@ public class GalleryFragment<Total> extends Fragment {
         StringRequest stringRequest2 = new StringRequest(Request.Method.GET, URLpedido, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                String idped, fech;
+                String idped, fech,usu,medicamentosid, cantidades,preciototal,os;
 
                 try {
 
                     JSONObject obj = new JSONObject(response);
                     idped = obj.getString("idpedido");
                     fech = obj.getString("fecha");
+                    usu=obj.getString("usuariocomprador");
+                    preciototal= obj.getString("preciototal");
+                    os=obj.getString("obrasocial");
+                    medicamentosid=obj.getString("medicamentosid");
+                    cantidades=obj.getString("cantidades");
 
+
+                    crearorden(idped,fech,usu,preciototal,os,medicamentosid,cantidades);
                     if(cursorReceta.moveToFirst() && cursorReceta != null){
                         receta(idped,fech,db,cursorReceta);
                     }
 
 
                 } catch (JSONException e) {
-                    Toast.makeText(getActivity(),e.toString()+"ACA",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),e.toString()+"ACAHOLA",Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
@@ -429,7 +465,6 @@ public class GalleryFragment<Total> extends Fragment {
 
         RequestQueue requestQueue2= Volley.newRequestQueue(getContext());
         requestQueue2.add(stringRequest2);
-
 
 
         //elimino lo que queda en pantalla

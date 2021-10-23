@@ -1,11 +1,9 @@
 package com.example.pharmapp.ui.home;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -110,9 +108,9 @@ public class AdapterMedicamentoBD extends RecyclerView.Adapter<AdapterMedicament
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
 
-            nombre = itemView.findViewById(R.id.lvTitulo);
-            comprimido = itemView.findViewById(R.id.textComprimido);
-            precio = itemView.findViewById(R.id.lvPrecio);
+            nombre = itemView.findViewById(R.id.lvpedidoid);
+            comprimido = itemView.findViewById(R.id.medica_lv);
+            precio = itemView.findViewById(R.id.preciolv);
             imagen = itemView.findViewById(R.id.ivImagen);
             bajoreceta = itemView.findViewById(R.id.textView5);
         }
