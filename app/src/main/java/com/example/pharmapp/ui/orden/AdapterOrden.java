@@ -39,11 +39,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 //extends RecyclerView.Adapter<AdapterMedicamento.ViewHolder> implements View.OnClickListener
-public class AdapterOrden extends RecyclerView.Adapter<AdapterOrden.ViewHolder> implements  View.OnClickListener {
+public class AdapterOrden extends RecyclerView.Adapter<AdapterOrden.ViewHolder> { //implements  View.OnClickListener {
     LayoutInflater inflater;
     ArrayList<OrdenBD> ordenBD;
     Context context;
-    private View.OnClickListener listener;
+    //private View.OnClickListener listener;
 
 
     public AdapterOrden(Context context, ArrayList<OrdenBD> ordenBD) {
@@ -59,16 +59,16 @@ public class AdapterOrden extends RecyclerView.Adapter<AdapterOrden.ViewHolder> 
     @Override
     public AdapterOrden.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View v = inflater.inflate((R.layout.elemento_lista_orden), parent, false);
-        v.setOnClickListener(this);
+        //v.setOnClickListener(this);
 
         return new ViewHolder(v);
     }
 
 
 
-    public void setOnClickListener(View.OnClickListener listener){
+    /*public void setOnClickListener(View.OnClickListener listener){
         this.listener = listener;
-    }
+    }*/
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
@@ -109,18 +109,18 @@ public class AdapterOrden extends RecyclerView.Adapter<AdapterOrden.ViewHolder> 
         return ordenBD.size();
     }
 
-    @Override
+    /*@Override
     public void onClick(View v) {
         if (listener!=null) {
             listener.onClick(v);
         }
 
-    }
+    }*/
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder { //implements View.OnClickListener {
 
         TextView idpedido,medicamentos, precio, estado,fecha,idorden;
-        ImageButton btnEliminar;
+        //ImageButton btnEliminar;
 
 
         public ViewHolder(@NonNull @NotNull View itemView) {
@@ -133,11 +133,12 @@ public class AdapterOrden extends RecyclerView.Adapter<AdapterOrden.ViewHolder> 
             fecha=itemView.findViewById(R.id.textView8);
             idorden=itemView.findViewById(R.id.idorden);
 
-            btnEliminar = itemView.findViewById(R.id.btnEliminar2);
-            btnEliminar.setOnClickListener(this);
+            //btnEliminar = itemView.findViewById(R.id.btnEliminar2);
+            //btnEliminar.setOnClickListener(this);
 
         }
 
+        /*
         @Override
         public void onClick(View v) { ;
             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
@@ -177,6 +178,12 @@ public class AdapterOrden extends RecyclerView.Adapter<AdapterOrden.ViewHolder> 
                         }
                     }).show();
         }
+
+         */
+
+
+
+
     }
 
 }
