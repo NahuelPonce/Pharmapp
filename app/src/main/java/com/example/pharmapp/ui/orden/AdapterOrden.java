@@ -1,42 +1,22 @@
 package com.example.pharmapp.ui.orden;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.example.pharmapp.R;
-import com.example.pharmapp.db.DbHelper;
-import com.example.pharmapp.ui.home.Medicamento;
-import com.example.pharmapp.ui.home.MedicamentoBD;
-import com.example.pharmapp.ui.orden.OrdenBD;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 //extends RecyclerView.Adapter<AdapterMedicamento.ViewHolder> implements View.OnClickListener
 public class AdapterOrden extends RecyclerView.Adapter<AdapterOrden.ViewHolder> { //implements  View.OnClickListener {
@@ -78,6 +58,7 @@ public class AdapterOrden extends RecyclerView.Adapter<AdapterOrden.ViewHolder> 
         String estado = ordenBD.get(position).getEstado();
         String fecha = ordenBD.get(position).getFecha();
         String medicamentosid = ordenBD.get(position).getMedicamentosid();
+        String descripcion = ordenBD.get(position).getMotivo();
         //String cantidades = ordenBD.get(position).getCantidades();
 
         Double preciototal = ordenBD.get(position).getPreciototal();
@@ -92,7 +73,31 @@ public class AdapterOrden extends RecyclerView.Adapter<AdapterOrden.ViewHolder> 
 
 
         holder.idpedido.setText(idpedido);
-        holder.estado.setText(estado);
+
+        if(estado.equals("Cancelado")){
+            holder.estado.setTextColor(Color.parseColor("#FF0054"));
+            holder.estado.setText(estado);
+            holder.descripcion.setVisibility(View.VISIBLE);
+            holder.descripcion.setText(descripcion);
+
+        }
+
+        else{
+            if(estado.equals("Confirmado")){
+                Log.i("tutorial","holahola");
+                holder.estado.setTextColor(Color.parseColor("#008f39"));
+                holder.estado.setText(estado);
+                holder.descripcion.setVisibility(View.GONE);
+            }else {
+                holder.estado.setText(estado);
+                holder.descripcion.setVisibility(View.GONE);
+                holder.estado.setTextColor(Color.parseColor("#e5be01"));
+            }
+
+       }
+
+
+
 
         DecimalFormat df = new DecimalFormat("#.00");
         holder.precio.setText(String.valueOf(df.format(preciototal)));
@@ -119,7 +124,7 @@ public class AdapterOrden extends RecyclerView.Adapter<AdapterOrden.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder { //implements View.OnClickListener {
 
-        TextView idpedido,medicamentos, precio, estado,fecha,idorden;
+        TextView idpedido,medicamentos, precio, estado,fecha,idorden,descripcion;
         //ImageButton btnEliminar;
 
 
@@ -129,6 +134,8 @@ public class AdapterOrden extends RecyclerView.Adapter<AdapterOrden.ViewHolder> 
             idpedido = itemView.findViewById(R.id.lvpedidoid);
             precio = itemView.findViewById(R.id.preciolv);
             estado = itemView.findViewById(R.id.estadoid);
+            descripcion = itemView.findViewById(R.id.descripcionlv);
+
             medicamentos =itemView.findViewById(R.id.medicamentoslist);
             fecha=itemView.findViewById(R.id.textView8);
             idorden=itemView.findViewById(R.id.idorden);

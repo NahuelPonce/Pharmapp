@@ -86,7 +86,8 @@ public class OrdenFragment extends Fragment {
                                                 jsonObject1.getString("fecha"),
                                                 jsonObject1.getString("medicamentosid"),
                                                 jsonObject1.getString("cantidades"),
-                                                jsonObject1.getDouble("preciototal")
+                                                jsonObject1.getDouble("preciototal"),
+                                                jsonObject1.getString("motivo")
 
                                         )
 

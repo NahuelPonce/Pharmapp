@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class OrdenBD {
 
-    public OrdenBD(int idorden, int idpedido, String usuario, String estado, String fecha, String medicamentosid, String cantidades, Double preciototal) {
+    public OrdenBD(int idorden, int idpedido, String usuario, String estado, String fecha, String medicamentosid, String cantidades, Double preciototal,String motivo) {
         this.idorden = idorden;
         this.idpedido = idpedido;
         this.usuario = usuario;
@@ -16,6 +16,7 @@ public class OrdenBD {
         this.medicamentosid = medicamentosid;
         this.cantidades = cantidades;
         this.preciototal = preciototal;
+        this.motivo = motivo;
 
     }
 
@@ -28,7 +29,15 @@ public class OrdenBD {
     private  String medicamentosid;
     private  String cantidades;
     private  Double preciototal;
+    private String motivo;
 
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
 
     public int getIdorden() {
         return idorden;
