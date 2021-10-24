@@ -105,7 +105,74 @@ public class DetalleMedicamento extends Fragment {
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         medicamentoCantidad.setText("1");
-        medicamentoPrecioTotal.setText(String.valueOf(precio));
+        //
+        SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String usu = preferences.getString("user","No exite la informacion");
+        String URL="http://192.168.0.87/medicamentos_android/buscarusuario.php?usuario="+usu;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String os;
+
+                JSONObject obj = null;
+                try {
+                    obj = new JSONObject(response);
+
+                    os = obj.getString("obrasocial");
+
+                    Log.i("Tutorial",os);
+
+
+                    if (receta == 1) {
+
+
+                        double resultado = 0;
+                        double medicamentop = precio;
+                        if (os.equals("ioma")) {
+
+                            resultado = (1 * medicamentop) - (1 * medicamentop * 0.60);
+                            DecimalFormat df = new DecimalFormat("#.00");
+                            medicamentoPrecioTotal.setText(String.valueOf(df.format(resultado)));
+
+                        } else {
+                            if (os.equals("osde")) {
+                                resultado = (1 * medicamentop) - (1 * medicamentop * 0.40);
+                                DecimalFormat df = new DecimalFormat("#.00");
+                                medicamentoPrecioTotal.setText(String.valueOf(df.format(resultado)));
+
+                            } else {
+
+                                resultado = 1 * medicamentop;
+                                DecimalFormat df = new DecimalFormat("#.00");
+                                medicamentoPrecioTotal.setText(String.valueOf(df.format(resultado)));
+                            }
+
+                        }
+                    } else {
+
+                        double resultado = 0;
+                        double medicamentop = precio;
+                        resultado = 1 * medicamentop;
+                        DecimalFormat df = new DecimalFormat("#.00");
+                        medicamentoPrecioTotal.setText(String.valueOf(df.format(resultado)));
+
+                    }
+                }catch (JSONException e) {
+                    Toast.makeText(getContext(),e.toString(),Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(),error.toString(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        RequestQueue requestQueue= Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+
 
         medicamentoCantidad.addTextChangedListener(new TextWatcher() {
             @Override
