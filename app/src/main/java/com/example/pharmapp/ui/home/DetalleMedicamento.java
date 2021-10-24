@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +21,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.pharmapp.Main2Activity;
 import com.example.pharmapp.R;
 import com.example.pharmapp.db.DbHelper;
 import com.google.gson.Gson;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -188,13 +202,77 @@ public class DetalleMedicamento extends Fragment {
 
         Bundle bundle = getArguments();
         Double precio = bundle.getDouble("precio");
+        Integer receta = bundle.getInt("receta");
 
 
-        double resultado = 0;
-        double medicamentop= precio;
-        resultado=cantidad*medicamentop;
-        DecimalFormat df = new DecimalFormat("#.00");
-        medicamentoPrecioTotal.setText(String.valueOf(df.format(resultado)));
+
+
+            SharedPreferences preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+            String usu = preferences.getString("user","No exite la informacion");
+            String URL="http://192.168.0.87/medicamentos_android/buscarusuario.php?usuario="+usu;
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    String os;
+
+                    JSONObject obj = null;
+                    try {
+                        obj = new JSONObject(response);
+
+                        os = obj.getString("obrasocial");
+
+                        Log.i("Tutorial",os);
+
+
+                        if (receta == 1) {
+
+
+                            double resultado = 0;
+                            double medicamentop = precio;
+                            if (os.equals("ioma")) {
+
+                                resultado = (cantidad * medicamentop) - (cantidad * medicamentop * 0.60);
+                                DecimalFormat df = new DecimalFormat("#.00");
+                                medicamentoPrecioTotal.setText(String.valueOf(df.format(resultado)));
+
+                            } else {
+                                if (os.equals("osde")) {
+                                    resultado = (cantidad * medicamentop) - (cantidad * medicamentop * 0.40);
+                                    DecimalFormat df = new DecimalFormat("#.00");
+                                    medicamentoPrecioTotal.setText(String.valueOf(df.format(resultado)));
+
+                                } else {
+
+                                    resultado = cantidad * medicamentop;
+                                    DecimalFormat df = new DecimalFormat("#.00");
+                                    medicamentoPrecioTotal.setText(String.valueOf(df.format(resultado)));
+                                }
+
+                            }
+                        } else {
+
+                            double resultado = 0;
+                            double medicamentop = precio;
+                            resultado = cantidad * medicamentop;
+                            DecimalFormat df = new DecimalFormat("#.00");
+                            medicamentoPrecioTotal.setText(String.valueOf(df.format(resultado)));
+
+                        }
+                    }catch (JSONException e) {
+                        Toast.makeText(getContext(),e.toString(),Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getContext(),error.toString(),Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            RequestQueue requestQueue= Volley.newRequestQueue(getContext());
+            requestQueue.add(stringRequest);
 
     }
 }
