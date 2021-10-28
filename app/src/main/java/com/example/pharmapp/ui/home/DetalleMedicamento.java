@@ -53,6 +53,7 @@ public class DetalleMedicamento extends Fragment {
     TextView medicamentoPrecioTotal;
     TextView medicamentoPrecio;
     TextView medicamentoId;
+    TextView avisodescuento;
     ImageButton mas;
     ImageButton menos;
     ImageButton agregar;
@@ -80,6 +81,7 @@ public class DetalleMedicamento extends Fragment {
         medicamentoPrecio = v.findViewById(R.id.precio_medicamento);
         medicamentoId = v.findViewById(R.id.medicamento_id);
         medicamentoComprimido = v.findViewById(R.id.txComprimido);
+        avisodescuento = v.findViewById(R.id.avisodescuento);
 
         Bundle bundle = getArguments();
         String nombre = bundle.getString("nombre");
@@ -133,18 +135,24 @@ public class DetalleMedicamento extends Fragment {
                             resultado = (1 * medicamentop) - (1 * medicamentop * 0.60);
                             DecimalFormat df = new DecimalFormat("#.00");
                             medicamentoPrecioTotal.setText(String.valueOf(df.format(resultado)));
+                            avisodescuento.setVisibility(View.VISIBLE);
+                            avisodescuento.setText("Descuento del 60% IOMA");
+
 
                         } else {
                             if (os.equals("osde")) {
                                 resultado = (1 * medicamentop) - (1 * medicamentop * 0.40);
                                 DecimalFormat df = new DecimalFormat("#.00");
                                 medicamentoPrecioTotal.setText(String.valueOf(df.format(resultado)));
+                                avisodescuento.setText("Descuento del 40% OSDE");
+                                avisodescuento.setVisibility(View.VISIBLE);
 
                             } else {
 
                                 resultado = 1 * medicamentop;
                                 DecimalFormat df = new DecimalFormat("#.00");
                                 medicamentoPrecioTotal.setText(String.valueOf(df.format(resultado)));
+                                avisodescuento.setVisibility(View.GONE);
                             }
 
                         }
@@ -155,6 +163,7 @@ public class DetalleMedicamento extends Fragment {
                         resultado = 1 * medicamentop;
                         DecimalFormat df = new DecimalFormat("#.00");
                         medicamentoPrecioTotal.setText(String.valueOf(df.format(resultado)));
+                        avisodescuento.setVisibility(View.GONE);
 
                     }
                 }catch (JSONException e) {
